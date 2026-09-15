@@ -151,4 +151,32 @@ Gestiona las cuentas, sus perfiles y la verificación del correo mediante códig
 
 Enviar un código no equivale a verificar el correo: debe comprobarse su validez y asociación con la cuenta. Las pruebas evaluarán el registro y la verificación. Permanecen pendientes la duración y los intentos del código, el inicio de sesión, la recuperación de acceso y la posibilidad de utilizar ambos perfiles.
 
+### 2.5.2. Context Mapping
+
+El Context Map de ANITEC representa las dependencias entre los cinco bounded contexts y sus integraciones externas. La marca U identifica al proveedor de información o capacidades y D al contexto consumidor. Estas relaciones expresan dependencias del modelo, no el orden temporal de las operaciones.
+
+![Context Map de ANITEC](../../assets/images/context-mapping/01-anitec-context-map.jpg)
+
+#### Relaciones entre bounded contexts
+
+| Proveedor (U) | Consumidor (D) | Relación |
+| --- | --- | --- |
+| Identidad y acceso | Gestión del ganado, Atención veterinaria, Vinculación veterinaria y Suscripciones | Proporciona información para validar la identidad y el perfil. Cada consumidor mantiene sus comprobaciones de permisos. |
+| Gestión del ganado | Atención veterinaria | Proporciona datos del animal, su propietario y observaciones para apoyar las atenciones. |
+| Vinculación veterinaria | Atención veterinaria | Proporciona el estado de la vinculación para comprobar el acceso del veterinario. |
+| Suscripciones | Gestión del ganado | Comunica cambios del plan que determinan el límite de animales activos. |
+| Suscripciones | Vinculación veterinaria | Comunica cambios del plan que determinan el límite de vinculaciones activas del veterinario. |
+
+En las cuatro relaciones entre Suscripciones, Gestión del ganado, Vinculación veterinaria y Atención veterinaria se propone el patrón Customer–Supplier. Los responsables del contexto proveedor consideran las necesidades del consumidor al coordinar los contratos y sus cambios. Las relaciones de Identidad y acceso se representan como dependencias U/D, sin asignar un patrón adicional.
+
+La conexión entre Suscripciones y Vinculación veterinaria aparece discontinua porque está pendiente de completar su representación en el canvas y los flujos correspondientes.
+
+#### Integraciones externas
+
+Stripe proporciona el procesamiento de pagos y la información de vigencia utilizada por Suscripciones. Se propone una Anti-Corruption Layer (ACL) del lado de ANITEC para traducir los conceptos y resultados de Stripe al modelo propio, reduciendo su dependencia del formato externo.
+
+Resend permite enviar códigos de verificación e invitaciones desde Identidad y acceso y Vinculación veterinaria, respectivamente. Sus dos apariciones en el diagrama representan el mismo servicio. Firebase Cloud Messaging permite enviar las notificaciones de indicaciones desde Atención veterinaria.
+
+Estas integraciones se muestran como dependencias U/D. El uso de sus servicios no implica una relación Customer–Supplier en el sentido de coordinación entre equipos. Los límites del mapa tampoco requieren que cada contexto se despliegue como un microservicio independiente.
+
 </div>
