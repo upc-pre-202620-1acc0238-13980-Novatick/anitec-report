@@ -74,3 +74,12 @@ Con el objetivo de que la propuesta de ANITEC esté orientada hacia las necesida
 
 El proceso toma como punto de partida las dificultades de organización y consulta de la información sanitaria del ganado, así como también la coordinación entre los pequeños y medianos ganaderos y con las veterinarias. Teniendo en cuenta lo anterior se desarrolla el Lean UX Problem Statement, los Lean UX Assumptions, los Lean UX Hypothesis Statements y, finalmente, el Lean UX Canvas.
 
+### 1.2.2.1. Lean UX Problem Statements
+
+El estado actual de la gestión de información sanitaria del ganado de pequeños y medianos productores está centrado en el registro de datos relacionados con la identificación, las vacunas, los tratamientos, los controles y las demás atenciones de los animales mediante diferentes registros y formas de comunicación. Cuando esta información se encuentra incompleta o dispersa, resulta más difícil mantener un historial sanitario estructurado, consultar los antecedentes cuando son necesarios y realizar el seguimiento de los cuidados de cada animal.
+
+Lo que las herramientas y formas de trabajo utilizadas actualmente no siempre permiten resolver es la necesidad de que ganaderos y veterinarios dispongan de los antecedentes sanitarios de cada animal en un mismo lugar. Esta situación dificulta la consulta de la información necesaria y la continuidad de las visitas, controles, tratamientos, vacunaciones e indicaciones veterinarias.
+
+ANITEC abordará esta brecha mediante una aplicación móvil orientada a la centralización y organización de la información sanitaria de cada animal. La solución permitirá registrar y consultar animales, gestionar la relación entre ganaderos y veterinarios, organizar visitas y controles, registrar atenciones veterinarias y mantener información sobre tratamientos, vacunas, indicaciones y cuidados pendientes. Nuestro enfoque inicial estará dirigido a pequeños y medianos ganaderos responsables del registro y cuidado de sus animales, así como a veterinarios que realizan visitas, controles y seguimiento sanitario del ganado.
+
+Sabremos que la propuesta tiene éxito cuando los ganaderos puedan mantener y consultar de forma recurrente la información sanitaria de sus animales y los veterinarios puedan acceder a los antecedentes autorizados, registrar las atenciones realizadas y utilizar la información disponible para dar continuidad al seguimiento de tratamientos, vacunas, controles y demás cuidados indicados.
