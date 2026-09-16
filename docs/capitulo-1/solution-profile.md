@@ -67,3 +67,10 @@ El objetivo de la aplicación ANITEC es optimizar la organización y la consulta
 Como alcance inicial, el proyecto incluye una landing page informativa y una aplicación móvil dirigida a los dos segmentos objetivo. La aplicación comprende funcionalidades para registrar y consultar animales, relacionar ganaderos y veterinarios, gestionar visitas o controles, registrar las atenciones veterinarias y mantener información sobre tratamientos, vacunas y cuidados pendientes.
 
 Entre sus restricciones, ANITEC debe desarrollarse utilizando las tecnologías y los requisitos establecidos por el curso, funcionar en dispositivos móviles y contar con una interfaz simple para sus usuarios. La versión inicial queda limitada a las funcionalidades definidas para el seguimiento sanitario y veterinario. Por ello, no incluye funcionalidades de finanzas, reproducción, productividad ni dispositivos IoT mientras estas no formen parte del alcance aprobado por el equipo.
+
+## 1.2.2. Lean UX Process
+
+Con el objetivo de que la propuesta de ANITEC esté orientada hacia las necesidades que lo componen, se utiliza el enfoque Lean UX. Este proceso permite partir de la necesidad identificada, establecer supuestos respecto a la propuesta de negocio y a los usuarios, generar hipótesis respecto de las funcionalidades propuestas y definir mecanismos con los que se validarían posteriormente las hipótesis generadas.
+
+El proceso toma como punto de partida las dificultades de organización y consulta de la información sanitaria del ganado, así como también la coordinación entre los pequeños y medianos ganaderos y con las veterinarias. Teniendo en cuenta lo anterior se desarrolla el Lean UX Problem Statement, los Lean UX Assumptions, los Lean UX Hypothesis Statements y, finalmente, el Lean UX Canvas.
+
