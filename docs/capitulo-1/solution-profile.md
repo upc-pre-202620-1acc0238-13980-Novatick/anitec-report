@@ -147,3 +147,55 @@ FA03. Creemos que una funcionalidad de vinculación entre ganaderos y veterinari
 FA04. Creemos que una funcionalidad para gestionar visitas, controles y atenciones veterinarias permitirá organizar mejor el seguimiento sanitario y conservar un registro de las acciones realizadas.
 
 FA05. Creemos que una funcionalidad para registrar tratamientos, vacunas, indicaciones y cuidados pendientes permitirá a ganaderos y veterinarios dar continuidad a los cuidados definidos para cada animal.
+
+### 1.2.2.3. Lean UX Hypothesis Statements
+
+#### Hypothesis Statement 01
+
+Creemos que lograremos una mayor adopción y uso recurrente de ANITEC
+
+Si los pequeños y medianos ganaderos
+
+Obtienen una forma organizada de registrar y consultar la información individual y sanitaria de sus animales
+
+Con una funcionalidad de registro y consulta de animales.
+
+#### Hypothesis Statement 02
+
+Creemos que lograremos una mayor frecuencia de consulta de información sanitaria dentro de ANITEC
+
+Si los pequeños y medianos ganaderos y los veterinarios
+
+Obtienen acceso organizado a los antecedentes sanitarios de cada animal para revisar atenciones, tratamientos, vacunas y controles anteriores
+
+Con una funcionalidad de consulta de antecedentes sanitarios.
+
+#### Hypothesis Statement 03
+
+Creemos que lograremos una mayor cantidad de vinculaciones activas entre ganaderos y veterinarios
+
+Si los pequeños y medianos ganaderos y los veterinarios
+
+Obtienen una forma autorizada de compartir y consultar la información necesaria para continuar la atención sanitaria de los animales
+
+Con una funcionalidad de vinculación entre ganaderos y veterinarios.
+
+#### Hypothesis Statement 04
+
+Creemos que lograremos un uso más continuo de ANITEC para la coordinación y el seguimiento de las atenciones
+
+Si los pequeños y medianos ganaderos y los veterinarios
+
+Obtienen una forma organizada de gestionar visitas, controles y atenciones veterinarias
+
+Con una funcionalidad para gestionar visitas, controles y atenciones.
+
+#### Hypothesis Statement 05
+
+Creemos que lograremos una mayor frecuencia de registro y consulta de información relacionada con el seguimiento sanitario
+
+Si los pequeños y medianos ganaderos y los veterinarios
+
+Obtienen una forma de registrar y consultar tratamientos, vacunas, indicaciones y cuidados pendientes para cada animal
+
+Con una funcionalidad para registrar tratamientos, vacunas, indicaciones y cuidados pendientes.
