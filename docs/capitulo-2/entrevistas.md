@@ -66,7 +66,38 @@ registran sus atenciones y realizan el seguimiento de sus pacientes.
 
 ## 2.2.2. Registro de entrevistas
 
-Pendiente de completar después de realizar las entrevistas.
+#### Entrevista 1: Porfirio Salazar Rodriguez
+
+<div align="center">
+
+| Campo                        | Información                                         |
+| ---------------------------- | --------------------------------------------------- |
+| Segmento                     | Ganadero                                            |
+| Nombres y apellidos          | Porfirio Salazar Rodriguez                          |
+| Edad                         | 65 años                                             |
+| Distrito                     | Comas, Lima                                         |
+| Ocupación                    | Ganadero artesanal                                  |
+| Tipo de ganado               | Ganado vacuno                                       |
+| Tamaño aproximado del ganado | Hato pequeño gestionado con apoyo de 2 a 3 personas |
+| Inicio de la entrevista      | 00:00                                               |
+| Duración                     | 00:13:55                                            |
+| URL del video                | https://tinyurl.com/entrevista3PorfirioSalazar      |
+
+</div>
+
+<div align="center">
+   <img src="../../assets/images/interviews/ranchers/porfirio-salazar.png" width="420">
+</div>
+
+**Resumen de la entrevista:**
+
+Porfirio Salazar Rodriguez describió su experiencia dentro de la ganadería artesanal, una actividad que realiza con apoyo de dos o tres personas. Durante la entrevista explicó que no trabaja con una empresa ganadera grande, pero sí tiene el objetivo de formalizar y hacer crecer su actividad para generar mayores ingresos. Sus respuestas muestran que percibe la tecnología como una oportunidad para mejorar la productividad, aunque también señaló que el costo económico puede ser una barrera importante para adoptar una solución digital.
+
+El entrevistado se mostró como una persona emprendedora y prudente. Tiene interés en mejorar, pero evalúa cuidadosamente si una herramienta realmente justifica la inversión. Sus influencias principales provienen de la experiencia familiar, el aprendizaje práctico, otros productores y las oportunidades comerciales que observa en el mercado. En cuanto a marcas o herramientas, no mencionó preferencia por una marca específica de software; sin embargo, sí mostró familiaridad con el uso de celular y comunicación por WhatsApp. Su interacción digital se concentra en el teléfono móvil y en búsquedas simples desde el navegador cuando necesita información relacionada con su actividad.
+
+La entrevista permitió reconocer que Porfirio necesita una solución que no solo registre información, sino que también le ayude a visualizar el valor económico de ordenar su ganadería. Para este perfil, AniTec debe comunicar beneficios concretos como reducción de pérdida de datos, mejor control del ganado, apoyo a la formalización y posibilidad de tomar mejores decisiones. Sus respuestas sustentan el arquetipo de ganadero artesanal con aspiración de crecimiento, sensible al costo, pero dispuesto a adoptar tecnología si percibe un retorno claro.
+
+### Entrevistas al segmento de veterinarios
 
 ## 2.2.3. Análisis de entrevistas
 
