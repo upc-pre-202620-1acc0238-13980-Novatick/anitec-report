@@ -776,4 +776,70 @@ Acceptance Criteria
 
 - Escenario 3: Conclusión de la investigación. Dado que concluyen las pruebas, cuando se presenta el informe, entonces incluye configuración necesaria, evidencias por plataforma, limitaciones y tareas pendientes; toda prueba no ejecutada se identifica expresamente.
 
+#### 2.4.2. Impact mapping
+
+**Desarrollo del impact mapping**
+
+#### 2.4.3. Product Backlog
+
+El Product Backlog de ANITEC ordena las 35 historias del proyecto (30 historias de usuario, 3 historias técnicas y 2 historias de investigación) según el valor que aportan al negocio. El orden inicia con la presentación pública de la solución (Landing Page), continúa con la gestión del ganado y avanza hacia la vinculación veterinaria, el registro de atenciones, las indicaciones de cuidado y, finalmente, la monetización y el acceso sin conexión. Las historias de identidad y acceso se incorporan como habilitadores del primer incremento, pero no encabezan el backlog, ya que por sí solas no entregan valor al usuario. El proyecto se planifica en 4 sprints.
+
+La estimación emplea la escala de Story Points 1 / 2 / 3 / 5 / 8. El total estimado es de 123 puntos, distribuidos en una velocidad objetivo aproximada de 31 puntos por sprint.
+
+| # Orden | Story Id | Título                                               | Story Points | Sprint |
+| ------- | -------- | ---------------------------------------------------- | ------------ | ------ |
+| 1       | US30     | Consultar presentación de ANITEC                     | 3            | 1      |
+| 2       | US01     | Registrar animal                                     | 5            | 1      |
+| 3       | US02     | Consultar inventario de animales                     | 3            | 1      |
+| 4       | US03     | Consultar ficha del animal                           | 3            | 1      |
+| 5       | US04     | Actualizar datos del animal                          | 3            | 1      |
+| 6       | US25     | Registrar cuenta                                     | 3            | 1      |
+| 7       | US26     | Verificar correo electrónico                         | 3            | 1      |
+| 8       | US27     | Iniciar sesión                                       | 3            | 1      |
+| 9       | US28     | Cerrar sesión                                        | 1            | 1      |
+| 10      | TS01     | Proveer operaciones de la API con control de acceso  | 5            | 1      |
+| 11      | US05     | Dar de baja a un animal                              | 3            | 2      |
+| 12      | US06     | Registrar observación sobre un animal                | 2            | 2      |
+| 13      | US14     | Enviar invitación de vinculación                     | 5            | 2      |
+| 14      | US15     | Responder invitación de vinculación                  | 3            | 2      |
+| 15      | US16     | Consultar invitaciones pendientes                    | 2            | 2      |
+| 16      | US17     | Consultar vinculaciones activas                      | 2            | 2      |
+| 17      | US18     | Revocar acceso del veterinario                       | 3            | 2      |
+| 18      | US07     | Programar visita veterinaria                         | 3            | 2      |
+| 19      | US08     | Consultar agenda de visitas y controles              | 3            | 2      |
+| 20      | SP02     | Validar notificaciones en Android e iOS              | 3            | 2      |
+| 21      | US09     | Registrar atención veterinaria                       | 5            | 3      |
+| 22      | US10     | Registrar tratamiento realizado                      | 3            | 3      |
+| 23      | US11     | Registrar vacunación aplicada                        | 3            | 3      |
+| 24      | US12     | Programar control veterinario                        | 3            | 3      |
+| 25      | US13     | Consultar historial veterinario del animal           | 5            | 3      |
+| 26      | US19     | Registrar indicaciones de cuidado                    | 3            | 3      |
+| 27      | US20     | Modificar indicaciones de cuidado                    | 3            | 3      |
+| 28      | US21     | Consultar indicaciones de cuidado                    | 3            | 3      |
+| 29      | SP01     | Validar integración de pagos y suscripciones         | 3            | 3      |
+| 30      | US22     | Consultar planes y suscripción vigente               | 2            | 4      |
+| 31      | US23     | Contratar suscripción premium                        | 8            | 4      |
+| 32      | US24     | Cancelar renovación de suscripción                   | 3            | 4      |
+| 33      | TS02     | Procesar cambios de suscripción de forma consistente | 5            | 4      |
+| 34      | TS03     | Mantener copias locales separadas por cuenta         | 5            | 4      |
+| 35      | US29     | Consultar información sin conexión                   | 8            | 4      |
+
+##### Criterios de ordenamiento
+
+- **Valor de negocio primero.** El backlog inicia con la Landing Page (US30), que da a conocer la solución y habilita la descarga de la aplicación, y continúa con la gestión del inventario de ganado (US01–US04), que resuelve el problema principal del ganadero.
+- **Identidad y acceso como habilitador, no como cabecera.** Las historias de cuenta y sesión (US25–US28) y el control de acceso de la API (TS01) se ubican al cierre del primer sprint: son necesarias para liberar el incremento, pero no abren el backlog porque no entregan valor por sí mismas.
+- **Dependencias funcionales respetadas.** La vinculación veterinaria (US14–US18) precede al registro de atenciones (US09–US13), ya que la autorización entre ganadero y veterinario condiciona esas operaciones. Las indicaciones de cuidado (US19–US21) se apoyan en la atención registrada.
+- **Investigación antes de implementación.** SP02 se resuelve en el Sprint 2 para habilitar los avisos de indicaciones del Sprint 3, y SP01 se ejecuta en el Sprint 3 para sustentar la integración de pagos del Sprint 4.
+- **Monetización y acceso sin conexión al final.** La suscripción (US22–US24, TS02) y la consulta sin conexión (TS03, US29) requieren un producto funcional previo, por lo que aportan valor una vez consolidadas las capacidades centrales.
+
+##### Distribución por sprint
+
+| Sprint    | Alcance principal                                                                                   | Story Points |
+| --------- | --------------------------------------------------------------------------------------------------- | ------------ |
+| 1         | Landing Page, gestión del inventario de ganado, cuentas, sesiones y base de la API                  | 32           |
+| 2         | Bajas y observaciones, vinculación veterinaria, agenda de visitas e investigación de avisos         | 29           |
+| 3         | Atenciones, tratamientos, vacunaciones, historial, indicaciones de cuidado e investigación de pagos | 31           |
+| 4         | Planes y suscripciones, consistencia de estados y consulta sin conexión                             | 31           |
+| **Total** |                                                                                                     | **123**      |
+
 </div>
