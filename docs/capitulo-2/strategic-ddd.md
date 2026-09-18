@@ -76,36 +76,57 @@ Los límites propuestos permiten separar responsabilidades sin perder las relaci
 
 #### 2.5.1.2. Domain Message Flows Modeling
 
-El tablero de contextos candidatos presentado en el apartado anterior también muestra interacciones entre etiquetas pertenecientes a distintos contextos. Estas conexiones permiten identificar el acontecimiento de origen, la reacción esperada y la responsabilidad del contexto receptor.
+Los siguientes diagramas muestran cómo se comunican los usuarios, la aplicación móvil, los contextos del negocio y los servicios externos de ANITEC. Se representan cinco escenarios; el tercero se divide en el envío y la aceptación de una invitación.
 
-##### Actualización del límite de animales
+Las notas azules representan comandos o solicitudes de acción; las naranjas, eventos que ya ocurrieron; las verdes, consultas; las moradas, reglas del negocio; y las grises, respuestas o información de apoyo. Los números permiten seguir cada flujo.
 
-Suscripciones comunica los cambios que afectan al límite permitido en Gestión del ganado. Se identificaron los siguientes flujos:
+##### Escenario 01: Activar suscripción premium
 
-| Evento de origen en Suscripciones | Política en Gestión del ganado                                                            | Comando receptor                        | Evento resultante                        |
-| --------------------------------- | ----------------------------------------------------------------------------------------- | --------------------------------------- | ---------------------------------------- |
-| Suscripción premium activada      | Al activar premium, aplicar el límite del plan contratado.                                | Actualizar límite de animales permitido | Límite de animales permitido actualizado |
-| Suscripción premium vencida       | Al vencer premium, aplicar el límite del plan gratuito sin eliminar registros existentes. | Actualizar límite de animales permitido | Límite de animales permitido actualizado |
+![Activación de suscripción premium](../../assets/images/event-storming/domain-message-flows/01-activate-premium-subscription.jpg)
 
-Ambos flujos utilizan el mismo comando, procesado por Capacidad del inventario. La información comunicada debe permitir identificar al ganadero y el límite que corresponde aplicar.
+El ganadero o veterinario solicita una suscripción premium desde la aplicación. Suscripciones solicita el procesamiento del pago a Stripe y activa el plan después de recibir una confirmación válida. A continuación, comunica el evento «Suscripción premium activada» al contexto correspondiente al perfil del usuario.
 
-Cada ganadero comienza con el límite del plan gratuito. Antes de registrar un nuevo animal, se comprueba que la cantidad de animales activos sea menor que el límite vigente. Si este disminuye, se conservan los animales existentes y su historial; las nuevas altas se impiden mientras la cantidad de animales activos alcance o supere dicho límite.
+Para el ganadero, Gestión del ganado actualiza el límite de animales activos. Para el veterinario, Vinculación veterinaria actualiza el límite de ganaderos vinculados. Cada contexto aplica el límite del plan contratado y registra el cambio.
 
-El procesamiento debe evitar que un mensaje duplicado o anterior sustituya un límite más reciente. Este requisito se considera para el posterior diseño de la integración.
+##### Escenario 02: Vencimiento de suscripción premium
 
-##### Observación del animal y programación de una visita
+![Vencimiento de suscripción premium](../../assets/images/event-storming/domain-message-flows/02-premium-subscription-expiration.jpg)
 
-El evento «Observación sobre un animal registrada», perteneciente a Gestión del ganado, se relaciona con el comando «Programar visita veterinaria», perteneciente a Atención veterinaria.
+Cuando termina el período pagado y se comprueba que no existe una nueva vigencia, Suscripciones finaliza premium y comunica el evento «Suscripción premium vencida». Gestión del ganado o Vinculación veterinaria recibe el mensaje y actualiza el límite según el plan gratuito del usuario.
 
-Esta conexión representa una posible continuación del proceso mediante la intervención del veterinario. La observación puede motivar la coordinación de una visita, pero no la programa automáticamente ni constituye un requisito para todas las visitas.
+En Gestión del ganado se conservan los animales existentes y su historial; se impiden nuevos registros mientras la cantidad de animales activos alcance o supere el límite. Para Vinculación veterinaria se propone conservar las vinculaciones existentes y restringir nuevas aceptaciones bajo la misma condición. Esta última regla queda pendiente de validación con el equipo.
 
-La programación debe identificar al animal y al ganadero correspondiente, además de comprobar que el veterinario dispone de una vinculación activa que autorice la operación.
+##### Escenario 03A: Enviar invitación de vinculación
 
-##### Alcance de las conexiones
+![Envío de invitación de vinculación veterinaria](../../assets/images/event-storming/domain-message-flows/03a-send-veterinary-linking-invitation.jpg)
 
-Las conexiones representadas distinguen las reacciones automáticas, como la actualización del límite del inventario, de las decisiones humanas, como la programación de una visita.
+El ganadero solicita invitar a un veterinario desde la aplicación. Vinculación veterinaria registra la invitación pendiente y genera el evento «Invitación de vinculación enviada». Como respuesta a este evento, solicita a Resend el envío del correo al destinatario.
 
-La autorización de la vinculación y la consulta de los datos del animal constituyen dependencias adicionales que deben respetarse al ejecutar las operaciones. No se interpretan como nuevos eventos automáticos ni como acceso directo a los datos internos de otro contexto.
+Resend devuelve el resultado de la solicitud de envío. Esta respuesta no confirma que el veterinario haya leído el correo ni activa la vinculación: la autorización requiere que el destinatario acepte la invitación.
+
+##### Escenario 03B: Aceptar invitación de vinculación
+
+![Aceptación de invitación de vinculación veterinaria](../../assets/images/event-storming/domain-message-flows/03b-accept-veterinary-linking-invitation.jpg)
+
+El veterinario acepta una invitación pendiente desde la aplicación. Vinculación veterinaria comprueba que sea el destinatario, que no exista una vinculación activa con el mismo ganadero y que tenga capacidad disponible según su plan.
+
+Si las condiciones se cumplen, registra el evento «Invitación de vinculación aceptada», deja activa la vinculación y devuelve el resultado a la aplicación. Si alguna validación falla, la operación se rechaza y no se concede el acceso.
+
+##### Escenario 04: Programar visita veterinaria
+
+![Programación de una visita veterinaria](../../assets/images/event-storming/domain-message-flows/04-schedule-veterinary-visit.jpg)
+
+El veterinario solicita programar una visita indicando el animal, el ganadero y la fecha y hora. Atención veterinaria consulta a Vinculación veterinaria para comprobar la autorización y, si está activa, solicita a Gestión del ganado los datos del animal y su propietario.
+
+Tras validar la información, registra el evento «Visita veterinaria programada» y devuelve la confirmación a la aplicación. Una observación del ganadero puede motivar la visita, pero no la programa automáticamente. La programación tampoco equivale al registro de una atención realizada.
+
+##### Escenario 05: Registrar indicaciones de cuidado y notificar al ganadero
+
+![Registro de indicaciones de cuidado y notificación al ganadero](../../assets/images/event-storming/domain-message-flows/05-register-care-instructions-and-notify.jpg)
+
+A partir de una atención registrada, el veterinario ingresa las indicaciones de cuidado. Atención veterinaria comprueba que exista una vinculación activa y que la atención sea válida. Luego guarda las indicaciones y genera el evento «Indicaciones de cuidado registradas».
+
+Este evento origina la solicitud de notificación al ganadero mediante Firebase Cloud Messaging (FCM). El servicio devuelve el resultado de la solicitud y gestiona la entrega del aviso al dispositivo. Las indicaciones permanecen disponibles en la aplicación aunque la notificación no llegue; la confirmación del registro al veterinario no depende de esa entrega.
 
 #### 2.5.1.3. Bounded Context Canvases
 
