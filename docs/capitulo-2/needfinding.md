@@ -41,10 +41,58 @@ Finalmente, se destacaron cuatro eventos mediante bordes morados discontinuos, d
 
 Estos eventos permiten reconocer momentos clave del negocio y sirven como referencia para profundizar posteriormente en las responsabilidades y relaciones del modelo.
 
-#### Hallazgos y decisiones
+#### 2.3.6. Ubiquitous Language
 
-El ejercicio permitió establecer una visión general de ANITEC centrada en el inventario de animales y el registro de atenciones veterinarias presenciales. También permitió reconocer la importancia de conservar el historial, controlar el acceso del veterinario y definir el comportamiento de los límites de registro según la suscripción.
+El lenguaje ubicuo de ANITEC reúne los términos utilizados para describir sus procesos y reglas de negocio. Estas definiciones permiten mantener un vocabulario común en los requerimientos, los diagramas y el desarrollo. Se incluye el equivalente en inglés como referencia para la implementación.
 
-Las dudas identificadas y los eventos destacados orientan el modelado posterior de comandos, políticas, agregados y bounded contexts.
+##### Identidad y acceso - Identity and Access Bounded Context
+
+| Término                | Equivalente en inglés | Definición                                                                                      |
+| ---------------------- | --------------------- | ----------------------------------------------------------------------------------------------- |
+| Cuenta                 | Account               | Registro que identifica a un usuario de ANITEC y permite gestionar su acceso.                   |
+| Perfil de usuario      | User Role             | Rol de ganadero o veterinario que determina las funciones y los planes aplicables al usuario.   |
+| Correo verificado      | Verified Email        | Dirección de correo cuya pertenencia al usuario se comprobó mediante un código de verificación. |
+| Código de verificación | Verification Code     | Código temporal asociado a una cuenta que permite comprobar el acceso al correo registrado.     |
+
+##### Gestión del ganado - Livestock Management Bounded Context
+
+| Término                  | Equivalente en inglés       | Definición                                                                                                    |
+| ------------------------ | --------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Ganadero                 | Livestock Owner             | Usuario que administra sus animales, registra observaciones y autoriza el acceso de veterinarios.             |
+| Animal                   | Animal                      | Individuo del ganado registrado en el inventario de un ganadero.                                              |
+| Animal activo            | Active Animal               | Animal que permanece en el inventario activo y cuenta para el límite permitido por el plan.                   |
+| Capacidad del inventario | Inventory Capacity          | Cantidad máxima de animales activos permitida para un ganadero según su plan vigente.                         |
+| Baja del inventario      | Inventory Deactivation      | Cambio que retira un animal del inventario activo, conservando sus datos y el historial asociado.             |
+| Observación del ganadero | Livestock Owner Observation | Información descriptiva registrada por el ganadero sobre un animal; no constituye un diagnóstico veterinario. |
+
+##### Vinculación veterinaria - Veterinary Linking Bounded Context
+
+| Término                        | Equivalente en inglés         | Definición                                                                                                                                            |
+| ------------------------------ | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Veterinario                    | Veterinarian                  | Usuario que programa visitas y controles y registra atenciones e indicaciones para animales de ganaderos con quienes mantiene una vinculación activa. |
+| Invitación de vinculación      | Linking Invitation            | Solicitud enviada por un ganadero para autorizar la vinculación con un veterinario.                                                                   |
+| Vinculación activa             | Active Veterinary Link        | Relación vigente que autoriza al veterinario a acceder a la información y realizar las operaciones permitidas sobre los animales del ganadero.        |
+| Revocación de acceso           | Access Revocation             | Acción del ganadero que retira la autorización concedida a un veterinario mediante la vinculación.                                                    |
+| Límite de ganaderos vinculados | Linked Livestock Owners Limit | Cantidad máxima de ganaderos con los que un veterinario puede mantener vinculaciones activas según su plan.                                           |
+
+##### Atención veterinaria - Veterinary Care Bounded Context
+
+| Término                 | Equivalente en inglés | Definición                                                                                                                   |
+| ----------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Visita veterinaria      | Veterinary Visit      | Encuentro programado para atender presencialmente a un animal. Su programación no implica que la atención se haya realizado. |
+| Control veterinario     | Veterinary Follow-up  | Revisión programada posterior a una atención para evaluar la evolución del animal.                                           |
+| Atención veterinaria    | Veterinary Care       | Atención presencial realizada a un animal, cuyo registro identifica al animal, al veterinario y la fecha correspondiente.    |
+| Tratamiento realizado   | Performed Treatment   | Intervención aplicada al animal y registrada como parte de una atención veterinaria.                                         |
+| Vacunación registrada   | Vaccination Record    | Constancia de una vacuna aplicada al animal durante una atención veterinaria.                                                |
+| Indicaciones de cuidado | Care Instructions     | Recomendaciones del veterinario para el cuidado del animal, registradas como parte de una atención.                          |
+| Historial veterinario   | Veterinary History    | Conjunto de atenciones registradas de un animal, incluidos los tratamientos, las vacunaciones y las indicaciones asociadas.  |
+
+##### Suscripciones - Subscriptions Bounded Context
+
+| Término          | Equivalente en inglés   | Definición                                                                                                                             |
+| ---------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Plan             | Plan                    | Conjunto de condiciones, precio y límites aplicables al perfil del usuario. Puede ser gratuito o premium.                              |
+| Suscripción      | Subscription            | Asociación de un usuario con un plan y su período de vigencia.                                                                         |
+| Vigencia premium | Premium Validity Period | Período durante el cual el usuario dispone de los beneficios del plan premium. Cancelar su renovación no elimina el período ya pagado. |
 
 </div>
