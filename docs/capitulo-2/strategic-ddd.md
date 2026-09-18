@@ -159,13 +159,13 @@ El Context Map de ANITEC representa las dependencias entre los cinco bounded con
 
 #### Relaciones entre bounded contexts
 
-| Proveedor (U) | Consumidor (D) | Relación |
-| --- | --- | --- |
-| Identidad y acceso | Gestión del ganado, Atención veterinaria, Vinculación veterinaria y Suscripciones | Proporciona información para validar la identidad y el perfil. Cada consumidor mantiene sus comprobaciones de permisos. |
-| Gestión del ganado | Atención veterinaria | Proporciona datos del animal, su propietario y observaciones para apoyar las atenciones. |
-| Vinculación veterinaria | Atención veterinaria | Proporciona el estado de la vinculación para comprobar el acceso del veterinario. |
-| Suscripciones | Gestión del ganado | Comunica cambios del plan que determinan el límite de animales activos. |
-| Suscripciones | Vinculación veterinaria | Comunica cambios del plan que determinan el límite de vinculaciones activas del veterinario. |
+| Proveedor (U)           | Consumidor (D)                                                                    | Relación                                                                                                                |
+| ----------------------- | --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Identidad y acceso      | Gestión del ganado, Atención veterinaria, Vinculación veterinaria y Suscripciones | Proporciona información para validar la identidad y el perfil. Cada consumidor mantiene sus comprobaciones de permisos. |
+| Gestión del ganado      | Atención veterinaria                                                              | Proporciona datos del animal, su propietario y observaciones para apoyar las atenciones.                                |
+| Vinculación veterinaria | Atención veterinaria                                                              | Proporciona el estado de la vinculación para comprobar el acceso del veterinario.                                       |
+| Suscripciones           | Gestión del ganado                                                                | Comunica cambios del plan que determinan el límite de animales activos.                                                 |
+| Suscripciones           | Vinculación veterinaria                                                           | Comunica cambios del plan que determinan el límite de vinculaciones activas del veterinario.                            |
 
 En las cuatro relaciones entre Suscripciones, Gestión del ganado, Vinculación veterinaria y Atención veterinaria se propone el patrón Customer–Supplier. Los responsables del contexto proveedor consideran las necesidades del consumidor al coordinar los contratos y sus cambios. Las relaciones de Identidad y acceso se representan como dependencias U/D, sin asignar un patrón adicional.
 
@@ -178,5 +178,37 @@ Stripe proporciona el procesamiento de pagos y la información de vigencia utili
 Resend permite enviar códigos de verificación e invitaciones desde Identidad y acceso y Vinculación veterinaria, respectivamente. Sus dos apariciones en el diagrama representan el mismo servicio. Firebase Cloud Messaging permite enviar las notificaciones de indicaciones desde Atención veterinaria.
 
 Estas integraciones se muestran como dependencias U/D. El uso de sus servicios no implica una relación Customer–Supplier en el sentido de coordinación entre equipos. Los límites del mapa tampoco requieren que cada contexto se despliegue como un microservicio independiente.
+
+### 2.5.3. Software Architecture
+
+La arquitectura de ANITEC se representa mediante el modelo C4. Los diagramas de contexto y contenedores describen los usuarios, los servicios externos y los principales elementos de software que conforman la aplicación móvil y su backend.
+
+#### 2.5.3.1. Software Architecture Context Level Diagram
+
+![Diagrama de contexto del sistema ANITEC](../../assets/images/software-architecture/01-anitec-system-context.png)
+
+El diagrama presenta la interacción de ANITEC con sus dos perfiles de usuario. El ganadero administra sus animales, registra observaciones, autoriza el acceso de veterinarios y consulta las atenciones e indicaciones. El veterinario gestiona sus vinculaciones, programa visitas y controles y registra la atención de los animales autorizados. Ambos perfiles pueden administrar su suscripción.
+
+ANITEC se integra con Stripe para gestionar pagos y suscripciones en modo de prueba, con Resend para enviar correos de verificación e invitaciones y con Firebase Cloud Messaging para notificar nuevas indicaciones y sus actualizaciones.
+
+#### 2.5.3.2. Software Architecture Container Level Diagrams
+
+![Diagrama de contenedores de ANITEC](../../assets/images/software-architecture/02-anitec-container-diagram.png)
+
+La aplicación móvil se desarrollará con Flutter y Dart para Android e iOS. Se comunicará mediante HTTPS y JSON con una API REST implementada en Java y Spring Boot. Esta API concentrará las reglas de negocio y los permisos, organizados en los módulos de identidad y acceso, gestión del ganado, vinculación veterinaria, atención veterinaria y suscripciones. La información central se almacenará en MySQL mediante Spring Data JPA e Hibernate.
+
+En cada dispositivo, SQLite conservará los datos descargados de la cuenta: inventario, fichas consultadas, últimas atenciones e indicaciones y agenda, según el perfil y sus permisos. Estos datos podrán consultarse sin conexión mostrando su fecha de actualización; las operaciones de registro y modificación requerirán internet. La API gestionará las integraciones con Stripe, Resend y Firebase Cloud Messaging, mientras la aplicación recibirá las notificaciones push.
+
+#### 2.5.3.3. Software Architecture Deployment Diagrams
+
+![Diagrama de despliegue propuesto de ANITEC](../../assets/images/software-architecture/03-anitec-deployment-diagram.png)
+
+El diagrama muestra cómo se desplegarán los principales componentes de ANITEC. La aplicación móvil desarrollada en Flutter se instalará en dispositivos Android o iOS y utilizará SQLite para almacenar información local y permitir la consulta de datos previamente descargados cuando no exista conexión a internet.
+
+Cuando se requiera registrar o actualizar información, la aplicación se comunicará mediante internet con el backend desarrollado en Java y Spring Boot. Este backend será responsable de procesar las solicitudes, validar los permisos de los usuarios y aplicar las reglas de negocio. La información principal del sistema será almacenada en una base de datos MySQL.
+
+El backend también se integrará con servicios externos como Stripe para gestionar pagos y suscripciones en modo de prueba, Resend para el envío de correos de verificación e invitaciones, y Firebase Cloud Messaging para el envío de notificaciones relacionadas con indicaciones y seguimientos veterinarios.
+
+Por otro lado, la landing page de ANITEC será una aplicación web estática alojada en GitHub Pages y podrá ser consultada desde cualquier navegador mediante internet.
 
 </div>
