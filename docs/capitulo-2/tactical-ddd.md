@@ -678,7 +678,15 @@ SQLite no conserva credenciales ni funciona como una cola de modificaciones. Las
 
 ###### Aplicación móvil - Flutter
 
+El diagrama de componentes del frontend de Veterinary Care Context se organiza en Presentation, Application, Infrastructure y Domain. Presentation gestiona la agenda, el historial y los formularios de atención veterinaria; Application coordina las consultas y registros del módulo; Domain representa citas, atenciones, tratamientos, vacunaciones e indicaciones; e Infrastructure implementa la comunicación con la REST API, el almacenamiento local en SQLite y la integración técnica con notificaciones. Shared proporciona los elementos comunes de la aplicación móvil.
+
+![Frontend - Veterinary Care](<../../assets/images/componets-level-diagrams/Frontend - Veterinary Care.png>)
+
 ###### API REST - Java
+
+El backend de Veterinary Care Context se descompone en Interfaces, Application, Infrastructure y Domain. Interfaces recibe las solicitudes relacionadas con visitas, controles y atenciones; Application coordina los casos de uso y las autorizaciones; Domain concentra las reglas de las citas y registros veterinarios; e Infrastructure gestiona la persistencia en MySQL y las integraciones con Livestock Management, Veterinary Linking y Firebase Cloud Messaging. También se utiliza el Shared Kernel para elementos comunes del backend.
+
+![Backend - Veterinary Care](<../../assets/images/componets-level-diagrams/Backend - Veterinary Care.png>)
 
 ##### 2.6.2.6. Bounded Context Software Architecture Code Level Diagrams
 
