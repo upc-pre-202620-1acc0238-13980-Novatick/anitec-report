@@ -348,7 +348,12 @@ El diagrama de componentes del backend representa Livestock Management Context m
 
 Aplicación móvil - Flutter
 
+![Livestock Management - Frontend](../../assets/images/UML%20Diagrams/Images/Livestock%20Management/Livestock%20Management%20-%20Frontend.png)
+
 API REST - Java
+
+![Livestock Management - Backend](../../assets/images/UML%20Diagrams/Images/Livestock%20Management/Livestock%20Management%20-%20Backend.png)
+
 
 ###### 2.6.1.6.2. Bounded Context Database Diagram
 
@@ -694,7 +699,12 @@ El backend de Veterinary Care Context se descompone en Interfaces, Application, 
 
 Aplicación móvil - Flutter
 
+![Veterinary Care - Frontend](../../assets/images/UML%20Diagrams/Images/Veterinary%20Care/Veterinary%20Care%20-%20Frontend.png)
+
+
 API REST - Java
+
+![Veterinary Care - Backend](../../assets/images/UML%20Diagrams/Images/Veterinary%20Care/Veterinary%20Care%20-%20Backend.png)
 
 ###### 2.6.2.6.2. Bounded Context Database Diagram
 
@@ -992,7 +1002,11 @@ El backend de Veterinary Linking Context está compuesto por Interfaces, Applica
 
 API REST - Java
 
+![Veterinary Linking - Backend](../../assets/images/UML%20Diagrams/Images/Veterinary%20Linking/Veterinary%20Linking%20-%20Backend.png)
+
 Aplicación móvil - Flutter
+
+![Veterinary Linking - Frontend](../../assets/images/UML%20Diagrams/Images/Veterinary%20Linking/Veterinary%20Linking%20-%20Frontend.png)
 
 ###### 2.6.3.6.2. Bounded Context Database Diagram
 
@@ -1294,7 +1308,11 @@ El backend de Subscriptions Context está conformado por Interfaces, Application
 
 API REST - Java
 
+![Subscriptions - Backend](../../assets/images/UML%20Diagrams/Images/Subscriptions/Subscriptions%20-%20Backend.png)
+
 Aplicación móvil - Flutter
+
+![Subscriptions - Frontend](../../assets/images/UML%20Diagrams/Images/Subscriptions/Subscriptions%20-%20Frontend.png)
 
 ###### 2.6.4.6.2. Bounded Context Database Diagram
 
@@ -1604,58 +1622,13 @@ El backend de Identity and Access Context se descompone en Interfaces, Applicati
 
 ###### 2.6.5.6.1. Bounded Context Domain Layer Class Diagram
 
-## API REST - Java
-
-Identity and Access - Backend
-
+API REST - Java
 ![Identity and Access - Backend](../../assets/images/UML%20Diagrams/Images/Identity%20and%20Access/Identity%20and%20Access%20-%20Backend.png)
 
 
-Livestock Management - Backend
 
-![Livestock Management - Backend](../../assets/images/UML%20Diagrams/Images/Livestock%20Management/Livestock%20Management%20-%20Backend.png)
-
-
-Subscriptions - Backend
-
-![Subscriptions - Backend](../../assets/images/UML%20Diagrams/Images/Subscriptions/Subscriptions%20-%20Backend.png)
-
-
-Veterinary Care - Backend
-
-![Veterinary Care - Backend](../../assets/images/UML%20Diagrams/Images/Veterinary%20Care/Veterinary%20Care%20-%20Backend.png)
-
-
-Veterinary Linking - Backend
-
-![Veterinary Linking - Backend](../../assets/images/UML%20Diagrams/Images/Veterinary%20Linking/Veterinary%20Linking%20-%20Backend.png)
-
-
-## Aplicación móvil - Flutter
-
-Identity and Access - Frontend
-
+Aplicación móvil - Flutter
 ![Identity and Access - Frontend](../../assets/images/UML%20Diagrams/Images/Identity%20and%20Access/Identity%20and%20Access%20-%20Frontend.png)
-
-
-Livestock Management - Frontend
-
-![Livestock Management - Frontend](../../assets/images/UML%20Diagrams/Images/Livestock%20Management/Livestock%20Management%20-%20Frontend.png)
-
-
-Subscriptions - Frontend
-
-![Subscriptions - Frontend](../../assets/images/UML%20Diagrams/Images/Subscriptions/Subscriptions%20-%20Frontend.png)
-
-
-Veterinary Care - Frontend
-
-![Veterinary Care - Frontend](../../assets/images/UML%20Diagrams/Images/Veterinary%20Care/Veterinary%20Care%20-%20Frontend.png)
-
-
-Veterinary Linking - Frontend
-
-![Veterinary Linking - Frontend](../../assets/images/UML%20Diagrams/Images/Veterinary%20Linking/Veterinary%20Linking%20-%20Frontend.png)
 
 
 
