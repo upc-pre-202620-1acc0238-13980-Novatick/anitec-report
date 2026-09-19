@@ -1,5 +1,15 @@
 <div align="justify">
 
+## 2.3. Needfinding
+
+### 2.3.1. User Personas
+
+### 2.3.2. User Task Matrix
+
+### 2.3.3. User Journey Mapping
+
+### 2.3.4. Empathy Mapping
+
 ### 2.3.5. Big Picture EventStorming
 
 El Big Picture EventSotrming nos permitio representar los pincipales acontecimientos de ANITEC y comprender las relaciones entre la gestión del ganado, la vinculación con veterinarios, las atenciones presenciales y las suscripciones. El modelado se desarrolló progresivamente mediante la exploración de eventos, su organización temporal, la identificación de dificultades y la selección de eventos. Todo este proceso se desarrollo en la plataforma Miro. [Ver Tablero](https://miro.com/welcomeonboard/MGhKZFJHcWZRaDA1VEhPeGVueUZlS2V2TUVJZnhVZUk0Rkx3TjVYWExHckNCclZmSisyaVZSN2M4SjNVdnRROFdSV21YNENhb2hQdkNBb0RHNkV1dVJvbnFnQU8rTlpiUVBxaGNNSE5WZzhnQ3BZYTBVWGtDejhNWUUxQW5xQ1lBS2NFMDFkcUNFSnM0d3FEN050ekl3PT0hdjE=?share_link_id=603558770825)

@@ -1,20 +1,20 @@
 <div align="justify">
 
-### 2.6. Tactical-Level Domain-Driven Design
+# 2.6. Tactical-Level Domain-Driven Design
 
 El diseño táctico de ANITEC documenta las clases y relaciones de Livestock Management, Veterinary Care, Veterinary Linking, Subscriptions e Identity and Access. Comprende Flutter y Java con Spring Boot, siguiendo las historias de usuario y el Event Storming.
 
-#### 2.6.1. Bounded Context: Livestock Management
+## 2.6.1. Bounded Context: Livestock Management
 
 Gestión del ganado administra animales, observaciones y capacidad del inventario (US01-US06 y consulta local de US29). Recibe límites de Subscriptions y proporciona datos autorizados a Veterinary Care, que conserva las atenciones, tratamientos, vacunaciones e indicaciones vinculadas por el identificador del animal.
 
-##### 2.6.1.1. Domain Layer
+### 2.6.1.1. Domain Layer
 
 Las raíces de agregado `Animal` e `InventoryCapacity` controlan las modificaciones y sus reglas. Sus atributos son privados y se consultan mediante métodos de lectura.
 
 Se proponen identificadores internos `UUID` (identificadores únicos generados por el sistema), distintos del código asignado por el ganadero.
 
-###### API REST - Java
+#### API REST - Java
 
 Diccionario de clases
 
@@ -112,7 +112,7 @@ Se mantienen los eventos "Observación sobre un animal registrada" y "Límite de
 
 Los usuarios se referencian por identificador. El acceso entre contextos requiere autorización y se realiza sin consultar directamente repositorios ajenos.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 Flutter representa la información y solicita operaciones. El servidor conserva la validación final de propiedad, códigos duplicados y capacidad.
 
@@ -145,11 +145,11 @@ El acceso al servidor y al almacenamiento local se coordina entre las capas de a
 
 `Animal` contiene observaciones y utiliza ambas enumeraciones. `LivestockRepository` devuelve estos modelos y la capacidad. Pantallas, formularios y operaciones de SQLite pertenecen a otras capas.
 
-##### 2.6.1.2. Interface Layer
+### 2.6.1.2. Interface Layer
 
 Esta capa recibe las solicitudes del usuario y presenta sus resultados. En el servidor incluye controladores y objetos de solicitud y respuesta. En Flutter, pantallas, formularios y estado de presentación. Las operaciones se delegan a Application Layer, que coordina las reglas del dominio.
 
-###### API REST - Java
+#### API REST - Java
 
 Los controladores reciben la identidad de la sesión validada y comprueban el formato de las solicitudes. El propietario, el autor, el estado inicial y las fechas de registro se determinan en el servidor.
 
@@ -174,7 +174,7 @@ Estos objetos transportan datos entre la aplicación móvil y el servidor. Sus a
 
 `AnimalController` recibe `AnimalDataRequest` u `ObservationRequest` y devuelve `AnimalResponse` o `AnimalObservationResponse`. El inventario devuelve una lista de animales. Cada `AnimalResponse` contiene cero o más observaciones. `InventoryCapacityController` devuelve `InventoryCapacityResponse`. Los métodos `fromDomain` convierten datos sin modificar los agregados.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 Las pantallas muestran los datos y recogen acciones. `LivestockViewModel` mantiene el estado de presentación y comunica esas acciones a `LivestockApplicationService`, de Application Layer. El término ViewModel identifica la clase que prepara los datos y resultados para la interfaz.
 
@@ -201,11 +201,11 @@ Relaciones y comportamiento de presentación
 
 La presentación no accede directamente a SQLite ni a servicios externos. Las respuestas del servidor se convierten a los modelos móviles fuera de esta capa.
 
-##### 2.6.1.3. Application Layer
+### 2.6.1.3. Application Layer
 
 Esta capa coordina las consultas y modificaciones del inventario. Comprueba quién solicita la operación, utiliza las reglas del dominio y delega la persistencia a los repositorios. Sus dependencias son atributos privados y sus operaciones de entrada son públicas.
 
-###### API REST - Java
+#### API REST - Java
 
 Un comando contiene los datos de una modificación solicitada. Su manejador organiza los pasos necesarios para ejecutarla. En este diseño, `LivestockCommandService` reúne los manejadores de los cuatro comandos del inventario.
 
@@ -243,7 +243,7 @@ Los controladores construyen estos objetos con la identidad validada del ganader
 
 `AnimalController` delega al servicio de comandos o al de consultas. `InventoryCapacityController` utiliza el de consultas. `InventoryCapacityService` accede a su repositorio y al contrato de Subscriptions. Las operaciones de escritura se delimitan como transacciones, es decir, se confirman completas o se deshacen si fallan.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 `LivestockApplicationService` coordina las acciones del ViewModel. Utiliza la sesión de la cuenta, el repositorio y las copias locales. Las operaciones de acceso devuelven `Future`.
 
@@ -268,11 +268,11 @@ Los controladores construyen estos objetos con la identidad validada del ganader
 
 Un fallo de red puede permitir una consulta local. Una respuesta de sesión inválida o acceso denegado no se sustituye por datos locales. Sin conexión no se puede detectar una revocación ocurrida en el servidor.
 
-##### 2.6.1.4. Infrastructure Layer
+### 2.6.1.4. Infrastructure Layer
 
 Esta capa implementa los contratos de persistencia e integración. El servidor utiliza MySQL y la aplicación móvil utiliza la API y SQLite. Las dependencias de las clases son privadas y las operaciones de sus contratos son públicas.
 
-###### API REST - Java
+#### API REST - Java
 
 Se propone utilizar JPA con Hibernate, herramientas que relacionan los objetos Java con las tablas de MySQL. Los objetos de persistencia se mantienen separados de los agregados del dominio.
 
@@ -301,7 +301,7 @@ Al registrar, editar, dar de baja o agregar observaciones, se bloquea primero la
 
 Spring administra las transacciones. Si falla el guardado del animal o del cupo, se deshacen ambos cambios. Los eventos se entregan después de confirmar la transacción de origen. Las revisiones permiten repetir la aplicación de un límite sin duplicar efectos. Si falla la entrega de un cambio de límite, `getOrCreate` recupera la revisión vigente de Subscriptions al consultar la capacidad o iniciar otra operación. Si no puede verificarla, informa el fallo sin autorizar nuevas altas.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 La implementación del repositorio comunica Flutter con la API. SQLite conserva únicamente las copias de consulta. Los datos de sesión permanecen en el almacenamiento seguro administrado por Identity and Access.
 
@@ -327,44 +327,43 @@ JSON es el formato de datos intercambiado con el servidor. El repositorio transf
 
 El indicador de conexión no garantiza que la API responda. Los errores de comunicación se distinguen de los rechazos de autorización. Los intentos de escritura sin respuesta concluyente se informan sin asumir que fallaron ni repetirlos automáticamente.
 
-##### 2.6.1.5. Bounded Context Software Architecture Component Level Diagrams
+### 2.6.1.5. Bounded Context Software Architecture Component Level Diagrams
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 El diagrama de componentes del frontend muestra la descomposición de Livestock Management Context en Presentation, Application, Infrastructure y Domain. Presentation gestiona las pantallas y formularios relacionados con el inventario de animales; Application coordina las operaciones del módulo; Domain contiene los modelos y contratos principales; e Infrastructure implementa la comunicación con la REST API y el almacenamiento local en SQLite. El módulo también utiliza Shared para navegación, sesión y elementos comunes de la aplicación móvil.
 
 ![Frontend - Livestock Management](<../../assets/images/componets-level-diagrams/Frontend - Livestock Management.png>)
 
-###### API REST - Java
+#### API REST - Java
 
 El diagrama de componentes del backend representa Livestock Management Context mediante Interfaces, Application, Infrastructure y Domain. Interfaces expone los endpoints relacionados con animales, observaciones y capacidad del inventario; Application coordina los casos de uso; Domain concentra las reglas y modelos del dominio; e Infrastructure implementa la persistencia mediante JPA e Hibernate sobre MySQL. El backend utiliza además un Shared Kernel para los elementos comunes entre bounded contexts.
 
 ![Backend - Livestock Management](<../../assets/images/componets-level-diagrams/Backend - Livestock Management.png>)
 
+### 2.6.1.6. Bounded Context Software Architecture Code Level Diagrams
 
-##### 2.6.1.6. Bounded Context Software Architecture Code Level Diagrams
-
-###### 2.6.1.6.1. Bounded Context Domain Layer Class Diagrams
+#### 2.6.1.6.1. Bounded Context Domain Layer Class Diagrams
 
 Aplicación móvil - Flutter
 
 API REST - Java
 
-###### 2.6.1.6.2. Bounded Context Database Diagram
+#### 2.6.1.6.2. Bounded Context Database Diagram
 
 Base de datos central - MySQL
 
 Base de datos local - SQLite
 
-#### 2.6.2. Bounded Context: Veterinary Care
+## 2.6.2. Bounded Context: Veterinary Care
 
 Atención veterinaria organiza visitas y controles y conserva las atenciones, tratamientos, vacunaciones e indicaciones de cada animal. Comprende US07-US13, US19-US21 y la consulta sin conexión de US29. Consulta los animales en Livestock Management y la autorización en Veterinary Linking. Solicita los avisos mediante Firebase Cloud Messaging.
 
-##### 2.6.2.1. Domain Layer
+### 2.6.2.1. Domain Layer
 
 Se proponen dos agregados: `VeterinaryAppointment` para la programación y `CareRecord` para la atención realizada. El historial se obtiene consultando las atenciones del animal. Los atributos son privados y las operaciones indicadas son públicas. Se mantienen los identificadores `UUID` y las fechas de registro asignadas por el servidor.
 
-###### API REST - Java
+#### API REST - Java
 
 Diccionario de clases
 
@@ -461,7 +460,7 @@ Repositorios y eventos
 
 Los identificadores de animales y usuarios son referencias a otros contextos. Dar de baja a un animal no elimina sus atenciones ni impide consultar el historial con autorización. Una observación del ganadero tampoco crea automáticamente una cita o atención.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 Los modelos móviles son de solo lectura. Usan `String` para identificadores, `DateTime` para fechas y `?` para campos opcionales. El texto clínico se representa como `String` y el servidor valida las operaciones.
 
@@ -485,11 +484,11 @@ Los modelos móviles son de solo lectura. Usan `String` para identificadores, `D
 
 Los métodos devuelven `Future`. Las relaciones entre modelos reproducen las del servidor. Las pantallas no modifican directamente sus colecciones ni construyen atenciones realizadas a partir de citas programadas.
 
-##### 2.6.2.2. Interface Layer
+### 2.6.2.2. Interface Layer
 
 Esta capa recibe solicitudes y muestra sus resultados. La identidad se obtiene de la sesión validada. Los identificadores recibidos en formularios se contrastan con los datos y permisos del servidor.
 
-###### API REST - Java
+#### API REST - Java
 
 | Clase                        | Propósito                                                       | Atributos privados                                           | Métodos públicos                                                                                                                                                   |
 | ---------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -522,7 +521,7 @@ Las respuestas copian los atributos de las clases indicadas en Domain Layer. Los
 
 Los controladores delegan a los servicios de aplicación y transforman sus resultados autorizados. Agenda e historial devuelven listas. La confirmación de un registro no afirma que una notificación haya sido entregada al teléfono.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 | Clase                    | Propósito y atributos principales                                                                                                                                                                                                                                                   | Métodos                                                                                                                                                                                                                      |
 | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -539,11 +538,11 @@ Los controladores delegan a los servicios de aplicación y transforman sus resul
 
 Las pantallas y formularios usan `CareViewModel`. El ganadero dispone de consultas y el veterinario de las acciones permitidas por su autoría. El servidor vuelve a comprobar la vinculación. Sin conexión se muestran las copias con su fecha y se deshabilitan las modificaciones. Un conflicto de revisión solicita recargar las indicaciones antes de volver a editarlas.
 
-##### 2.6.2.3. Application Layer
+### 2.6.2.3. Application Layer
 
 Esta capa coordina las reglas y los permisos. Las dependencias son privadas y las operaciones indicadas son públicas. Los servicios de comandos actúan como manejadores y delimitan las transacciones de escritura.
 
-###### API REST - Java
+#### API REST - Java
 
 | Clase o interfaz                 | Propósito                                                                       | Atributos principales                                                                                                                                            | Métodos                                                                                                                                     |
 | -------------------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -586,7 +585,7 @@ Los comandos son inmutables y disponen de constructor y métodos de lectura. Los
 
 `CareCommandService` utiliza los agregados y repositorios. `CareQueryService` utiliza los repositorios y la autorización. `CareInstructionsChangedHandler` utiliza el contrato de notificaciones. La revocación de una vinculación impide nuevas operaciones clínicas, sin borrar ni cancelar automáticamente los registros existentes.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 | Clase o interfaz         | Propósito y atributos                                                                                                                                          | Métodos                                                                                                                                                                                                                                                                                    |
 | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -612,11 +611,11 @@ Las escrituras requieren conexión y confirmación del servidor. Tras un cambio 
 
 Al cerrar sesión se eliminan las copias de la cuenta. Al reconectar se validan la sesión y los permisos de los animales descargados, retirando datos revocados e invalidando agendas afectadas. Una respuesta de acceso denegado no se sustituye por una copia local. Abrir un aviso exige sesión y la comprobación de acceso a la atención solicitada.
 
-##### 2.6.2.4. Infrastructure Layer
+### 2.6.2.4. Infrastructure Layer
 
 Esta capa implementa los contratos de acceso a MySQL, SQLite, otros contextos y notificaciones. Los datos veterinarios se mantienen dentro de Veterinary Care, relacionados con animales y usuarios mediante sus identificadores.
 
-###### API REST - Java
+#### API REST - Java
 
 | Clase                        | Propósito                                                                         | Atributos principales                                                                                               | Métodos                                                                                                                                                             |
 | ---------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -650,7 +649,7 @@ Los eventos de indicaciones se procesan después del guardado. Los errores de no
 
 El aviso contiene una referencia a la atención y un mensaje general. No incluye contenido clínico. El registro de dispositivos respeta la cuenta activa y su cierre de sesión. La aplicación valida el acceso al abrir la referencia.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 | Clase                        | Propósito                                                                               | Atributos principales                                        | Métodos                                                                                                                                                                                                                 |
 | ---------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -674,43 +673,43 @@ El aviso contiene una referencia a la atención y un mensaje general. No incluye
 
 SQLite no conserva credenciales ni funciona como una cola de modificaciones. Las fechas de agenda se intercambian con información de zona horaria y se muestran en la hora local del dispositivo. Sin conexión solo se consulta información previamente descargada.
 
-##### 2.6.2.5. Bounded Context Software Architecture Component Level Diagrams
+### 2.6.2.5. Bounded Context Software Architecture Component Level Diagrams
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 El diagrama de componentes del frontend de Veterinary Care Context se organiza en Presentation, Application, Infrastructure y Domain. Presentation gestiona la agenda, el historial y los formularios de atención veterinaria; Application coordina las consultas y registros del módulo; Domain representa citas, atenciones, tratamientos, vacunaciones e indicaciones; e Infrastructure implementa la comunicación con la REST API, el almacenamiento local en SQLite y la integración técnica con notificaciones. Shared proporciona los elementos comunes de la aplicación móvil.
 
 ![Frontend - Veterinary Care](<../../assets/images/componets-level-diagrams/Frontend - Veterinary Care.png>)
 
-###### API REST - Java
+#### API REST - Java
 
 El backend de Veterinary Care Context se descompone en Interfaces, Application, Infrastructure y Domain. Interfaces recibe las solicitudes relacionadas con visitas, controles y atenciones; Application coordina los casos de uso y las autorizaciones; Domain concentra las reglas de las citas y registros veterinarios; e Infrastructure gestiona la persistencia en MySQL y las integraciones con Livestock Management, Veterinary Linking y Firebase Cloud Messaging. También se utiliza el Shared Kernel para elementos comunes del backend.
 
 ![Backend - Veterinary Care](<../../assets/images/componets-level-diagrams/Backend - Veterinary Care.png>)
 
-##### 2.6.2.6. Bounded Context Software Architecture Code Level Diagrams
+### 2.6.2.6. Bounded Context Software Architecture Code Level Diagrams
 
-###### 2.6.2.6.1. Bounded Context Domain Layer Class Diagrams
+#### 2.6.2.6.1. Bounded Context Domain Layer Class Diagrams
 
 Aplicación móvil - Flutter
 
 API REST - Java
 
-###### 2.6.2.6.2. Bounded Context Database Diagram
+#### 2.6.2.6.2. Bounded Context Database Diagram
 
 Base de datos central - MySQL
 
 Base de datos local - SQLite
 
-#### 2.6.3. Bounded Context: Veterinary Linking
+## 2.6.3. Bounded Context: Veterinary Linking
 
 Vinculación veterinaria gestiona las invitaciones entre ganaderos y veterinarios, su aceptación o rechazo y la revocación del acceso. Comprende US14-US18 y aplica los límites comunicados por Suscripciones en US23-US24. Atención veterinaria consulta este contexto para comprobar si existe una vinculación activa.
 
-##### 2.6.3.1. Domain Layer
+### 2.6.3.1. Domain Layer
 
 Se proponen tres agregados: `LinkingInvitation`, `VeterinaryLink` y `LinkingCapacity`. Sus atributos son privados y sus operaciones son públicas. En Java se utiliza `UUID` para los identificadores y `Instant` para las fechas asignadas por el servidor.
 
-###### API REST - Java
+#### API REST - Java
 
 Diccionario de clases
 
@@ -802,7 +801,7 @@ Relaciones principales
 
 No se incorporan vencimiento de invitaciones ni cancelación automática de citas. La revocación cambia la autorización consultada por Atención veterinaria, sin modificar directamente sus registros.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 El móvil utiliza modelos de lectura. Los identificadores se representan con `String`, las fechas con `DateTime` y los valores opcionales con `?`. Las reglas de autorización y capacidad se aplican en el servidor.
 
@@ -818,11 +817,11 @@ El móvil utiliza modelos de lectura. Los identificadores se representan con `St
 
 Las operaciones del repositorio devuelven resultados mediante `Future`, que representa una respuesta que llegará después de la solicitud. La aplicación puede mostrar los identificadores de los participantes sin descargar sus cuentas completas.
 
-##### 2.6.3.2. Interface Layer
+### 2.6.3.2. Interface Layer
 
 La identidad y el perfil proceden de la sesión validada. El cliente no puede elegir quién actúa como remitente o quién responde una invitación.
 
-###### API REST - Java
+#### API REST - Java
 
 | Clase                       | Propósito                                         | Atributos privados                                                                                                | Métodos públicos                                                                                                          |
 | --------------------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -842,7 +841,7 @@ Datos de entrada y salida
 
 Aceptar, rechazar y revocar requieren el identificador del recurso, sin datos de autor enviados en el formulario. Las consultas devuelven únicamente recursos del usuario autenticado. `emailAccepted` no confirma que el destinatario haya recibido o leído el correo.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 | Clase                    | Propósito y atributos                                                                                                                                                                                                                                          | Métodos                                                                                                                                              |
 | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -853,11 +852,11 @@ Aceptar, rechazar y revocar requieren el identificador del recurso, sin datos de
 
 El ganadero puede invitar y revocar. El veterinario puede responder y consultar su capacidad. Alcanzar el límite no deshabilita el rechazo de invitaciones. Después de una aceptación se actualizan las listas y el contador. Si falla el correo, se informa que la invitación existe y que su envío no está confirmado.
 
-##### 2.6.3.3. Application Layer
+### 2.6.3.3. Application Layer
 
 Esta capa coordina identidad, invitaciones, vinculaciones, capacidad y correo. Los servicios reciben un `LinkingActor` obtenido de la sesión, no del contenido de la solicitud.
 
-###### API REST - Java
+#### API REST - Java
 
 Servicios y contratos
 
@@ -905,7 +904,7 @@ Flujos de aplicación
 
 El envío de correo se realiza después de confirmar el guardado. Si Resend rechaza la solicitud o no responde, la invitación permanece pendiente y la operación informa que el correo no está confirmado. El correo no activa la vinculación.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 | Clase o interfaz            | Propósito y atributos                                                                                                                | Métodos                                                                                                                                                          |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -917,11 +916,11 @@ Se reutiliza `ConnectionGateway` como contrato técnico para comprobar conexión
 
 El servicio devuelve modelos del dominio y `InvitationSubmission` al invitar. La presentación limpia su estado al cerrar o cambiar de cuenta y descarta respuestas que correspondan a una sesión anterior. Si se pierde la respuesta de una operación, se consultan las listas antes de repetirla.
 
-##### 2.6.3.4. Infrastructure Layer
+### 2.6.3.4. Infrastructure Layer
 
 Esta capa implementa la persistencia en MySQL y la comunicación con Identidad y acceso, Suscripciones y Resend. Las vinculaciones se consultan en el servidor y no se almacenan como permisos permanentes del dispositivo.
 
-###### API REST - Java
+#### API REST - Java
 
 Repositorios e integraciones
 
@@ -957,7 +956,7 @@ Así, solo una solicitud puede validar y modificar a la vez las relaciones de un
 
 Atención veterinaria utiliza `VeterinaryLinkingFacade.isActive`, compatible con `CareLinkingGateway` del apartado anterior. Una revocación confirmada hace que las nuevas comprobaciones devuelvan acceso inactivo. No se eliminan atenciones ni se cancelan citas automáticamente.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 | Clase                           | Propósito y atributos                                                                           | Métodos                                                                                                                                   |
 | ------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -970,45 +969,45 @@ Se reutiliza `DeviceConnectionAdapter` para conocer la disponibilidad de conexi�
 
 Los contextos que conservan historiales o indicaciones descargadas comprueban nuevamente sus permisos al recuperar conexión. Si se revocó el acceso, eliminan las copias afectadas según US29 y TS03. El dispositivo no puede detectar una revocación nueva mientras permanece sin conexión.
 
-##### 2.6.3.5. Bounded Context Software Architecture Component Level Diagrams
+### 2.6.3.5. Bounded Context Software Architecture Component Level Diagrams
 
-##### 2.6.3.5. Bounded Context Software Architecture Component Level Diagrams
+### 2.6.3.5. Bounded Context Software Architecture Component Level Diagrams
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 El frontend de Veterinary Linking Context se divide en Presentation, Application, Infrastructure y Domain. Presentation muestra los formularios de invitación, invitaciones pendientes y vinculaciones activas; Application coordina el envío, aceptación, rechazo y revocación de vinculaciones; Domain representa las invitaciones, vinculaciones y capacidad; e Infrastructure implementa la comunicación con la REST API y los servicios técnicos requeridos. Este contexto no utiliza SQLite, debido a que sus datos se consultan directamente al servidor y se mantienen durante la sesión.
 
 ![Frontend - Veterinary Linking](<../../assets/images/componets-level-diagrams/Frontend - Veterinary Linking.png>)
 
-###### API REST - Java
+#### API REST - Java
 
 El backend de Veterinary Linking Context está compuesto por Interfaces, Application, Infrastructure y Domain. Interfaces expone las operaciones relacionadas con invitaciones y vinculaciones; Application coordina los casos de uso y el control de capacidad; Domain contiene las reglas correspondientes a invitaciones, vínculos y límites; e Infrastructure implementa la persistencia en MySQL y las integraciones con Identity and Access, Subscriptions y Resend. Asimismo, el contexto expone la autorización de vinculaciones para Veterinary Care y utiliza el Shared Kernel del backend.
 
 ![Backend - Veterinary Linking](<../../assets/images/componets-level-diagrams/Backend - Veterinary Linking.png>)
 
-##### 2.6.3.6. Bounded Context Software Architecture Code Level Diagrams
+### 2.6.3.6. Bounded Context Software Architecture Code Level Diagrams
 
-###### 2.6.3.6.1. Bounded Context Domain Layer Class Diagram
+#### 2.6.3.6.1. Bounded Context Domain Layer Class Diagram
 
 API REST - Java
 
 Aplicación móvil - Flutter
 
-###### 2.6.3.6.2. Bounded Context Database Diagram
+#### 2.6.3.6.2. Bounded Context Database Diagram
 
 Base de datos central - MySQL
 
 Este contexto no requiere persistencia local en SQLite para el alcance definido.
 
-#### 2.6.4. Bounded Context: Subscriptions
+## 2.6.4. Bounded Context: Subscriptions
 
 Suscripciones administra los planes gratuitos y premium de ganaderos y veterinarios, sus pagos y su vigencia. Comprende US22-US24 y el procesamiento de pagos definido en TS02. Comunica a Livestock Management el límite de animales y a Veterinary Linking el límite de ganaderos vinculados. Los pagos se realizan en modo de prueba.
 
-##### 2.6.4.1. Domain Layer
+### 2.6.4.1. Domain Layer
 
 Se proponen los agregados `Plan` y `Subscription`. Este contexto define los límites, pero no cuenta animales ni vinculaciones. Esos controles pertenecen a los contextos que administran dichos registros. Los atributos son privados y las operaciones son públicas.
 
-###### API REST - Java
+#### API REST - Java
 
 Diccionario de clases
 
@@ -1091,7 +1090,7 @@ Repositorios y relaciones
 
 Las interfaces no tienen atributos de implementación. Cada cuenta tiene una suscripción para su único perfil. Muchas suscripciones pueden referenciar un mismo plan. `Plan` contiene un `Money` y `Subscription` contiene cero o un `PaidPeriod`. Las cuentas de Identidad y acceso se referencian por identificador, sin incorporar sus entidades al agregado.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 El móvil presenta los resultados del servidor. Los identificadores utilizan `String`, las fechas `DateTime` y los campos opcionales `?`. No calcula una activación a partir de la pantalla del proveedor de pago.
 
@@ -1107,11 +1106,11 @@ El móvil presenta los resultados del servidor. Los identificadores utilizan `St
 
 Se utilizan las mismas enumeraciones de perfil, tipo de plan, período y estado, con nombres adaptados a Dart. Los métodos del repositorio devuelven `Future`, una respuesta disponible cuando termina la operación.
 
-##### 2.6.4.2. Interface Layer
+### 2.6.4.2. Interface Layer
 
 Las solicitudes se vinculan a la cuenta y perfil de la sesión. Solo se muestran o modifican sus propios datos. El cliente selecciona el plan, pero no decide el importe, el límite ni la vigencia.
 
-###### API REST - Java
+#### API REST - Java
 
 | Clase                     | Propósito y atributos                                                                                            | Métodos                                                                   |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
@@ -1134,7 +1133,7 @@ Datos de entrada y salida
 
 El resultado del navegador o la pantalla de pago solo provoca una nueva consulta al servidor. No activa premium. Los fallos internos al procesar un aviso no se confirman al proveedor como si el cambio ya estuviera guardado.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 | Clase                   | Propósito y atributos                                                                                                                                                                              | Métodos                                                                                                   |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
@@ -1144,11 +1143,11 @@ El resultado del navegador o la pantalla de pago solo provoca una nueva consulta
 
 Las pantallas muestran precio, período, capacidad y fin de vigencia cuando corresponde. Durante un pago sin confirmación mantienen el plan anterior. Una cancelación confirmada muestra hasta cuándo se conservan los beneficios.
 
-##### 2.6.4.3. Application Layer
+### 2.6.4.3. Application Layer
 
 Esta capa valida el perfil, coordina los pagos y publica los cambios efectivos. Los contratos de integración utilizan datos propios de ANITEC para que el dominio no dependa de objetos de Stripe.
 
-###### API REST - Java
+#### API REST - Java
 
 Servicios
 
@@ -1204,7 +1203,7 @@ Al llegar al fin del período, una renovación no confirmada no extiende premium
 
 Los eventos se publican después del guardado. Los adaptadores de Livestock Management y Veterinary Linking convierten `allowedCapacity` en `allowedAnimals` o `allowedRanchers`, respectivamente, y conservan la revisión. Ambos contextos pueden consultar `EffectiveSubscriptionLimits` si necesitan contrastar el estado vigente.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 | Clase o interfaz                 | Propósito y atributos                                                                                                                                                        | Métodos                                                                                                      |
 | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
@@ -1216,11 +1215,11 @@ Se reutiliza el contrato técnico `ConnectionGateway`. Consultar o modificar la 
 
 El cierre o cambio de cuenta limpia el estado de presentación. Las respuestas de la cuenta anterior se descartan. Una solicitud sin resultado conocido no se repite con otro identificador para intentar forzar una confirmación.
 
-##### 2.6.4.4. Infrastructure Layer
+### 2.6.4.4. Infrastructure Layer
 
 El servidor utiliza MySQL y un adaptador para Stripe en modo de prueba. Este adaptador actúa como capa de traducción entre el proveedor de pagos y los conceptos de ANITEC.
 
-###### API REST - Java
+#### API REST - Java
 
 | Clase                                  | Propósito y atributos                                                                                      | Métodos                                                                        |
 | -------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
@@ -1258,7 +1257,7 @@ El cambio de la suscripción y el registro del aviso procesado se guardan en una
 
 Los eventos hacia otros contextos se procesan después de confirmar la transacción. Si su entrega interna falla, las consultas de límites permiten recuperar la revisión vigente. Los consumidores no modifican la suscripción ni sus datos de pago.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 | Clase                                | Propósito y atributos                                                                                       | Métodos                                                                             |
 | ------------------------------------ | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
@@ -1272,45 +1271,45 @@ Se reutiliza `DeviceConnectionAdapter` para comprobar conexión. No se propone p
 
 La integración utiliza el entorno de prueba durante el desarrollo académico. La viabilidad de cobros reales y las condiciones de publicación móvil se revisan mediante SP01 antes de ofrecer una contratación real.
 
-##### 2.6.4.5. Bounded Context Software Architecture Component Level Diagrams
+### 2.6.4.5. Bounded Context Software Architecture Component Level Diagrams
 
-##### 2.6.4.5. Bounded Context Software Architecture Component Level Diagrams
+### 2.6.4.5. Bounded Context Software Architecture Component Level Diagrams
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 El frontend de Subscriptions Context se estructura mediante Presentation, Application, Infrastructure y Domain. Presentation muestra los planes disponibles, la suscripción actual y su vigencia; Application coordina las consultas, contratación premium y cancelación de renovación; Domain contiene los modelos de planes, precios y suscripciones; e Infrastructure implementa la comunicación con la REST API y la apertura del proceso de pago. Este contexto no requiere SQLite y utiliza Stripe en modo de prueba para el proceso de checkout.
 
 ![Frontend - Subscriptions](<../../assets/images/componets-level-diagrams/Frontend - Subscriptions.png>)
 
-###### API REST - Java
+#### API REST - Java
 
 El backend de Subscriptions Context está conformado por Interfaces, Application, Infrastructure y Domain. Interfaces expone la consulta de planes, gestión de suscripciones y recepción de webhooks; Application coordina pagos, cancelaciones, vigencias y cambios de beneficios; Domain contiene las reglas de planes y suscripciones; e Infrastructure implementa la persistencia en MySQL y la integración con Stripe. El contexto también comunica los límites vigentes a Livestock Management y Veterinary Linking y utiliza el Shared Kernel del backend.
 
 ![Backend - Subscriptions](<../../assets/images/componets-level-diagrams/Backend - Subscriptions.png>)
 
-##### 2.6.4.6. Bounded Context Software Architecture Code Level Diagrams
+### 2.6.4.6. Bounded Context Software Architecture Code Level Diagrams
 
-###### 2.6.4.6.1. Bounded Context Domain Layer Class Diagram
+#### 2.6.4.6.1. Bounded Context Domain Layer Class Diagram
 
 API REST - Java
 
 Aplicación móvil - Flutter
 
-###### 2.6.4.6.2. Bounded Context Database Diagram
+#### 2.6.4.6.2. Bounded Context Database Diagram
 
 Base de datos central - MySQL
 
 Este contexto no requiere persistencia local en SQLite para el alcance definido.
 
-#### 2.6.5. Bounded Context: Identity and Access
+## 2.6.5. Bounded Context: Identity and Access
 
 Identidad y acceso administra cuentas, verificación de correo y sesiones de ganaderos y veterinarios. Comprende US25-US28 y proporciona la identidad utilizada en las operaciones protegidas. Coordina el cierre de sesión con la eliminación de las copias locales de US29 y TS03. Cada contexto conserva la responsabilidad de comprobar sus permisos de negocio.
 
-##### 2.6.5.1. Domain Layer
+### 2.6.5.1. Domain Layer
 
 Se proponen los agregados `Account` y `UserSession`. La cuenta contiene su verificación de correo. La sesión representa un acceso con vencimiento, independiente de las sesiones de otros dispositivos. Los atributos son privados y las operaciones indicadas son públicas.
 
-###### API REST - Java
+#### API REST - Java
 
 Diccionario de clases
 
@@ -1387,7 +1386,7 @@ Repositorios y relaciones
 
 Las interfaces no tienen atributos. Una cuenta contiene una verificación actual y puede tener varias sesiones. Cada sesión pertenece a una cuenta. Reenviar un código reemplaza la verificación, pero no crea otra cuenta. Verificar el correo no inicia una sesión automáticamente.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 | Elemento                | Atributos                                                                                    | Métodos y propósito                                                                                                                                                                    |
 | ----------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1399,11 +1398,11 @@ Las interfaces no tienen atributos. Una cuenta contiene una verificación actual
 
 Las operaciones devuelven `Future`, una respuesta disponible cuando termina la solicitud. El móvil no recibe la contraseña protegida, el código guardado ni los intentos internos del servidor. La validez local permite consultar copias autorizadas, pero no demuestra que la sesión siga activa en el servidor cuando no hay conexión.
 
-##### 2.6.5.2. Interface Layer
+### 2.6.5.2. Interface Layer
 
 Esta capa recibe credenciales y solicitudes de verificación y entrega resultados sin exponer información secreta. La identidad de las operaciones protegidas se obtiene de la sesión validada.
 
-###### API REST - Java
+#### API REST - Java
 
 | Clase                    | Propósito y atributos                                                         | Métodos                                                 |
 | ------------------------ | ----------------------------------------------------------------------------- | ------------------------------------------------------- |
@@ -1425,7 +1424,7 @@ Datos de entrada y salida
 
 La verificación responde con una confirmación sin crear una sesión. El reenvío solo dirige el código al correo ya registrado y respeta los límites de solicitudes. Un código correcto de otra cuenta o de una verificación reemplazada no se acepta.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 | Clase                   | Propósito y atributos                                                                                                                                                            | Métodos                                                                                               |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
@@ -1437,11 +1436,11 @@ La verificación responde con una confirmación sin crear una sesión. El reenv�
 
 Las contraseñas y códigos introducidos se eliminan de los formularios al terminar o abandonar el proceso. Si falla el correo, la pantalla conserva la referencia de la cuenta pendiente y permite solicitar otro código cuando corresponda. No presenta el envío como una verificación completada.
 
-##### 2.6.5.3. Application Layer
+### 2.6.5.3. Application Layer
 
 Los servicios coordinan las reglas de cuenta y sesión con la protección de credenciales, los límites de solicitudes y el correo. Los valores concretos de duración e intentos se mantienen configurables y deben definirse antes de implementar las historias.
 
-###### API REST - Java
+#### API REST - Java
 
 Servicios
 
@@ -1497,7 +1496,7 @@ Las operaciones de verificación bloquean la cuenta durante la comprobación y e
 
 `getIdentity` no autentica por sí solo a un usuario. Los controladores de otros contextos reciben la identidad validada por el control de acceso y comprueban después propiedad, vinculación o autoría, según corresponda.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 | Clase o interfaz             | Propósito y atributos                                                                                                                                                                            | Métodos                                                                                                                                    |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -1519,11 +1518,11 @@ Las operaciones de verificación bloquean la cuenta durante la comprobación y e
 
 La aplicación deja de mostrar datos protegidos desde que comienza el cierre. Si falla la eliminación de una copia, mantiene bloqueado su acceso y vuelve a completar la limpieza antes de habilitar otra cuenta. Sin conexión no se puede detectar una revocación reciente del servidor.
 
-##### 2.6.5.4. Infrastructure Layer
+### 2.6.5.4. Infrastructure Layer
 
 El servidor persiste cuentas y sesiones en MySQL. El móvil guarda la credencial en el almacenamiento seguro del dispositivo. SQLite se reserva para las copias de información de los contextos que requieren consulta sin conexión.
 
-###### API REST - Java
+#### API REST - Java
 
 | Clase                           | Propósito y atributos                                                                                              | Métodos                                                                                               |
 | ------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
@@ -1555,7 +1554,7 @@ Las rutas públicas de registro, verificación e inicio de sesión no requieren 
 
 `IdentityFacade.findVeterinarianByEmail` permite implementar `VeterinarianDirectoryGateway` de Veterinary Linking. El adaptador transforma `IdentityData` en `VeterinarianContact`. Los demás contextos reciben identidad y perfil, no entidades modificables de cuenta.
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 | Clase                       | Propósito y atributos                                                                                                                                   | Métodos                                                                                       |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
@@ -1575,29 +1574,29 @@ El registro técnico de dispositivos pertenece a la integración compartida de n
 
 Los adaptadores `IdentitySessionAdapter`, `IdentityCareSessionAdapter`, `IdentityLinkingSessionAdapter` e `IdentitySubscriptionSessionAdapter` de los apartados anteriores utilizan `IdentityApplicationService` como su servicio de sesión compartido. Cada uno entrega al contexto únicamente los identificadores y el perfil que necesita.
 
-##### 2.6.5.5. Bounded Context Software Architecture Component Level Diagrams
+### 2.6.5.5. Bounded Context Software Architecture Component Level Diagrams
 
-###### Aplicación móvil - Flutter
+#### Aplicación móvil - Flutter
 
 El frontend de Identity and Access Context se divide en Presentation, Application, Infrastructure y Domain. Presentation contiene las interfaces para registro, verificación de correo e inicio de sesión; Application coordina las operaciones relacionadas con cuenta y sesión; Domain representa la identidad, perfil y credenciales de sesión; e Infrastructure implementa la comunicación con la REST API, el almacenamiento seguro de credenciales y la integración con las notificaciones del dispositivo. Shared proporciona navegación, sesión y elementos comunes utilizados por la aplicación móvil.
 
 ![Frontend - Identity and Access](<../../assets/images/componets-level-diagrams/Frontend - Identity and Access.png>)
 
-###### API REST - Java
+#### API REST - Java
 
 El backend de Identity and Access Context se descompone en Interfaces, Application, Infrastructure y Domain. Interfaces expone las operaciones de registro, verificación, autenticación y cierre de sesión; Application coordina la gestión de cuentas, códigos y sesiones; Domain contiene las reglas asociadas a cuentas, verificaciones e identidad; e Infrastructure implementa la persistencia en MySQL, mecanismos de seguridad e integración con Resend para el envío de códigos de verificación. Este contexto proporciona además la identidad autenticada requerida por los demás bounded contexts y utiliza el Shared Kernel del backend.
 
 ![Backend - Identity and Access](<../../assets/images/componets-level-diagrams/Backend - Identity and Access.png>)
 
-##### 2.6.5.6. Bounded Context Software Architecture Code Level Diagrams
+### 2.6.5.6. Bounded Context Software Architecture Code Level Diagrams
 
-###### 2.6.5.6.1. Bounded Context Domain Layer Class Diagram
+#### 2.6.5.6.1. Bounded Context Domain Layer Class Diagram
 
 API REST - Java
 
 Aplicación móvil - Flutter
 
-###### 2.6.5.6.2. Bounded Context Database Diagram
+#### 2.6.5.6.2. Bounded Context Database Diagram
 
 Base de datos central - MySQL
 
