@@ -38,6 +38,8 @@
 | 0.3     | 18/09/2026 | Equipo NOVATICK | Incorporación del análisis competitivo, Domain-Driven Design y documentación inicial de la arquitectura de software. |
 
 <br>
+Repositorio de GitHub: https://github.com/upc-pre-202620-1acc0238-13980-Novatick
+
 
 ## Project Report Collaboration Insights
 
