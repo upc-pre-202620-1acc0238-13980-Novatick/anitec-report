@@ -780,7 +780,20 @@ Acceptance Criteria
 
 ## 2.4.2. Impact mapping
 
-**Desarrollo del impact mapping**
+El Impact Mapping de ANITEC se estructura en torno a cuatro Business Goals derivados de los objetivos SMART definidos para el proyecto y de los Business Outcome Assumptions establecidos en el Lean UX Canvas. Cada Business Goal identifica a los User Personas involucrados, los cambios de comportamiento esperados (Impacts), las funcionalidades del negocio digital que provocan esos cambios (Deliverables) y las User Stories que permiten obtener dichos features.
+
+<div align="center">
+   <img src="../../assets/images/impact-mapping/impact-mapping.jpg" width="420">
+</div>
+
+##### Resumen del Impact Mapping
+
+| Business Goal                 | Meta                                 | User Personas          | Cantidad de US |
+| ----------------------------- | ------------------------------------ | ---------------------- | -------------- |
+| BG1 — Adopción inicial        | 200 ganaderos activos en 6 meses     | Carlos                 | 5              |
+| BG2 — Uso recurrente          | 60% con info actualizada en 4 meses  | Carlos, Dra. Valentina | 10             |
+| BG3 — Coordinación sanitaria  | 100 vinculaciones activas en 6 meses | Carlos, Dra. Valentina | 6              |
+| BG4 — Monetización sostenible | 50 suscripciones premium en 1 año    | Carlos, Dra. Valentina | 3 + TS02       |
 
 ## 2.4.3. Product Backlog
 
