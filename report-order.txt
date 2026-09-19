@@ -1,0 +1,3 @@
+docs/preliminares/student-outcome.md
+docs/preliminares/objetivos-smart.md
+docs/capitulo-2/strategic-ddd.md

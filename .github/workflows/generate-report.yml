@@ -1,0 +1,178 @@
+name: Generate ANITEC PDF
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  generate-pdf:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc weasyprint fonts-dejavu fonts-liberation
+
+      - name: Build complete Markdown
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path.cwd()
+          order_file = root / "report-order.txt"
+          build_dir = root / "build"
+          output_file = build_dir / "ANITEC-develop.md"
+
+          build_dir.mkdir(exist_ok=True)
+
+          files = [
+              line.strip()
+              for line in order_file.read_text(encoding="utf-8").splitlines()
+              if line.strip() and not line.strip().startswith("#")
+          ]
+
+          result = []
+
+          image_pattern = re.compile(r'!\[([^\]]*)\]\(([^)]+)\)')
+
+          for relative_file in files:
+              source = root / relative_file
+
+              if not source.exists():
+                  raise FileNotFoundError(
+                      f"No se encontró el archivo: {relative_file}"
+                  )
+
+              print(f"Agregando: {relative_file}")
+
+              content = source.read_text(encoding="utf-8")
+              source_directory = source.parent
+
+              def replace_image(match):
+                  alt = match.group(1)
+                  image = match.group(2).strip()
+
+                  if image.startswith(("http://", "https://", "data:")):
+                      return match.group(0)
+
+                  image_path = (source_directory / image).resolve()
+
+                  try:
+                      relative_image = image_path.relative_to(root.resolve())
+                  except ValueError:
+                      return match.group(0)
+
+                  return f"![{alt}]({relative_image.as_posix()})"
+
+              content = image_pattern.sub(replace_image, content)
+
+              result.append(content)
+              result.append("\n\n")
+
+          output_file.write_text(
+              "".join(result),
+              encoding="utf-8"
+          )
+
+          print("Markdown completo generado correctamente.")
+          PY
+
+      - name: Create PDF styles
+        run: |
+          cat > build/report.css <<'EOF'
+          @page {
+            size: A4;
+            margin: 2.5cm;
+          }
+
+          body {
+            font-family: Arial, sans-serif;
+            font-size: 11pt;
+            line-height: 1.5;
+            color: #111;
+          }
+
+          h1 {
+            font-size: 22pt;
+          }
+
+          h2 {
+            font-size: 18pt;
+          }
+
+          h3 {
+            font-size: 15pt;
+          }
+
+          h4 {
+            font-size: 13pt;
+          }
+
+          h5 {
+            font-size: 12pt;
+          }
+
+          p {
+            text-align: justify;
+          }
+
+          img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 20px auto;
+          }
+
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 9pt;
+          }
+
+          th,
+          td {
+            border: 1px solid #555;
+            padding: 6px;
+            vertical-align: top;
+          }
+
+          th {
+            font-weight: bold;
+          }
+
+          pre {
+            white-space: pre-wrap;
+          }
+          EOF
+
+      - name: Generate HTML
+        run: |
+          pandoc build/ANITEC-develop.md \
+            --from=gfm+raw_html \
+            --standalone \
+            --toc \
+            --resource-path=. \
+            --embed-resources \
+            --css=build/report.css \
+            --metadata title="ANITEC - Informe del Trabajo Final" \
+            -o build/ANITEC-develop.html
+
+      - name: Generate PDF
+        run: |
+          weasyprint \
+            build/ANITEC-develop.html \
+            build/ANITEC-develop.pdf
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: ANITEC-develop
+          path: build/ANITEC-develop.pdf
+          retention-days: 7
