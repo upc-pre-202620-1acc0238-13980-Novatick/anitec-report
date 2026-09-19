@@ -1546,11 +1546,38 @@ Los adaptadores `IdentitySessionAdapter`, `IdentityCareSessionAdapter`, `Identit
 
 ##### 2.6.5.6. Bounded Context Software Architecture Code Level Diagrams
 
+
+
+
+
+
+
+
+
+
+
+
 ###### 2.6.5.6.1. Bounded Context Domain Layer Class Diagram
 
 API REST - Java
 
+
+
+
+
+
+
+
+
 Aplicación móvil - Flutter
+
+
+
+
+
+
+
+
 
 ###### 2.6.5.6.2. Bounded Context Database Diagram
 
