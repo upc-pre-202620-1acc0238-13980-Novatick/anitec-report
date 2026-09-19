@@ -331,7 +331,16 @@ El indicador de conexión no garantiza que la API responda. Los errores de comun
 
 ###### Aplicación móvil - Flutter
 
+El diagrama de componentes del frontend muestra la descomposición de Livestock Management Context en Presentation, Application, Infrastructure y Domain. Presentation gestiona las pantallas y formularios relacionados con el inventario de animales; Application coordina las operaciones del módulo; Domain contiene los modelos y contratos principales; e Infrastructure implementa la comunicación con la REST API y el almacenamiento local en SQLite. El módulo también utiliza Shared para navegación, sesión y elementos comunes de la aplicación móvil.
+
+![Frontend - Livestock Management](<../../assets/images/componets-level-diagrams/Frontend - Livestock Management.png>)
+
 ###### API REST - Java
+
+El diagrama de componentes del backend representa Livestock Management Context mediante Interfaces, Application, Infrastructure y Domain. Interfaces expone los endpoints relacionados con animales, observaciones y capacidad del inventario; Application coordina los casos de uso; Domain concentra las reglas y modelos del dominio; e Infrastructure implementa la persistencia mediante JPA e Hibernate sobre MySQL. El backend utiliza además un Shared Kernel para los elementos comunes entre bounded contexts.
+
+![Backend - Livestock Management](<../../assets/images/componets-level-diagrams/Backend - Livestock Management.png>)
+
 
 ##### 2.6.1.6. Bounded Context Software Architecture Code Level Diagrams
 
