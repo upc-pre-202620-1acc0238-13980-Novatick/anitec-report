@@ -1577,9 +1577,17 @@ Los adaptadores `IdentitySessionAdapter`, `IdentityCareSessionAdapter`, `Identit
 
 ##### 2.6.5.5. Bounded Context Software Architecture Component Level Diagrams
 
-###### API REST - Java / Spring Boot
-
 ###### Aplicación móvil - Flutter
+
+El frontend de Identity and Access Context se divide en Presentation, Application, Infrastructure y Domain. Presentation contiene las interfaces para registro, verificación de correo e inicio de sesión; Application coordina las operaciones relacionadas con cuenta y sesión; Domain representa la identidad, perfil y credenciales de sesión; e Infrastructure implementa la comunicación con la REST API, el almacenamiento seguro de credenciales y la integración con las notificaciones del dispositivo. Shared proporciona navegación, sesión y elementos comunes utilizados por la aplicación móvil.
+
+![Frontend - Identity and Access](<../../assets/images/componets-level-diagrams/Frontend - Identity and Access.png>)
+
+###### API REST - Java
+
+El backend de Identity and Access Context se descompone en Interfaces, Application, Infrastructure y Domain. Interfaces expone las operaciones de registro, verificación, autenticación y cierre de sesión; Application coordina la gestión de cuentas, códigos y sesiones; Domain contiene las reglas asociadas a cuentas, verificaciones e identidad; e Infrastructure implementa la persistencia en MySQL, mecanismos de seguridad e integración con Resend para el envío de códigos de verificación. Este contexto proporciona además la identidad autenticada requerida por los demás bounded contexts y utiliza el Shared Kernel del backend.
+
+![Backend - Identity and Access](<../../assets/images/componets-level-diagrams/Backend - Identity and Access.png>)
 
 ##### 2.6.5.6. Bounded Context Software Architecture Code Level Diagrams
 
