@@ -1,0 +1,112 @@
+@startuml
+title Subscriptions - Backend
+
+top to bottom direction
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package "Subscriptions" {
+
+    class PlanController {
+        + getPlans(): List<Plan>
+    }
+
+    class SubscriptionController {
+        + getSubscription(): Subscription
+        + requestPremium(planId: UUID): String
+        + cancelRenewal(): void
+    }
+
+    class StripeWebhookController {
+        + receive(rawBody: String, signature: String): void
+    }
+
+    class SubscriptionService {
+        + getPlans(): List<Plan>
+        + getSubscription(): Subscription
+        + requestPremium(): String
+        + cancelRenewal(): void
+        + activatePremium(): void
+        + expirePremium(): void
+    }
+
+    class SubscriptionQueries {
+        + getPlans(): List<Plan>
+        + getSubscription(accountId: UUID): Subscription
+        + getLimits(accountId: UUID): int
+    }
+
+    interface PlanRepository {
+        + findById(planId: UUID): Plan
+        + findByProfile(profile: SubscriberProfile): List<Plan>
+        + findFreeByProfile(profile: SubscriberProfile): Plan
+    }
+
+    interface SubscriptionRepository {
+        + save(subscription: Subscription): void
+        + findByAccountId(accountId: UUID): Subscription
+    }
+
+    interface PaymentGateway {
+        + createCheckout(accountId: UUID, plan: Plan): String
+        + cancelRenewal(accountId: UUID): void
+        + getCurrentState(accountId: UUID): String
+    }
+
+    class Plan {
+        - id: UUID
+        - name: String
+        - profile: SubscriberProfile
+        - type: PlanType
+        - price: BigDecimal
+        - currency: String
+        - billingPeriod: BillingPeriod
+        - capacityLimit: int
+
+        + supports(profile: SubscriberProfile): boolean
+        + isPremium(): boolean
+    }
+
+    class Subscription {
+        - id: UUID
+        - accountId: UUID
+        - profile: SubscriberProfile
+        - currentPlanId: UUID
+        - status: SubscriptionStatus
+        - renewalEnabled: boolean
+        - allowedCapacity: int
+        - revision: long
+        - createdAt: Instant
+        - updatedAt: Instant
+
+        + activatePremium(): void
+        + cancelRenewal(): void
+        + expire(): void
+        + isPremiumAt(now: Instant): boolean
+        + belongsTo(accountId: UUID): boolean
+    }
+
+    PlanController --> SubscriptionQueries
+
+    SubscriptionController --> SubscriptionService
+    SubscriptionController --> SubscriptionQueries
+
+    StripeWebhookController --> SubscriptionService
+
+    SubscriptionService --> PlanRepository
+    SubscriptionService --> SubscriptionRepository
+    SubscriptionService --> PaymentGateway
+
+    SubscriptionQueries --> PlanRepository
+    SubscriptionQueries --> SubscriptionRepository
+
+    PlanRepository --> Plan
+    SubscriptionRepository --> Subscription
+
+    Subscription --> Plan : currentPlan
+}
+
+@enduml

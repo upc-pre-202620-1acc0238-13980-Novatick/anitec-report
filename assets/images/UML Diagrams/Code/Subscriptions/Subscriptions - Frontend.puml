@@ -1,0 +1,105 @@
+@startuml
+title Subscriptions - Frontend
+
+top to bottom direction
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package "Subscriptions" {
+
+    class PlansPage {
+        - viewModel: SubscriptionViewModel
+
+        + build(): Widget
+        + selectPlan(): void
+        + confirmSelection(): void
+    }
+
+    class SubscriptionPage {
+        - viewModel: SubscriptionViewModel
+
+        + build(): Widget
+        + refreshSubscription(): void
+        + confirmCancellation(): void
+    }
+
+    class SubscriptionViewModel {
+        - service: SubscriptionApplicationService
+        - plans: List<Plan>
+        - subscription: Subscription
+        - isLoading: bool
+        - errorMessage: String
+        - cancellationConfirmed: bool
+
+        + loadPlans(): void
+        + loadSubscription(): void
+        + requestPremium(): void
+        + cancelRenewal(): void
+        + refreshAfterCheckout(): void
+    }
+
+    class SubscriptionApplicationService {
+        - repository: SubscriptionRepository
+
+        + getPlans(): Future
+        + getSubscription(): Future
+        + requestPremium(): Future
+        + cancelRenewal(): Future
+        + refreshAfterCheckout(): Future
+    }
+
+    interface SubscriptionRepository {
+        + getPlans(): Future<List<Plan>>
+        + getSubscription(): Future<Subscription>
+        + requestPremium(planId: String): Future<String>
+        + cancelRenewal(): Future
+    }
+
+    class SubscriptionRepositoryImpl {
+        + getPlans(): Future<List<Plan>>
+        + getSubscription(): Future<Subscription>
+        + requestPremium(planId: String): Future<String>
+        + cancelRenewal(): Future
+    }
+
+    class Plan {
+        - id: String
+        - name: String
+        - type: PlanType
+        - price: String
+        - currency: String
+        - billingPeriod: BillingPeriod
+        - capacityLimit: int
+
+        + isPremium(): bool
+    }
+
+    class Subscription {
+        - id: String
+        - accountId: String
+        - currentPlanId: String
+        - status: SubscriptionStatus
+        - renewalEnabled: bool
+        - allowedCapacity: int
+        - revision: int
+
+        + isPremium(): bool
+    }
+
+    PlansPage --> SubscriptionViewModel
+    SubscriptionPage --> SubscriptionViewModel
+
+    SubscriptionViewModel --> SubscriptionApplicationService
+
+    SubscriptionApplicationService --> SubscriptionRepository
+
+    SubscriptionRepositoryImpl ..|> SubscriptionRepository
+
+    SubscriptionRepository --> Plan
+    SubscriptionRepository --> Subscription
+}
+
+@enduml
