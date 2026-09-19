@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - develop
+      - main
+  workflow_dispatch:
 
 jobs:
   generate-pdf:
@@ -18,16 +20,27 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y pandoc weasyprint fonts-dejavu fonts-liberation
 
+      - name: Set output name
+        run: |
+          if [ "${GITHUB_REF_NAME}" = "main" ]; then
+            echo "REPORT_NAME=ANITEC-AV1" >> "$GITHUB_ENV"
+          else
+            echo "REPORT_NAME=ANITEC-develop" >> "$GITHUB_ENV"
+          fi
+
       - name: Build complete Markdown
         run: |
           python3 <<'PY'
           from pathlib import Path
           import re
+          import os
 
           root = Path.cwd()
           order_file = root / "report-order.txt"
           build_dir = root / "build"
-          output_file = build_dir / "ANITEC-develop.md"
+
+          report_name = os.environ["REPORT_NAME"]
+          output_file = build_dir / f"{report_name}.md"
 
           build_dir.mkdir(exist_ok=True)
 
@@ -80,7 +93,7 @@ jobs:
               encoding="utf-8"
           )
 
-          print("Markdown completo generado correctamente.")
+          print(f"Markdown generado: {output_file}")
           PY
 
       - name: Create PDF styles
@@ -100,22 +113,27 @@ jobs:
 
           h1 {
             font-size: 22pt;
+            margin-top: 30px;
           }
 
           h2 {
             font-size: 18pt;
+            margin-top: 25px;
           }
 
           h3 {
             font-size: 15pt;
+            margin-top: 20px;
           }
 
           h4 {
             font-size: 13pt;
+            margin-top: 18px;
           }
 
           h5 {
             font-size: 12pt;
+            margin-top: 15px;
           }
 
           p {
@@ -154,7 +172,7 @@ jobs:
 
       - name: Generate HTML
         run: |
-          pandoc build/ANITEC-develop.md \
+          pandoc "build/${REPORT_NAME}.md" \
             --from=gfm+raw_html \
             --standalone \
             --toc \
@@ -162,17 +180,17 @@ jobs:
             --embed-resources \
             --css=build/report.css \
             --metadata title="ANITEC - Informe del Trabajo Final" \
-            -o build/ANITEC-develop.html
+            -o "build/${REPORT_NAME}.html"
 
       - name: Generate PDF
         run: |
           weasyprint \
-            build/ANITEC-develop.html \
-            build/ANITEC-develop.pdf
+            "build/${REPORT_NAME}.html" \
+            "build/${REPORT_NAME}.pdf"
 
       - name: Upload PDF
         uses: actions/upload-artifact@v4
         with:
-          name: ANITEC-develop
-          path: build/ANITEC-develop.pdf
+          name: ${{ env.REPORT_NAME }}
+          path: build/${{ env.REPORT_NAME }}.pdf
           retention-days: 7
