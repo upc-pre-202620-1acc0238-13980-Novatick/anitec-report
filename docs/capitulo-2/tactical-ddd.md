@@ -1591,11 +1591,77 @@ El backend de Identity and Access Context se descompone en Interfaces, Applicati
 
 ##### 2.6.5.6. Bounded Context Software Architecture Code Level Diagrams
 
+
+
+
+
+
+
+
+
+
+
+
 ###### 2.6.5.6.1. Bounded Context Domain Layer Class Diagram
 
-API REST - Java
+## API REST - Java
 
-Aplicación móvil - Flutter
+Identity and Access - Backend
+
+![Identity and Access - Backend](../../assets/images/UML%20Diagrams/Images/Identity%20and%20Access/Identity%20and%20Access%20-%20Backend.png)
+
+
+Livestock Management - Backend
+
+![Livestock Management - Backend](../../assets/images/UML%20Diagrams/Images/Livestock%20Management/Livestock%20Management%20-%20Backend.png)
+
+
+Subscriptions - Backend
+
+![Subscriptions - Backend](../../assets/images/UML%20Diagrams/Images/Subscriptions/Subscriptions%20-%20Backend.png)
+
+
+Veterinary Care - Backend
+
+![Veterinary Care - Backend](../../assets/images/UML%20Diagrams/Images/Veterinary%20Care/Veterinary%20Care%20-%20Backend.png)
+
+
+Veterinary Linking - Backend
+
+![Veterinary Linking - Backend](../../assets/images/UML%20Diagrams/Images/Veterinary%20Linking/Veterinary%20Linking%20-%20Backend.png)
+
+
+## Aplicación móvil - Flutter
+
+Identity and Access - Frontend
+
+![Identity and Access - Frontend](../../assets/images/UML%20Diagrams/Images/Identity%20and%20Access/Identity%20and%20Access%20-%20Frontend.png)
+
+
+Livestock Management - Frontend
+
+![Livestock Management - Frontend](../../assets/images/UML%20Diagrams/Images/Livestock%20Management/Livestock%20Management%20-%20Frontend.png)
+
+
+Subscriptions - Frontend
+
+![Subscriptions - Frontend](../../assets/images/UML%20Diagrams/Images/Subscriptions/Subscriptions%20-%20Frontend.png)
+
+
+Veterinary Care - Frontend
+
+![Veterinary Care - Frontend](../../assets/images/UML%20Diagrams/Images/Veterinary%20Care/Veterinary%20Care%20-%20Frontend.png)
+
+
+Veterinary Linking - Frontend
+
+![Veterinary Linking - Frontend](../../assets/images/UML%20Diagrams/Images/Veterinary%20Linking/Veterinary%20Linking%20-%20Frontend.png)
+
+
+
+
+
+
 
 ###### 2.6.5.6.2. Bounded Context Database Diagram
 

@@ -1,0 +1,128 @@
+@startuml
+title Livestock Management - Frontend
+
+top to bottom direction
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package "Livestock Management" {
+
+    class LivestockInventoryPage {
+        - viewModel: LivestockViewModel
+
+        + build(): Widget
+        + refreshInventory(): void
+        + openAnimal(animalId: String): void
+        + openRegistration(): void
+    }
+
+    class AnimalDetailPage {
+        - animalId: String
+        - viewModel: LivestockViewModel
+
+        + build(): Widget
+        + openEdition(): void
+        + confirmDeactivation(): void
+        + openObservationForm(): void
+    }
+
+    class AnimalFormPage {
+        - viewModel: LivestockViewModel
+        - initialAnimal: Animal
+
+        + build(): Widget
+        + validateForm(): bool
+        + submit(): void
+    }
+
+    class LivestockViewModel {
+        - service: LivestockApplicationService
+        - animals: List<Animal>
+        - selectedAnimal: Animal
+        - capacity: InventoryCapacity
+        - isLoading: bool
+        - isOffline: bool
+        - errorMessage: String
+
+        + loadInventory(): void
+        + loadAnimal(): void
+        + loadCapacity(): void
+        + registerAnimal(): void
+        + updateAnimal(): void
+        + deactivateAnimal(): void
+        + registerObservation(): void
+    }
+
+    class LivestockApplicationService {
+        - repository: LivestockRepository
+
+        + getInventory(): Future
+        + getAnimal(): Future
+        + getCapacity(): Future
+        + registerAnimal(): Future
+        + updateAnimal(): Future
+        + deactivateAnimal(): Future
+        + registerObservation(): Future
+    }
+
+    interface LivestockRepository {
+        + getInventory(): Future<List<Animal>>
+        + getAnimal(): Future<Animal>
+        + getCapacity(): Future<InventoryCapacity>
+        + registerAnimal(): Future
+        + updateAnimal(): Future
+        + deactivateAnimal(): Future
+        + registerObservation(): Future
+    }
+
+    class LivestockRepositoryImpl {
+        + getInventory(): Future<List<Animal>>
+        + getAnimal(): Future<Animal>
+        + getCapacity(): Future<InventoryCapacity>
+        + registerAnimal(): Future
+        + updateAnimal(): Future
+        + deactivateAnimal(): Future
+        + registerObservation(): Future
+    }
+
+    class Animal {
+        - id: String
+        - ownerId: String
+        - code: String
+        - species: String
+        - sex: AnimalSex
+        - name: String
+        - breed: String
+        - birthDate: DateTime
+        - status: AnimalStatus
+        - observations: List<String>
+
+        + isActive(): bool
+    }
+
+    class InventoryCapacity {
+        - ownerId: String
+        - allowedAnimals: int
+        - activeAnimals: int
+
+        + hasAvailableSlot(): bool
+    }
+
+    LivestockInventoryPage --> LivestockViewModel
+    AnimalDetailPage --> LivestockViewModel
+    AnimalFormPage --> LivestockViewModel
+
+    LivestockViewModel --> LivestockApplicationService
+
+    LivestockApplicationService --> LivestockRepository
+
+    LivestockRepositoryImpl ..|> LivestockRepository
+
+    LivestockRepository --> Animal
+    LivestockRepository --> InventoryCapacity
+}
+
+@enduml

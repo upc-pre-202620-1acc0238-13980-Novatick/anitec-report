@@ -1,0 +1,132 @@
+@startuml
+title Veterinary Care - Frontend
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+top to bottom direction
+
+package "Veterinary Care" {
+
+    class CareAgendaPage {
+        - viewModel: CareViewModel
+        - from: DateTime
+        - to: DateTime
+
+        + build(): Widget
+        + changePeriod(): void
+        + openAppointmentForm(): void
+    }
+
+    class CareRecordDetailPage {
+        - viewModel: CareViewModel
+        - recordId: String
+
+        + build(): Widget
+        + openTreatmentForm(): void
+        + openVaccinationForm(): void
+        + openInstructionsForm(): void
+    }
+
+    class CareViewModel {
+        - service: CareApplicationService
+        - appointments: List<VeterinaryAppointment>
+        - history: List<CareRecord>
+        - selectedRecord: CareRecord
+        - isLoading: bool
+        - isOffline: bool
+        - errorMessage: String
+
+        + loadAgenda(): void
+        + loadHistory(): void
+        + loadCareRecord(): void
+        + scheduleVisit(): void
+        + scheduleFollowUp(): void
+        + registerCareRecord(): void
+        + addTreatment(): void
+        + addVaccination(): void
+        + updateInstructions(): void
+    }
+
+    class CareApplicationService {
+        - repository: CareRepository
+
+        + getAgenda(): Future
+        + getHistory(): Future
+        + getCareRecord(): Future
+        + scheduleVisit(): Future
+        + scheduleFollowUp(): Future
+        + registerCareRecord(): Future
+        + addTreatment(): Future
+        + addVaccination(): Future
+        + updateInstructions(): Future
+    }
+
+    interface CareRepository {
+        + getAgenda(): Future<List<VeterinaryAppointment>>
+        + getHistory(): Future<List<CareRecord>>
+        + getCareRecord(): Future<CareRecord>
+        + scheduleVisit(): Future
+        + scheduleFollowUp(): Future
+        + registerCareRecord(): Future
+        + addTreatment(): Future
+        + addVaccination(): Future
+        + updateInstructions(): Future
+    }
+
+    class CareRepositoryImpl {
+        + getAgenda(): Future<List<VeterinaryAppointment>>
+        + getHistory(): Future<List<CareRecord>>
+        + getCareRecord(): Future<CareRecord>
+        + scheduleVisit(): Future
+        + scheduleFollowUp(): Future
+        + registerCareRecord(): Future
+        + addTreatment(): Future
+        + addVaccination(): Future
+        + updateInstructions(): Future
+    }
+
+    class VeterinaryAppointment {
+        - id: String
+        - animalId: String
+        - ownerId: String
+        - veterinarianId: String
+        - type: AppointmentType
+        - scheduledAt: DateTime
+        - status: AppointmentStatus
+
+        + isCompleted(): bool
+    }
+
+    class CareRecord {
+        - id: String
+        - animalId: String
+        - ownerId: String
+        - veterinarianId: String
+        - attendedAt: DateTime
+        - description: String
+        - treatments: List<String>
+        - vaccinations: List<String>
+        - instructions: String
+
+        + isAuthoredBy(userId: String): bool
+    }
+
+
+    CareAgendaPage --> CareViewModel
+    CareRecordDetailPage --> CareViewModel
+
+    CareViewModel --> CareApplicationService
+
+    CareApplicationService --> CareRepository
+
+    CareRepositoryImpl ..|> CareRepository
+
+    CareRepository --> VeterinaryAppointment
+    CareRepository --> CareRecord
+
+}
+
+@enduml
