@@ -175,7 +175,6 @@ jobs:
           pandoc "build/${REPORT_NAME}.md" \
             --from=gfm+raw_html \
             --standalone \
-            --toc \
             --resource-path=. \
             --embed-resources \
             --css=build/report.css \
