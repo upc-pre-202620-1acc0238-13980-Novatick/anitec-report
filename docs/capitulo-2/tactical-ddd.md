@@ -1274,9 +1274,19 @@ La integración utiliza el entorno de prueba durante el desarrollo académico. L
 
 ##### 2.6.4.5. Bounded Context Software Architecture Component Level Diagrams
 
-###### API REST - Java / Spring Boot
+##### 2.6.4.5. Bounded Context Software Architecture Component Level Diagrams
 
 ###### Aplicación móvil - Flutter
+
+El frontend de Subscriptions Context se estructura mediante Presentation, Application, Infrastructure y Domain. Presentation muestra los planes disponibles, la suscripción actual y su vigencia; Application coordina las consultas, contratación premium y cancelación de renovación; Domain contiene los modelos de planes, precios y suscripciones; e Infrastructure implementa la comunicación con la REST API y la apertura del proceso de pago. Este contexto no requiere SQLite y utiliza Stripe en modo de prueba para el proceso de checkout.
+
+![Frontend - Subscriptions](<../../assets/images/componets-level-diagrams/Frontend - Subscriptions.png>)
+
+###### API REST - Java
+
+El backend de Subscriptions Context está conformado por Interfaces, Application, Infrastructure y Domain. Interfaces expone la consulta de planes, gestión de suscripciones y recepción de webhooks; Application coordina pagos, cancelaciones, vigencias y cambios de beneficios; Domain contiene las reglas de planes y suscripciones; e Infrastructure implementa la persistencia en MySQL y la integración con Stripe. El contexto también comunica los límites vigentes a Livestock Management y Veterinary Linking y utiliza el Shared Kernel del backend.
+
+![Backend - Subscriptions](<../../assets/images/componets-level-diagrams/Backend - Subscriptions.png>)
 
 ##### 2.6.4.6. Bounded Context Software Architecture Code Level Diagrams
 
