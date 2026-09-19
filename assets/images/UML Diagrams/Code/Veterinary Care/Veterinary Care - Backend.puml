@@ -1,0 +1,110 @@
+@startuml
+title Veterinary Care - Backend
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+top to bottom direction
+
+package "Veterinary Care" {
+
+    class AppointmentController {
+        + scheduleVisit(): void
+        + scheduleFollowUp(): void
+        + getAgenda(): List<VeterinaryAppointment>
+    }
+
+    class CareRecordController {
+        + registerCareRecord(): void
+        + getHistory(): List<CareRecord>
+        + getCareRecord(): CareRecord
+        + addTreatment(): void
+        + addVaccination(): void
+        + updateInstructions(): void
+    }
+
+    class CareService {
+        + scheduleVisit(): void
+        + scheduleFollowUp(): void
+        + registerCareRecord(): void
+        + addTreatment(): void
+        + addVaccination(): void
+        + registerInstructions(): void
+        + updateInstructions(): void
+    }
+
+    class CareQueries {
+        + getAgenda(): List<VeterinaryAppointment>
+        + getHistory(): List<CareRecord>
+        + getCareRecord(): CareRecord
+        + getInstructions(): String
+    }
+
+    class AppointmentRepository {
+        + save(appointment: VeterinaryAppointment): void
+        + findById(id: UUID): VeterinaryAppointment
+        + findByVeterinarian(): List<VeterinaryAppointment>
+    }
+
+    class CareRecordRepository {
+        + save(record: CareRecord): void
+        + findById(id: UUID): CareRecord
+        + findByAnimalId(animalId: UUID): List<CareRecord>
+    }
+
+    class VeterinaryAppointment {
+        - id: UUID
+        - animalId: UUID
+        - ownerId: UUID
+        - veterinarianId: UUID
+        - type: AppointmentType
+        - scheduledAt: Instant
+        - status: AppointmentStatus
+        - createdAt: Instant
+
+        + complete(): void
+        + isAssignedTo(veterinarianId: UUID): boolean
+    }
+
+    class CareRecord {
+        - id: UUID
+        - animalId: UUID
+        - ownerId: UUID
+        - veterinarianId: UUID
+        - attendedAt: Instant
+        - description: String
+        - appointmentId: UUID
+        - registeredAt: Instant
+        - treatments: List<String>
+        - vaccinations: List<String>
+        - instructions: String
+
+        + addTreatment(): void
+        + addVaccination(): void
+        + registerInstructions(): void
+        + updateInstructions(): void
+        + isAuthoredBy(veterinarianId: UUID): boolean
+    }
+
+    AppointmentController --> CareService
+    AppointmentController --> CareQueries
+
+    CareRecordController --> CareService
+    CareRecordController --> CareQueries
+
+    CareService --> AppointmentRepository
+    CareService --> CareRecordRepository
+
+    CareQueries --> AppointmentRepository
+    CareQueries --> CareRecordRepository
+
+    AppointmentRepository --> VeterinaryAppointment
+    CareRecordRepository --> CareRecord
+
+    VeterinaryAppointment "0..1" --> "0..1" CareRecord : genera
+
+}
+
+@enduml
