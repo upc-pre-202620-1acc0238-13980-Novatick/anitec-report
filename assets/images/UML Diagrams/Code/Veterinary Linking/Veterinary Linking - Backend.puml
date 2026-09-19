@@ -1,0 +1,120 @@
+@startuml
+title Veterinary Linking - Backend
+
+top to bottom direction
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package "Veterinary Linking" {
+
+    class InvitationController {
+        + sendInvitation(): void
+        + acceptInvitation(invitationId: UUID): void
+        + rejectInvitation(invitationId: UUID): void
+        + getPendingInvitations(): List<LinkingInvitation>
+    }
+
+    class VeterinaryLinkController {
+        + getActiveLinks(): List<VeterinaryLink>
+        + revokeLink(linkId: UUID): void
+        + getCapacity(): LinkingCapacity
+    }
+
+    class LinkingCommandService {
+        + sendInvitation(): void
+        + acceptInvitation(): void
+        + rejectInvitation(): void
+        + revokeLink(): void
+    }
+
+    class LinkingQueryService {
+        + getPendingInvitations(): List<LinkingInvitation>
+        + getActiveLinks(): List<VeterinaryLink>
+        + getCapacity(): LinkingCapacity
+        + isActive(veterinarianId: UUID, ownerId: UUID): boolean
+    }
+
+    interface InvitationRepository {
+        + save(invitation: LinkingInvitation): void
+        + findById(id: UUID): LinkingInvitation
+        + findPendingByVeterinarianId(veterinarianId: UUID): List<LinkingInvitation>
+    }
+
+    interface VeterinaryLinkRepository {
+        + save(link: VeterinaryLink): void
+        + findById(id: UUID): VeterinaryLink
+        + findActiveByOwnerId(ownerId: UUID): List<VeterinaryLink>
+        + findActiveByVeterinarianId(veterinarianId: UUID): List<VeterinaryLink>
+    }
+
+    interface LinkingCapacityRepository {
+        + save(capacity: LinkingCapacity): void
+        + findByVeterinarianId(veterinarianId: UUID): LinkingCapacity
+    }
+
+    class LinkingInvitation {
+        - id: UUID
+        - ownerId: UUID
+        - veterinarianId: UUID
+        - status: InvitationStatus
+        - createdAt: Instant
+        - respondedAt: Instant
+
+        + accept(veterinarianId: UUID): void
+        + reject(veterinarianId: UUID): void
+        + isPending(): boolean
+        + isAddressedTo(veterinarianId: UUID): boolean
+    }
+
+    class VeterinaryLink {
+        - id: UUID
+        - invitationId: UUID
+        - ownerId: UUID
+        - veterinarianId: UUID
+        - status: LinkStatus
+        - activatedAt: Instant
+        - revokedAt: Instant
+
+        + revoke(ownerId: UUID): boolean
+        + isActive(): boolean
+        + belongsTo(ownerId: UUID): boolean
+    }
+
+    class LinkingCapacity {
+        - veterinarianId: UUID
+        - allowedRanchers: int
+        - activeLinks: int
+        - lastPlanRevision: long
+
+        + hasAvailableSlot(): boolean
+        + occupySlot(): void
+        + releaseSlot(): void
+        + updateLimit(): void
+    }
+
+    InvitationController --> LinkingCommandService
+    InvitationController --> LinkingQueryService
+
+    VeterinaryLinkController --> LinkingCommandService
+    VeterinaryLinkController --> LinkingQueryService
+
+    LinkingCommandService --> InvitationRepository
+    LinkingCommandService --> VeterinaryLinkRepository
+    LinkingCommandService --> LinkingCapacityRepository
+
+    LinkingQueryService --> InvitationRepository
+    LinkingQueryService --> VeterinaryLinkRepository
+    LinkingQueryService --> LinkingCapacityRepository
+
+    InvitationRepository --> LinkingInvitation
+    VeterinaryLinkRepository --> VeterinaryLink
+    LinkingCapacityRepository --> LinkingCapacity
+
+    LinkingInvitation "1" --> "0..1" VeterinaryLink : originates
+    VeterinaryLink ..> LinkingCapacity : consumes slot
+}
+
+@enduml

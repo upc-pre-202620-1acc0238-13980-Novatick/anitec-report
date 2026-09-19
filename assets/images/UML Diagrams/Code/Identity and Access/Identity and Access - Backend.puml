@@ -1,0 +1,98 @@
+@startuml
+title Identity and Access - Backend
+
+top to bottom direction
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package "Identity and Access" {
+
+    class RegistrationController {
+        + register(): void
+    }
+
+    class VerificationController {
+        + verify(): void
+        + resend(): void
+    }
+
+    class SessionController {
+        + signIn(): UserSession
+        + getCurrentIdentity(): Account
+        + signOut(): void
+    }
+
+    class IdentityService {
+        + register(): void
+        + verifyEmail(): void
+        + resendVerification(): void
+        + signIn(): UserSession
+        + signOut(): void
+        + authenticate(): boolean
+    }
+
+    class IdentityQueries {
+        + getIdentity(accountId: UUID): Account
+        + findVeterinarianByEmail(email: String): Account
+    }
+
+    interface AccountRepository {
+        + save(account: Account): void
+        + findById(accountId: UUID): Account
+        + findByEmail(email: String): Account
+        + existsByEmail(email: String): boolean
+    }
+
+    interface UserSessionRepository {
+        + save(session: UserSession): void
+        + findByTokenDigest(token: String): UserSession
+    }
+
+    class Account {
+        - id: UUID
+        - email: String
+        - passwordHash: String
+        - profile: AccountProfile
+        - status: AccountStatus
+        - verificationCode: String
+        - verificationExpiresAt: Instant
+        - createdAt: Instant
+        - verifiedAt: Instant
+
+        + verifyEmail(): void
+        + replaceVerification(): void
+        + canSignIn(): boolean
+    }
+
+    class UserSession {
+        - id: UUID
+        - accountId: UUID
+        - tokenDigest: String
+        - createdAt: Instant
+        - expiresAt: Instant
+        - revokedAt: Instant
+
+        + isValidAt(now: Instant): boolean
+        + revoke(): void
+    }
+
+    RegistrationController --> IdentityService
+    VerificationController --> IdentityService
+    SessionController --> IdentityService
+    SessionController --> IdentityQueries
+
+    IdentityService --> AccountRepository
+    IdentityService --> UserSessionRepository
+
+    IdentityQueries --> AccountRepository
+
+    AccountRepository --> Account
+    UserSessionRepository --> UserSession
+
+    Account "1" --> "0..*" UserSession : owns
+}
+
+@enduml

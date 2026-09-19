@@ -1,0 +1,133 @@
+@startuml
+title Veterinary Linking - Frontend
+
+top to bottom direction
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package "Veterinary Linking" {
+
+    class InvitationFormPage {
+        - viewModel: LinkingViewModel
+        - email: String
+
+        + build(): Widget
+        + validateForm(): bool
+        + submit(): void
+    }
+
+    class PendingInvitationsPage {
+        - viewModel: LinkingViewModel
+
+        + build(): Widget
+        + refreshInvitations(): void
+        + acceptInvitation(): void
+        + rejectInvitation(): void
+    }
+
+    class ActiveLinksPage {
+        - viewModel: LinkingViewModel
+
+        + build(): Widget
+        + refreshLinks(): void
+        + confirmRevocation(): void
+    }
+
+    class LinkingViewModel {
+        - service: LinkingApplicationService
+        - invitations: List<LinkingInvitation>
+        - links: List<VeterinaryLink>
+        - capacity: LinkingCapacity
+        - isLoading: bool
+        - errorMessage: String
+
+        + loadInvitations(): void
+        + loadLinks(): void
+        + loadCapacity(): void
+        + sendInvitation(): void
+        + acceptInvitation(): void
+        + rejectInvitation(): void
+        + revokeLink(): void
+    }
+
+    class LinkingApplicationService {
+        - repository: LinkingRepository
+
+        + getPendingInvitations(): Future
+        + getActiveLinks(): Future
+        + getCapacity(): Future
+        + sendInvitation(): Future
+        + acceptInvitation(): Future
+        + rejectInvitation(): Future
+        + revokeLink(): Future
+    }
+
+    interface LinkingRepository {
+        + sendInvitation(email: String): Future
+        + acceptInvitation(invitationId: String): Future
+        + rejectInvitation(invitationId: String): Future
+        + getPendingInvitations(): Future<List<LinkingInvitation>>
+        + getActiveLinks(): Future<List<VeterinaryLink>>
+        + revokeLink(linkId: String): Future
+        + getCapacity(): Future<LinkingCapacity>
+    }
+
+    class LinkingRepositoryImpl {
+        + sendInvitation(email: String): Future
+        + acceptInvitation(invitationId: String): Future
+        + rejectInvitation(invitationId: String): Future
+        + getPendingInvitations(): Future<List<LinkingInvitation>>
+        + getActiveLinks(): Future<List<VeterinaryLink>>
+        + revokeLink(linkId: String): Future
+        + getCapacity(): Future<LinkingCapacity>
+    }
+
+    class LinkingInvitation {
+        - id: String
+        - ownerId: String
+        - veterinarianId: String
+        - status: InvitationStatus
+        - createdAt: DateTime
+        - respondedAt: DateTime
+
+        + isPending(): bool
+    }
+
+    class VeterinaryLink {
+        - id: String
+        - ownerId: String
+        - veterinarianId: String
+        - status: LinkStatus
+        - activatedAt: DateTime
+        - revokedAt: DateTime
+
+        + isActive(): bool
+    }
+
+    class LinkingCapacity {
+        - veterinarianId: String
+        - allowedRanchers: int
+        - activeLinks: int
+
+        + hasAvailableSlot(): bool
+    }
+
+    InvitationFormPage --> LinkingViewModel
+    PendingInvitationsPage --> LinkingViewModel
+    ActiveLinksPage --> LinkingViewModel
+
+    LinkingViewModel --> LinkingApplicationService
+
+    LinkingApplicationService --> LinkingRepository
+
+    LinkingRepositoryImpl ..|> LinkingRepository
+
+    LinkingRepository --> LinkingInvitation
+    LinkingRepository --> VeterinaryLink
+    LinkingRepository --> LinkingCapacity
+}
+
+@enduml

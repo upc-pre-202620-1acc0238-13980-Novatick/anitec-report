@@ -1,0 +1,101 @@
+@startuml
+title Livestock Management - Backend
+
+top to bottom direction
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package "Livestock Management" {
+
+    class AnimalController {
+        + getInventory(): List<Animal>
+        + getAnimal(animalId: UUID): Animal
+        + registerAnimal(): void
+        + updateAnimal(animalId: UUID): void
+        + deactivateAnimal(animalId: UUID): void
+        + registerObservation(animalId: UUID): void
+    }
+
+    class InventoryCapacityController {
+        + getCapacity(): InventoryCapacity
+    }
+
+    class LivestockService {
+        + registerAnimal(): void
+        + updateAnimal(): void
+        + deactivateAnimal(): void
+        + registerObservation(): void
+        + updateCapacity(): void
+    }
+
+    class LivestockQueries {
+        + getInventory(ownerId: UUID): List<Animal>
+        + getAnimal(ownerId: UUID, animalId: UUID): Animal
+        + getCapacity(ownerId: UUID): InventoryCapacity
+    }
+
+    class AnimalRepository {
+        + save(animal: Animal): void
+        + findById(animalId: UUID): Animal
+        + findByOwnerId(ownerId: UUID): List<Animal>
+        + existsByOwnerIdAndCode(): boolean
+    }
+
+    class InventoryCapacityRepository {
+        + save(capacity: InventoryCapacity): void
+        + findByOwnerId(ownerId: UUID): InventoryCapacity
+    }
+
+    class Animal {
+        - id: UUID
+        - ownerId: UUID
+        - code: String
+        - species: String
+        - sex: AnimalSex
+        - name: String
+        - breed: String
+        - birthDate: LocalDate
+        - status: AnimalStatus
+        - registeredAt: Instant
+        - observations: List<String>
+
+        + updateDetails(): void
+        + deactivate(): boolean
+        + addObservation(): void
+        + belongsTo(ownerId: UUID): boolean
+        + isActive(): boolean
+    }
+
+    class InventoryCapacity {
+        - ownerId: UUID
+        - allowedAnimals: int
+        - activeAnimals: int
+        - lastPlanRevision: long
+
+        + hasAvailableSlot(): boolean
+        + occupySlot(): void
+        + releaseSlot(): void
+        + updateLimit(): void
+    }
+
+    AnimalController --> LivestockService
+    AnimalController --> LivestockQueries
+
+    InventoryCapacityController --> LivestockQueries
+
+    LivestockService --> AnimalRepository
+    LivestockService --> InventoryCapacityRepository
+
+    LivestockQueries --> AnimalRepository
+    LivestockQueries --> InventoryCapacityRepository
+
+    AnimalRepository --> Animal
+    InventoryCapacityRepository --> InventoryCapacity
+
+    Animal ..> InventoryCapacity : ownerId
+}
+
+@enduml
