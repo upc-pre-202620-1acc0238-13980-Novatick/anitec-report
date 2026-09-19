@@ -1,4 +1,8 @@
-# 2.1. Competidores
+<div align="justify">
+
+# Capítulo II: Requirements Development and Software Solution Design
+
+## 2.1. Competidores
 
 Comprender el entorno competitivo nos permite reconocer las alternativas disponibles para los usuarios y determinar cómo puede diferenciarse ANITEC para alcanzar el éxito como negocio. Por eso en esta sección se van a comparar tres aplicaciones relacionadas con la gestión ganadera: Livestock Manager, Herdwatch y AgriWebb. Se analizarán sus funciones, usuarios, estrategias de marketing, precios, canales de distribución, fortalezas y debilidades.
 

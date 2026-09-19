@@ -1,10 +1,12 @@
 <div align="justify">
 
-#### 2.4.1. User Stories
+# 2.4. Requirements specification
+
+## 2.4.1. User Stories
 
 Las historias de usuario de ANITEC describen las necesidades de los ganaderos y veterinarios y el valor que esperan obtener de la solución. Se organizan en siete épicas y se acompañan de criterios de aceptación para comprobar su cumplimiento. También se incluyen historias técnicas y de investigación para abordar las integraciones y las decisiones necesarias para su desarrollo.
 
-##### Epics
+### Epics
 
 | Epic ID | Nombre                  | Objetivo                                                                |
 | ------- | ----------------------- | ----------------------------------------------------------------------- |
@@ -18,7 +20,7 @@ Las historias de usuario de ANITEC describen las necesidades de los ganaderos y 
 
 Las épicas agrupan necesidades del usuario y no corresponden necesariamente a contextos separados. EP02 y EP04 pertenecen a Atención veterinaria. La consulta sin conexión abarca información de varias épicas.
 
-##### EP01: Gestión del ganado
+### EP01: Gestión del ganado
 
 Reglas de datos del inventario
 
@@ -27,7 +29,7 @@ Reglas de datos del inventario
 - El nombre, la raza y la fecha de nacimiento son opcionales; esta última no puede ser futura.
 - El sistema asigna el propietario, la fecha de registro y el estado activo. Actualizar los datos no cambia el propietario ni reactiva un animal dado de baja.
 
-###### US01: Registrar animal
+#### US01: Registrar animal
 
 | Campo       | Contenido                                                                                         |
 | ----------- | ------------------------------------------------------------------------------------------------- |
@@ -46,7 +48,7 @@ Acceptance Criteria
 
 - Escenario 3: Datos inválidos. Dado que la solicitud contiene datos obligatorios ausentes o inválidos, o un código ya utilizado en el inventario, cuando el ganadero solicita registrar el animal, entonces el sistema informa los datos que requieren corrección y no crea el registro.
 
-###### US02: Consultar inventario de animales
+#### US02: Consultar inventario de animales
 
 | Campo       | Contenido                                                                                        |
 | ----------- | ------------------------------------------------------------------------------------------------ |
@@ -65,7 +67,7 @@ Acceptance Criteria
 
 - Escenario 3: Protección del inventario. Dado que un animal pertenece a otro ganadero, cuando el ganadero consulta su inventario, entonces el sistema excluye ese animal de los resultados.
 
-###### US03: Consultar ficha del animal
+#### US03: Consultar ficha del animal
 
 | Campo       | Contenido                                                                                                              |
 | ----------- | ---------------------------------------------------------------------------------------------------------------------- |
@@ -84,7 +86,7 @@ Acceptance Criteria
 
 - Escenario 3: Consulta no autorizada. Dado que el animal pertenece a otro ganadero, cuando el usuario solicita su ficha sin autorización, entonces el sistema rechaza la consulta y no revela sus datos.
 
-###### US04: Actualizar datos del animal
+#### US04: Actualizar datos del animal
 
 | Campo       | Contenido                                                                                                       |
 | ----------- | --------------------------------------------------------------------------------------------------------------- |
@@ -103,7 +105,7 @@ Acceptance Criteria
 
 - Escenario 3: Modificación no autorizada. Dado que el animal pertenece a otro ganadero, cuando el usuario solicita modificar sus datos, entonces el sistema rechaza la operación y mantiene el registro sin cambios.
 
-###### US05: Dar de baja a un animal
+#### US05: Dar de baja a un animal
 
 | Campo       | Contenido                                                                                                                                     |
 | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -122,7 +124,7 @@ Acceptance Criteria
 
 - Escenario 3: Baja no autorizada. Dado que el animal pertenece a otro ganadero, cuando el usuario solicita darlo de baja, entonces el sistema rechaza la operación y conserva su estado.
 
-###### US06: Registrar observación sobre un animal
+#### US06: Registrar observación sobre un animal
 
 | Campo       | Contenido                                                                                                                                       |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -145,9 +147,9 @@ Reglas de negocio
 
 - Una observación del ganadero no genera automáticamente una visita ni una atención veterinaria.
 
-##### EP02: Atención veterinaria
+### EP02: Atención veterinaria
 
-###### US07: Programar visita veterinaria
+#### US07: Programar visita veterinaria
 
 | Campo       | Contenido                                                                                                          |
 | ----------- | ------------------------------------------------------------------------------------------------------------------ |
@@ -166,7 +168,7 @@ Acceptance Criteria
 
 - Escenario 3: Datos de programación inválidos. Dado que el animal no pertenece al ganadero indicado o la fecha y hora no son posteriores al momento actual, cuando el veterinario solicita programar la visita, entonces el sistema rechaza la operación e informa el motivo.
 
-###### US08: Consultar agenda de visitas y controles
+#### US08: Consultar agenda de visitas y controles
 
 | Campo       | Contenido                                                                                         |
 | ----------- | ------------------------------------------------------------------------------------------------- |
@@ -185,7 +187,7 @@ Acceptance Criteria
 
 - Escenario 3: Protección de la agenda. Dado que existen citas asignadas a otros veterinarios, cuando el veterinario consulta su agenda, entonces el sistema excluye esas citas.
 
-###### US09: Registrar atención veterinaria
+#### US09: Registrar atención veterinaria
 
 | Campo       | Contenido                                                                                                                   |
 | ----------- | --------------------------------------------------------------------------------------------------------------------------- |
@@ -210,7 +212,7 @@ Reglas de negocio
 - Una visita o un control programado solo cuenta como atención realizada cuando el veterinario registra la atención correspondiente.
 - El registro de la atención de un control genera una nueva atención vinculada a ese control y conserva la atención anterior.
 
-###### US10: Registrar tratamiento realizado
+#### US10: Registrar tratamiento realizado
 
 | Campo       | Contenido                                                                                                                           |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------------------- |
@@ -229,7 +231,7 @@ Acceptance Criteria
 
 - Escenario 3: Asociación no autorizada. Dado que la atención pertenece a otro veterinario o no existe una vinculación activa con el ganadero, cuando el usuario solicita agregar un tratamiento, entonces el sistema rechaza la operación.
 
-###### US11: Registrar vacunación aplicada
+#### US11: Registrar vacunación aplicada
 
 | Campo       | Contenido                                                                                                                    |
 | ----------- | ---------------------------------------------------------------------------------------------------------------------------- |
@@ -248,7 +250,7 @@ Acceptance Criteria
 
 - Escenario 3: Asociación no autorizada. Dado que la atención pertenece a otro veterinario o no existe una vinculación activa con el ganadero, cuando el usuario solicita agregar una vacunación, entonces el sistema rechaza la operación.
 
-###### US12: Programar control veterinario
+#### US12: Programar control veterinario
 
 | Campo       | Contenido                                                                                                     |
 | ----------- | ------------------------------------------------------------------------------------------------------------- |
@@ -267,7 +269,7 @@ Acceptance Criteria
 
 - Escenario 3: Vinculación inactiva. Dado que el veterinario no mantiene una vinculación activa con el ganadero, cuando solicita programar un control para uno de sus animales, entonces el sistema rechaza la operación.
 
-###### US13: Consultar historial veterinario del animal
+#### US13: Consultar historial veterinario del animal
 
 | Campo       | Contenido                                                                                                                                                         |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -286,9 +288,9 @@ Acceptance Criteria
 
 - Escenario 3: Consulta no autorizada. Dado que el usuario no es el propietario ni un veterinario con vinculación activa, cuando solicita el historial, entonces el sistema rechaza la consulta y no revela su contenido.
 
-##### EP03: Vinculación veterinaria
+### EP03: Vinculación veterinaria
 
-###### US14: Enviar invitación de vinculación
+#### US14: Enviar invitación de vinculación
 
 | Campo       | Contenido                                                                                                     |
 | ----------- | ------------------------------------------------------------------------------------------------------------- |
@@ -307,7 +309,7 @@ Acceptance Criteria
 
 - Escenario 3: Fallo en el correo. Dado que la invitación queda registrada pero el servicio de correo rechaza el envío, cuando el sistema recibe ese resultado, entonces conserva la invitación pendiente e informa que no se confirma el envío del correo.
 
-###### US15: Responder invitación de vinculación
+#### US15: Responder invitación de vinculación
 
 | Campo       | Contenido                                                                                          |
 | ----------- | -------------------------------------------------------------------------------------------------- |
@@ -330,7 +332,7 @@ Reglas y alcance
 
 - El límite se comprueba al aceptar, no al recibir una invitación. Alcanzarlo no impide rechazar invitaciones pendientes.
 
-###### US16: Consultar invitaciones pendientes
+#### US16: Consultar invitaciones pendientes
 
 | Campo       | Contenido                                                                                     |
 | ----------- | --------------------------------------------------------------------------------------------- |
@@ -347,7 +349,7 @@ Acceptance Criteria
 
 - Escenario 2: Sin invitaciones. Dado que el veterinario no tiene invitaciones pendientes, cuando las consulta, entonces el sistema informa que no existen invitaciones por responder.
 
-###### US17: Consultar vinculaciones activas
+#### US17: Consultar vinculaciones activas
 
 | Campo       | Contenido                                                                                                                      |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------ |
@@ -364,7 +366,7 @@ Acceptance Criteria
 
 - Escenario 2: Sin vinculaciones activas. Dado que el usuario no tiene vinculaciones activas, cuando las consulta, entonces el sistema informa que no existen relaciones activas.
 
-###### US18: Revocar acceso del veterinario
+#### US18: Revocar acceso del veterinario
 
 | Campo       | Contenido                                                                                                               |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------- |
@@ -387,9 +389,9 @@ Reglas y alcance
 
 - La revocación libera capacidad de vinculaciones activas del veterinario. El tratamiento de las copias locales se especifica en US29 y TS03.
 
-##### EP04: Indicaciones de cuidado
+### EP04: Indicaciones de cuidado
 
-###### US19: Registrar indicaciones de cuidado
+#### US19: Registrar indicaciones de cuidado
 
 | Campo       | Contenido                                                                                                           |
 | ----------- | ------------------------------------------------------------------------------------------------------------------- |
@@ -408,7 +410,7 @@ Acceptance Criteria
 
 - Escenario 3: Fallo de notificación. Dado que las indicaciones se guardan pero el servicio de notificaciones rechaza la solicitud, cuando el sistema recibe ese resultado, entonces conserva las indicaciones para su consulta y no informa que el aviso fue entregado.
 
-###### US20: Modificar indicaciones de cuidado
+#### US20: Modificar indicaciones de cuidado
 
 | Campo       | Contenido                                                                                          |
 | ----------- | -------------------------------------------------------------------------------------------------- |
@@ -431,7 +433,7 @@ Reglas y alcance
 
 - Se conserva el contenido anterior con su autor y fecha para poder revisar los cambios. Esta historia no permite modificar los demás datos de la atención.
 
-###### US21: Consultar indicaciones de cuidado
+#### US21: Consultar indicaciones de cuidado
 
 | Campo       | Contenido                                                                                                                     |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -450,9 +452,9 @@ Acceptance Criteria
 
 - Escenario 3: Consulta no autorizada. Dado que el usuario no es el propietario ni un veterinario con vinculación activa, cuando solicita las indicaciones, entonces el sistema rechaza la consulta y no revela su contenido.
 
-##### EP05: Suscripciones
+### EP05: Suscripciones
 
-###### US22: Consultar planes y suscripción vigente
+#### US22: Consultar planes y suscripción vigente
 
 | Campo       | Contenido                                                                                                                      |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------ |
@@ -475,7 +477,7 @@ Reglas y alcance
 
 - Cada perfil dispone de un plan gratuito inicial y una opción premium. Los precios y las capacidades quedan sujetos a validación con los usuarios; no se fijan cifras en estas historias.
 
-###### US23: Contratar suscripción premium
+#### US23: Contratar suscripción premium
 
 | Campo       | Contenido                                                                                                |
 | ----------- | -------------------------------------------------------------------------------------------------------- |
@@ -498,7 +500,7 @@ Reglas y alcance
 
 - Los pagos se realizan en modo de prueba durante el desarrollo académico. Los cambios de plan durante una vigencia activa quedan fuera de esta historia.
 
-###### US24: Cancelar renovación de suscripción
+#### US24: Cancelar renovación de suscripción
 
 | Campo       | Contenido                                                                                                               |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------- |
@@ -521,9 +523,9 @@ Reglas y alcance
 
 - Al finalizar el período sin una nueva vigencia válida, se aplica el límite gratuito. Se conservan los animales, sus historiales y las vinculaciones existentes; se bloquean nuevas altas o aceptaciones mientras se alcance o supere el límite correspondiente.
 
-##### EP06: Identidad y acceso
+### EP06: Identidad y acceso
 
-###### US25: Registrar cuenta
+#### US25: Registrar cuenta
 
 | Campo       | Contenido                                                                                                                 |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -546,7 +548,7 @@ Reglas y alcance
 
 - Para esta versión cada cuenta tiene un único perfil: ganadero o veterinario. La cuenta utiliza correo y contraseña para identificarse; no se incluye cambio de perfil.
 
-###### US26: Verificar correo electrónico
+#### US26: Verificar correo electrónico
 
 | Campo       | Contenido                                                                                                                     |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -569,7 +571,7 @@ Reglas y alcance
 
 - La duración del código y los límites de intentos y reenvíos se definen antes de implementar la historia. El envío de un correo no equivale a su verificación.
 
-###### US27: Iniciar sesión
+#### US27: Iniciar sesión
 
 | Campo       | Contenido                                                                                                                                          |
 | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -592,7 +594,7 @@ Reglas y alcance
 
 - Sin conexión solo se permite la consulta local definida en US29. La sesión no tiene una vigencia ilimitada y no habilita registros o modificaciones sin conexión.
 
-###### US28: Cerrar sesión
+#### US28: Cerrar sesión
 
 | Campo       | Contenido                                                                                                     |
 | ----------- | ------------------------------------------------------------------------------------------------------------- |
@@ -617,7 +619,7 @@ Reglas y alcance
 
 ##### Consulta sin conexión
 
-###### US29: Consultar información sin conexión
+#### US29: Consultar información sin conexión
 
 | Campo       | Contenido                                                                                                                                              |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -642,9 +644,9 @@ Reglas y alcance
 - Las copias se separan por cuenta y se eliminan al cerrar sesión. Al recuperar la conexión, se revalidan los permisos antes de actualizar datos y se eliminan las copias cuyo acceso fue revocado.
 - Sin conexión no se puede detectar una revocación ocurrida en el servidor. La copia local conserva el último estado descargado hasta la siguiente validación o el cierre de sesión.
 
-##### EP07: Presentación de ANITEC
+### EP07: Presentación de ANITEC
 
-###### US30: Consultar presentación de ANITEC
+#### US30: Consultar presentación de ANITEC
 
 | Campo       | Contenido                                                                                                              |
 | ----------- | ---------------------------------------------------------------------------------------------------------------------- |
@@ -663,7 +665,7 @@ Acceptance Criteria
 
 ##### Historias técnicas
 
-###### TS01: Proveer operaciones de la API con control de acceso
+#### TS01: Proveer operaciones de la API con control de acceso
 
 | Campo       | Contenido                                                                                                                                               |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -686,7 +688,7 @@ Reglas y alcance
 
 - La documentación especifica para cada operación el método, la ruta, los datos de solicitud, las respuestas y los permisos. La cobertura comprende las operaciones en línea de US01–US28; la implementación se divide en tareas por contexto.
 
-###### TS02: Procesar cambios de suscripción de forma consistente
+#### TS02: Procesar cambios de suscripción de forma consistente
 
 | Campo       | Contenido                                                                                                                                               |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -709,7 +711,7 @@ Reglas y alcance
 
 - Las notificaciones cuyo origen no se puede verificar se rechazan sin modificar suscripciones. Las respuestas al proveedor distinguen una recepción procesada de una solicitud inválida o un error de procesamiento.
 
-###### TS03: Mantener copias locales separadas por cuenta
+#### TS03: Mantener copias locales separadas por cuenta
 
 | Campo       | Contenido                                                                                                                                                   |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -734,7 +736,7 @@ Reglas y alcance
 
 ##### Historias de investigación
 
-###### SP01: Validar integración de pagos y suscripciones
+#### SP01: Validar integración de pagos y suscripciones
 
 | Campo       | Contenido                                                                                                                                  |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -757,7 +759,7 @@ Condiciones de cierre
 
 - El objetivo es validar la viabilidad de Stripe en modo de prueba y documentar las condiciones de una publicación futura; no se presupone que la misma integración pueda usarse sin cambios en las tiendas móviles.
 
-###### SP02: Validar notificaciones en Android e iOS
+#### SP02: Validar notificaciones en Android e iOS
 
 | Campo       | Contenido                                                                                                                                        |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -776,11 +778,11 @@ Acceptance Criteria
 
 - Escenario 3: Conclusión de la investigación. Dado que concluyen las pruebas, cuando se presenta el informe, entonces incluye configuración necesaria, evidencias por plataforma, limitaciones y tareas pendientes; toda prueba no ejecutada se identifica expresamente.
 
-#### 2.4.2. Impact mapping
+## 2.4.2. Impact mapping
 
 **Desarrollo del impact mapping**
 
-#### 2.4.3. Product Backlog
+## 2.4.3. Product Backlog
 
 El Product Backlog de ANITEC ordena las 35 historias del proyecto (30 historias de usuario, 3 historias técnicas y 2 historias de investigación) según el valor que aportan al negocio. El orden inicia con la presentación pública de la solución (Landing Page), continúa con la gestión del ganado y avanza hacia la vinculación veterinaria, el registro de atenciones, las indicaciones de cuidado y, finalmente, la monetización y el acceso sin conexión. Las historias de identidad y acceso se incorporan como habilitadores del primer incremento, pero no encabezan el backlog, ya que por sí solas no entregan valor al usuario. El proyecto se planifica en 4 sprints.
 

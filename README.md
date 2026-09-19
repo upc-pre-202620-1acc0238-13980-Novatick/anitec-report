@@ -60,7 +60,7 @@ Para el control de versiones se utilizó Git y GitHub. El equipo trabajó con un
 - [Student Outcome](docs/preliminares/student-outcome.md)
 - [Objetivos SMART](docs/preliminares/objetivos-smart.md)
 
-- [Capítulo I: Presentación](docs/capitulo-1/README.md)
+- [Capítulo I: Presentación](docs/capitulo-1/startup-profile.md)
   - [1.1. Startup Profile](docs/capitulo-1/startup-profile.md)
     - [1.1.1. Descripción de la Startup](docs/capitulo-1/startup-profile.md#111-descripción-de-la-startup)
     - [1.1.2. Perfiles de integrantes del equipo](docs/capitulo-1/startup-profile.md#112-perfiles-de-integrantes-del-equipo)
@@ -69,7 +69,7 @@ Para el control de versiones se utilizó Git y GitHub. El equipo trabajó con un
     - [1.2.2. Lean UX Process](docs/capitulo-1/solution-profile.md#122-lean-ux-process)
   - [1.3. Segmentos objetivo](docs/capitulo-1/segmentos-objetivo.md)
 
-- [Capítulo II: Requirements Development and Software Solution Design](docs/capitulo-2/README.md)
+- [Capítulo II: Requirements Development and Software Solution Design](docs/capitulo-2/competidores.md)
   - [2.1. Competidores](docs/capitulo-2/competidores.md)
     - [2.1.1. Análisis competitivo](docs/capitulo-2/competidores.md#211-análisis-competitivo)
     - [2.1.2. Estrategias y tácticas frente a competidores](docs/capitulo-2/competidores.md#212-estrategias-y-tácticas-frente-a-competidores)

@@ -1,14 +1,16 @@
 <div align="justify">
 
-### 2.5.1. EventStorming
+# 2.5. Strategic-Level Domain-Driven Design
+
+## 2.5.1. EventStorming
 
 A partir del Big Picture EventStorming, se profundizó en los procesos de ANITEC mediante la incorporación de comandos, actores, políticas, modelos de lectura, sistemas externos y agregados. Estos elementos permitieron identificar responsabilidades y proponer límites entre los modelos del dominio.
 
-#### 2.5.1.1. Candidate Context Discovery
+### 2.5.1.1. Candidate Context Discovery
 
 La identificación de contextos candidatos se desarrolló progresivamente, considerando las operaciones realizadas por los usuarios, las reglas que intervienen y la información necesaria para cada proceso.
 
-##### Comandos y actores
+#### Comandos y actores
 
 ![Comandos y actores](../../assets/images/event-storming/strategic/05-commands-and-actors.jpg)
 
@@ -18,7 +20,7 @@ El ganadero administra sus animales, registra observaciones, gestiona las vincul
 
 Los tratamientos y las vacunaciones se presentan como registros opcionales asociados a una atención. La programación de controles posteriores depende de la evaluación del veterinario y no implica que estos ya se hayan realizado.
 
-##### Políticas
+#### Políticas
 
 ![Políticas](../../assets/images/event-storming/strategic/06-policies.jpg)
 
@@ -28,7 +30,7 @@ En las suscripciones, la confirmación de un pago inicial válido permite activa
 
 Estas políticas permiten diferenciar las acciones automáticas de las decisiones que requieren la intervención del ganadero o del veterinario.
 
-##### Modelos de lectura
+#### Modelos de lectura
 
 ![Modelos de lectura](../../assets/images/event-storming/strategic/07-read-models.jpg)
 
@@ -38,7 +40,7 @@ Para la gestión del ganado se consideraron el inventario y la ficha del animal.
 
 Estas vistas presentan información para la consulta y la toma de decisiones. Su aparición en distintos puntos del tablero no implica que sean modelos independientes en cada ubicación.
 
-##### Sistemas externos
+#### Sistemas externos
 
 ![Sistemas externos](../../assets/images/event-storming/strategic/08-external-systems.jpg)
 
@@ -46,7 +48,7 @@ Se identificaron tres servicios externos previstos para apoyar las funcionalidad
 
 Su representación distingue los servicios externos de las responsabilidades propias del dominio. ANITEC mantiene las reglas de autorización, registro y vigencia de beneficios, mientras utiliza estas integraciones para ejecutar operaciones específicas. Un envío aceptado por un proveedor no garantiza que el usuario haya recibido o leído el mensaje.
 
-##### Agregados
+#### Agregados
 
 ![Agregados](../../assets/images/event-storming/strategic/09-aggregates.jpg)
 
@@ -56,7 +58,7 @@ Cuenta concentra el registro y la verificación del usuario. Animal reúne sus d
 
 Las apariciones repetidas de un agregado muestran su participación en distintas operaciones. Estos agregados constituyen una propuesta inicial que se refina al definir las reglas y los límites del modelo.
 
-##### Bounded contexts candidatos
+#### Bounded contexts candidatos
 
 ![Bounded contexts candidatos](../../assets/images/event-storming/strategic/10-candidate-bounded-contexts.jpg)
 
@@ -74,13 +76,13 @@ Durante esta delimitación se incorporó el agregado candidato Capacidad del inv
 
 Los límites propuestos permiten separar responsabilidades sin perder las relaciones entre los procesos. Representan límites de modelos del dominio y no implican, por sí mismos, un despliegue en servicios independientes.
 
-#### 2.5.1.2. Domain Message Flows Modeling
+### 2.5.1.2. Domain Message Flows Modeling
 
 Los siguientes diagramas muestran cómo se comunican los usuarios, la aplicación móvil, los contextos del negocio y los servicios externos de ANITEC. Se representan cinco escenarios; el tercero se divide en el envío y la aceptación de una invitación.
 
 Las notas azules representan comandos o solicitudes de acción; las naranjas, eventos que ya ocurrieron; las verdes, consultas; las moradas, reglas del negocio; y las grises, respuestas o información de apoyo. Los números permiten seguir cada flujo.
 
-##### Escenario 01: Activar suscripción premium
+#### Escenario 01: Activar suscripción premium
 
 ![Activación de suscripción premium](../../assets/images/event-storming/domain-message-flows/01-activate-premium-subscription.jpg)
 
@@ -88,7 +90,7 @@ El ganadero o veterinario solicita una suscripción premium desde la aplicación
 
 Para el ganadero, Gestión del ganado actualiza el límite de animales activos. Para el veterinario, Vinculación veterinaria actualiza el límite de ganaderos vinculados. Cada contexto aplica el límite del plan contratado y registra el cambio.
 
-##### Escenario 02: Vencimiento de suscripción premium
+#### Escenario 02: Vencimiento de suscripción premium
 
 ![Vencimiento de suscripción premium](../../assets/images/event-storming/domain-message-flows/02-premium-subscription-expiration.jpg)
 
@@ -96,7 +98,7 @@ Cuando termina el período pagado y se comprueba que no existe una nueva vigenci
 
 En Gestión del ganado se conservan los animales existentes y su historial; se impiden nuevos registros mientras la cantidad de animales activos alcance o supere el límite. Para Vinculación veterinaria se propone conservar las vinculaciones existentes y restringir nuevas aceptaciones bajo la misma condición. Esta última regla queda pendiente de validación con el equipo.
 
-##### Escenario 03A: Enviar invitación de vinculación
+#### Escenario 03A: Enviar invitación de vinculación
 
 ![Envío de invitación de vinculación veterinaria](../../assets/images/event-storming/domain-message-flows/03a-send-veterinary-linking-invitation.jpg)
 
@@ -104,7 +106,7 @@ El ganadero solicita invitar a un veterinario desde la aplicación. Vinculación
 
 Resend devuelve el resultado de la solicitud de envío. Esta respuesta no confirma que el veterinario haya leído el correo ni activa la vinculación: la autorización requiere que el destinatario acepte la invitación.
 
-##### Escenario 03B: Aceptar invitación de vinculación
+#### Escenario 03B: Aceptar invitación de vinculación
 
 ![Aceptación de invitación de vinculación veterinaria](../../assets/images/event-storming/domain-message-flows/03b-accept-veterinary-linking-invitation.jpg)
 
@@ -112,7 +114,7 @@ El veterinario acepta una invitación pendiente desde la aplicación. Vinculaci�
 
 Si las condiciones se cumplen, registra el evento «Invitación de vinculación aceptada», deja activa la vinculación y devuelve el resultado a la aplicación. Si alguna validación falla, la operación se rechaza y no se concede el acceso.
 
-##### Escenario 04: Programar visita veterinaria
+#### Escenario 04: Programar visita veterinaria
 
 ![Programación de una visita veterinaria](../../assets/images/event-storming/domain-message-flows/04-schedule-veterinary-visit.jpg)
 
@@ -120,7 +122,7 @@ El veterinario solicita programar una visita indicando el animal, el ganadero y 
 
 Tras validar la información, registra el evento «Visita veterinaria programada» y devuelve la confirmación a la aplicación. Una observación del ganadero puede motivar la visita, pero no la programa automáticamente. La programación tampoco equivale al registro de una atención realizada.
 
-##### Escenario 05: Registrar indicaciones de cuidado y notificar al ganadero
+#### Escenario 05: Registrar indicaciones de cuidado y notificar al ganadero
 
 ![Registro de indicaciones de cuidado y notificación al ganadero](../../assets/images/event-storming/domain-message-flows/05-register-care-instructions-and-notify.jpg)
 
@@ -128,11 +130,11 @@ A partir de una atención registrada, el veterinario ingresa las indicaciones de
 
 Este evento origina la solicitud de notificación al ganadero mediante Firebase Cloud Messaging (FCM). El servicio devuelve el resultado de la solicitud y gestiona la entrega del aviso al dispositivo. Las indicaciones permanecen disponibles en la aplicación aunque la notificación no llegue; la confirmación del registro al veterinario no depende de esa entrega.
 
-#### 2.5.1.3. Bounded Context Canvases
+### 2.5.1.3. Bounded Context Canvases
 
 Los siguientes canvases describen las responsabilidades, comunicaciones y reglas de los cinco contextos candidatos de ANITEC. Las métricas representan objetivos para pruebas con datos simulados, mientras que las preguntas abiertas señalan decisiones pendientes.
 
-##### Gestión del ganado
+#### Gestión del ganado
 
 ![Canvas de Gestión del ganado](../../assets/images/event-storming/bounded-context-canvases/01-livestock-management-canvas.jpg)
 
@@ -140,7 +142,7 @@ Administra el inventario del ganadero mediante el registro, actualización y baj
 
 Sus reglas conservan los registros y el historial al dar de baja animales o vencer premium. Las nuevas altas requieren capacidad disponible y cada ganadero solo puede modificar su inventario. Las pruebas verificarán estas condiciones; quedan pendientes los límites por plan, los datos obligatorios y la identificación de los animales.
 
-##### Atención veterinaria
+#### Atención veterinaria
 
 ![Canvas de Atención veterinaria](../../assets/images/event-storming/bounded-context-canvases/02-veterinary-care-canvas.jpg)
 
@@ -148,7 +150,7 @@ Organiza visitas y controles, y registra las atenciones presenciales con sus tra
 
 Programar una cita no significa haberla realizado: cada control efectuado se registra como una nueva atención. Las indicaciones generan avisos mediante Firebase Cloud Messaging. Se verificarán la autorización y la asociación correcta de registros; quedan pendientes las cancelaciones, las correcciones del historial y el tratamiento de citas tras revocar el acceso.
 
-##### Vinculación veterinaria
+#### Vinculación veterinaria
 
 ![Canvas de Vinculación veterinaria](../../assets/images/event-storming/bounded-context-canvases/03-veterinary-linking-canvas.jpg)
 
@@ -156,7 +158,7 @@ Gestiona las invitaciones y la autorización entre ganaderos y veterinarios. El 
 
 Las pruebas comprobarán que solo el destinatario responda y que la aceptación o revocación actualice la autorización. Quedan pendientes la vigencia y duplicidad de invitaciones. Además, este canvas requiere incorporar los cambios de Suscripciones y el control del límite de ganaderos vinculados al veterinario.
 
-##### Suscripciones
+#### Suscripciones
 
 ![Canvas de Suscripciones](../../assets/images/event-storming/bounded-context-canvases/04-subscriptions-canvas.jpg)
 
@@ -164,7 +166,7 @@ Administra los planes de ambos perfiles: el ganadero amplía su límite de anima
 
 Un pago inicial válido activa premium. Cancelar la renovación conserva los beneficios hasta finalizar el período pagado. Las pruebas verificarán estos comportamientos y sus comunicaciones; quedan por definir precios, límites, periodicidad y manejo de renovaciones fallidas. La integración del límite veterinario debe completarse en Vinculación veterinaria.
 
-##### Identidad y acceso
+#### Identidad y acceso
 
 ![Canvas de Identidad y acceso](../../assets/images/event-storming/bounded-context-canvases/05-identity-and-access-canvas.jpg)
 
@@ -172,13 +174,13 @@ Gestiona las cuentas, sus perfiles y la verificación del correo mediante códig
 
 Enviar un código no equivale a verificar el correo: debe comprobarse su validez y asociación con la cuenta. Las pruebas evaluarán el registro y la verificación. Permanecen pendientes la duración y los intentos del código, el inicio de sesión, la recuperación de acceso y la posibilidad de utilizar ambos perfiles.
 
-### 2.5.2. Context Mapping
+## 2.5.2. Context Mapping
 
 El Context Map de ANITEC representa las dependencias entre los cinco bounded contexts y sus integraciones externas. La marca U identifica al proveedor de información o capacidades y D al contexto consumidor. Estas relaciones expresan dependencias del modelo, no el orden temporal de las operaciones.
 
 ![Context Map de ANITEC](../../assets/images/context-mapping/01-anitec-context-map.jpg)
 
-#### Relaciones entre bounded contexts
+### Relaciones entre bounded contexts
 
 | Proveedor (U)           | Consumidor (D)                                                                    | Relación                                                                                                                |
 | ----------------------- | --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
@@ -192,7 +194,7 @@ En las cuatro relaciones entre Suscripciones, Gestión del ganado, Vinculación 
 
 La conexión entre Suscripciones y Vinculación veterinaria aparece discontinua porque está pendiente de completar su representación en el canvas y los flujos correspondientes.
 
-#### Integraciones externas
+### Integraciones externas
 
 Stripe proporciona el procesamiento de pagos y la información de vigencia utilizada por Suscripciones. Se propone una Anti-Corruption Layer (ACL) del lado de ANITEC para traducir los conceptos y resultados de Stripe al modelo propio, reduciendo su dependencia del formato externo.
 
@@ -200,11 +202,11 @@ Resend permite enviar códigos de verificación e invitaciones desde Identidad y
 
 Estas integraciones se muestran como dependencias U/D. El uso de sus servicios no implica una relación Customer–Supplier en el sentido de coordinación entre equipos. Los límites del mapa tampoco requieren que cada contexto se despliegue como un microservicio independiente.
 
-### 2.5.3. Software Architecture
+## 2.5.3. Software Architecture
 
 La arquitectura de ANITEC se representa mediante el modelo C4. Los diagramas de contexto y contenedores describen los usuarios, los servicios externos y los principales elementos de software que conforman la aplicación móvil y su backend.
 
-#### 2.5.3.1. Software Architecture Context Level Diagram
+### 2.5.3.1. Software Architecture Context Level Diagram
 
 ![Diagrama de contexto del sistema ANITEC](../../assets/images/software-architecture/01-anitec-system-context.png)
 
@@ -212,7 +214,7 @@ El diagrama presenta la interacción de ANITEC con sus dos perfiles de usuario. 
 
 ANITEC se integra con Stripe para gestionar pagos y suscripciones en modo de prueba, con Resend para enviar correos de verificación e invitaciones y con Firebase Cloud Messaging para notificar nuevas indicaciones y sus actualizaciones.
 
-#### 2.5.3.2. Software Architecture Container Level Diagrams
+### 2.5.3.2. Software Architecture Container Level Diagrams
 
 ![Diagrama de contenedores de ANITEC](../../assets/images/software-architecture/02-anitec-container-diagram.png)
 
@@ -220,7 +222,7 @@ La aplicación móvil se desarrollará con Flutter y Dart para Android e iOS. Se
 
 En cada dispositivo, SQLite conservará los datos descargados de la cuenta: inventario, fichas consultadas, últimas atenciones e indicaciones y agenda, según el perfil y sus permisos. Estos datos podrán consultarse sin conexión mostrando su fecha de actualización; las operaciones de registro y modificación requerirán internet. La API gestionará las integraciones con Stripe, Resend y Firebase Cloud Messaging, mientras la aplicación recibirá las notificaciones push.
 
-#### 2.5.3.3. Software Architecture Deployment Diagrams
+### 2.5.3.3. Software Architecture Deployment Diagrams
 
 ![Diagrama de despliegue propuesto de ANITEC](../../assets/images/software-architecture/03-anitec-deployment-diagram.png)
 
