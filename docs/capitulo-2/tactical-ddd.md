@@ -972,9 +972,19 @@ Los contextos que conservan historiales o indicaciones descargadas comprueban nu
 
 ##### 2.6.3.5. Bounded Context Software Architecture Component Level Diagrams
 
-###### API REST - Java / Spring Boot
+##### 2.6.3.5. Bounded Context Software Architecture Component Level Diagrams
 
 ###### Aplicación móvil - Flutter
+
+El frontend de Veterinary Linking Context se divide en Presentation, Application, Infrastructure y Domain. Presentation muestra los formularios de invitación, invitaciones pendientes y vinculaciones activas; Application coordina el envío, aceptación, rechazo y revocación de vinculaciones; Domain representa las invitaciones, vinculaciones y capacidad; e Infrastructure implementa la comunicación con la REST API y los servicios técnicos requeridos. Este contexto no utiliza SQLite, debido a que sus datos se consultan directamente al servidor y se mantienen durante la sesión.
+
+![Frontend - Veterinary Linking](<../../assets/images/componets-level-diagrams/Frontend - Veterinary Linking.png>)
+
+###### API REST - Java
+
+El backend de Veterinary Linking Context está compuesto por Interfaces, Application, Infrastructure y Domain. Interfaces expone las operaciones relacionadas con invitaciones y vinculaciones; Application coordina los casos de uso y el control de capacidad; Domain contiene las reglas correspondientes a invitaciones, vínculos y límites; e Infrastructure implementa la persistencia en MySQL y las integraciones con Identity and Access, Subscriptions y Resend. Asimismo, el contexto expone la autorización de vinculaciones para Veterinary Care y utiliza el Shared Kernel del backend.
+
+![Backend - Veterinary Linking](<../../assets/images/componets-level-diagrams/Backend - Veterinary Linking.png>)
 
 ##### 2.6.3.6. Bounded Context Software Architecture Code Level Diagrams
 
