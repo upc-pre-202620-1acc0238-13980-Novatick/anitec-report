@@ -331,7 +331,16 @@ El indicador de conexión no garantiza que la API responda. Los errores de comun
 
 ###### Aplicación móvil - Flutter
 
+El diagrama de componentes del frontend muestra la descomposición de Livestock Management Context en Presentation, Application, Infrastructure y Domain. Presentation gestiona las pantallas y formularios relacionados con el inventario de animales; Application coordina las operaciones del módulo; Domain contiene los modelos y contratos principales; e Infrastructure implementa la comunicación con la REST API y el almacenamiento local en SQLite. El módulo también utiliza Shared para navegación, sesión y elementos comunes de la aplicación móvil.
+
+![Frontend - Livestock Management](<../../assets/images/componets-level-diagrams/Frontend - Livestock Management.png>)
+
 ###### API REST - Java
+
+El diagrama de componentes del backend representa Livestock Management Context mediante Interfaces, Application, Infrastructure y Domain. Interfaces expone los endpoints relacionados con animales, observaciones y capacidad del inventario; Application coordina los casos de uso; Domain concentra las reglas y modelos del dominio; e Infrastructure implementa la persistencia mediante JPA e Hibernate sobre MySQL. El backend utiliza además un Shared Kernel para los elementos comunes entre bounded contexts.
+
+![Backend - Livestock Management](<../../assets/images/componets-level-diagrams/Backend - Livestock Management.png>)
+
 
 ##### 2.6.1.6. Bounded Context Software Architecture Code Level Diagrams
 
@@ -669,7 +678,15 @@ SQLite no conserva credenciales ni funciona como una cola de modificaciones. Las
 
 ###### Aplicación móvil - Flutter
 
+El diagrama de componentes del frontend de Veterinary Care Context se organiza en Presentation, Application, Infrastructure y Domain. Presentation gestiona la agenda, el historial y los formularios de atención veterinaria; Application coordina las consultas y registros del módulo; Domain representa citas, atenciones, tratamientos, vacunaciones e indicaciones; e Infrastructure implementa la comunicación con la REST API, el almacenamiento local en SQLite y la integración técnica con notificaciones. Shared proporciona los elementos comunes de la aplicación móvil.
+
+![Frontend - Veterinary Care](<../../assets/images/componets-level-diagrams/Frontend - Veterinary Care.png>)
+
 ###### API REST - Java
+
+El backend de Veterinary Care Context se descompone en Interfaces, Application, Infrastructure y Domain. Interfaces recibe las solicitudes relacionadas con visitas, controles y atenciones; Application coordina los casos de uso y las autorizaciones; Domain concentra las reglas de las citas y registros veterinarios; e Infrastructure gestiona la persistencia en MySQL y las integraciones con Livestock Management, Veterinary Linking y Firebase Cloud Messaging. También se utiliza el Shared Kernel para elementos comunes del backend.
+
+![Backend - Veterinary Care](<../../assets/images/componets-level-diagrams/Backend - Veterinary Care.png>)
 
 ##### 2.6.2.6. Bounded Context Software Architecture Code Level Diagrams
 
@@ -955,9 +972,19 @@ Los contextos que conservan historiales o indicaciones descargadas comprueban nu
 
 ##### 2.6.3.5. Bounded Context Software Architecture Component Level Diagrams
 
-###### API REST - Java / Spring Boot
+##### 2.6.3.5. Bounded Context Software Architecture Component Level Diagrams
 
 ###### Aplicación móvil - Flutter
+
+El frontend de Veterinary Linking Context se divide en Presentation, Application, Infrastructure y Domain. Presentation muestra los formularios de invitación, invitaciones pendientes y vinculaciones activas; Application coordina el envío, aceptación, rechazo y revocación de vinculaciones; Domain representa las invitaciones, vinculaciones y capacidad; e Infrastructure implementa la comunicación con la REST API y los servicios técnicos requeridos. Este contexto no utiliza SQLite, debido a que sus datos se consultan directamente al servidor y se mantienen durante la sesión.
+
+![Frontend - Veterinary Linking](<../../assets/images/componets-level-diagrams/Frontend - Veterinary Linking.png>)
+
+###### API REST - Java
+
+El backend de Veterinary Linking Context está compuesto por Interfaces, Application, Infrastructure y Domain. Interfaces expone las operaciones relacionadas con invitaciones y vinculaciones; Application coordina los casos de uso y el control de capacidad; Domain contiene las reglas correspondientes a invitaciones, vínculos y límites; e Infrastructure implementa la persistencia en MySQL y las integraciones con Identity and Access, Subscriptions y Resend. Asimismo, el contexto expone la autorización de vinculaciones para Veterinary Care y utiliza el Shared Kernel del backend.
+
+![Backend - Veterinary Linking](<../../assets/images/componets-level-diagrams/Backend - Veterinary Linking.png>)
 
 ##### 2.6.3.6. Bounded Context Software Architecture Code Level Diagrams
 
@@ -1247,9 +1274,19 @@ La integración utiliza el entorno de prueba durante el desarrollo académico. L
 
 ##### 2.6.4.5. Bounded Context Software Architecture Component Level Diagrams
 
-###### API REST - Java / Spring Boot
+##### 2.6.4.5. Bounded Context Software Architecture Component Level Diagrams
 
 ###### Aplicación móvil - Flutter
+
+El frontend de Subscriptions Context se estructura mediante Presentation, Application, Infrastructure y Domain. Presentation muestra los planes disponibles, la suscripción actual y su vigencia; Application coordina las consultas, contratación premium y cancelación de renovación; Domain contiene los modelos de planes, precios y suscripciones; e Infrastructure implementa la comunicación con la REST API y la apertura del proceso de pago. Este contexto no requiere SQLite y utiliza Stripe en modo de prueba para el proceso de checkout.
+
+![Frontend - Subscriptions](<../../assets/images/componets-level-diagrams/Frontend - Subscriptions.png>)
+
+###### API REST - Java
+
+El backend de Subscriptions Context está conformado por Interfaces, Application, Infrastructure y Domain. Interfaces expone la consulta de planes, gestión de suscripciones y recepción de webhooks; Application coordina pagos, cancelaciones, vigencias y cambios de beneficios; Domain contiene las reglas de planes y suscripciones; e Infrastructure implementa la persistencia en MySQL y la integración con Stripe. El contexto también comunica los límites vigentes a Livestock Management y Veterinary Linking y utiliza el Shared Kernel del backend.
+
+![Backend - Subscriptions](<../../assets/images/componets-level-diagrams/Backend - Subscriptions.png>)
 
 ##### 2.6.4.6. Bounded Context Software Architecture Code Level Diagrams
 
@@ -1540,9 +1577,17 @@ Los adaptadores `IdentitySessionAdapter`, `IdentityCareSessionAdapter`, `Identit
 
 ##### 2.6.5.5. Bounded Context Software Architecture Component Level Diagrams
 
-###### API REST - Java / Spring Boot
-
 ###### Aplicación móvil - Flutter
+
+El frontend de Identity and Access Context se divide en Presentation, Application, Infrastructure y Domain. Presentation contiene las interfaces para registro, verificación de correo e inicio de sesión; Application coordina las operaciones relacionadas con cuenta y sesión; Domain representa la identidad, perfil y credenciales de sesión; e Infrastructure implementa la comunicación con la REST API, el almacenamiento seguro de credenciales y la integración con las notificaciones del dispositivo. Shared proporciona navegación, sesión y elementos comunes utilizados por la aplicación móvil.
+
+![Frontend - Identity and Access](<../../assets/images/componets-level-diagrams/Frontend - Identity and Access.png>)
+
+###### API REST - Java
+
+El backend de Identity and Access Context se descompone en Interfaces, Application, Infrastructure y Domain. Interfaces expone las operaciones de registro, verificación, autenticación y cierre de sesión; Application coordina la gestión de cuentas, códigos y sesiones; Domain contiene las reglas asociadas a cuentas, verificaciones e identidad; e Infrastructure implementa la persistencia en MySQL, mecanismos de seguridad e integración con Resend para el envío de códigos de verificación. Este contexto proporciona además la identidad autenticada requerida por los demás bounded contexts y utiliza el Shared Kernel del backend.
+
+![Backend - Identity and Access](<../../assets/images/componets-level-diagrams/Backend - Identity and Access.png>)
 
 ##### 2.6.5.6. Bounded Context Software Architecture Code Level Diagrams
 
