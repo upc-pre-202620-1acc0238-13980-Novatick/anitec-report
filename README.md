@@ -29,14 +29,29 @@
 <br>
 </div>
 
-# Registro de Versiones del Informe
+## Registro de Versiones del Informe
 
-| **Versión** | **Fecha** | **Autor** | **Descripción de modificación** |
-| ----------- | --------- | --------- | ------------------------------- |
+| Versión | Fecha      | Autor(es)       | Descripción de la modificación                                                                                       |
+| ------- | ---------- | --------------- | -------------------------------------------------------------------------------------------------------------------- |
+| 0.1     | 04/09/2026 | Equipo NOVATICK | Creación de la estructura inicial del informe y definición de la propuesta ANITEC.                                   |
+| 0.2     | 11/09/2026 | Equipo NOVATICK | Incorporación de Startup Profile, Solution Profile, Lean UX, segmentos objetivo y diseño de entrevistas.             |
+| 0.3     | 18/09/2026 | Equipo NOVATICK | Incorporación del análisis competitivo, Domain-Driven Design y documentación inicial de la arquitectura de software. |
 
 <br>
 
-# Project Report Collaboration Insights
+## Project Report Collaboration Insights
+
+Cada integrante participó en la elaboración de diferentes secciones del proyecto, mientras que la integración de los cambios se realizó mediante ramas de trabajo y Pull Requests hacia la rama `develop` del repositorio.
+
+| Integrante                              | Principales contribuciones                                                                                                                                                                                 |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| León Morales, Johan Yonel               | Coordinación general del proyecto, Startup Profile, entrevistas, User Stories, EventStorming, Strategic-Level DDD, Tactical-Level DDD, Software Architecture, conclusiones y revisión general del informe. |
+| Lozano Leon, Richard Enrique            | Startup Profile, antecedentes y problemática, análisis de competidores, entrevistas, User Stories, Impact Mapping, Product Backlog, Strategic-Level DDD, Context Mapping y Tactical-Level DDD.             |
+| Montes Zamora, Edgar Alexander Mauricio | Lean UX Process, segmentos objetivo, entrevistas, User Personas, User Task Matrix, User Journey Mapping, Empathy Mapping, análisis de entrevistas, User Stories y apoyo en Software Architecture.          |
+| Mauricio Silva, Ghiou Justinn           | Lean UX Canvas, Big Picture EventStorming, Strategic-Level DDD, Context Mapping y Tactical-Level DDD.                                                                                                      |
+| Ayala Fernandez, Jorge Brayan           | Análisis de competidores, Impact Mapping, Product Backlog, Software Architecture y anexos.                                                                                                                 |
+
+Para el control de versiones se utilizó Git y GitHub. El equipo trabajó con una rama principal `main`, una rama de integración `develop` y ramas `feature/*` para el desarrollo de secciones específicas. Los cambios fueron integrados mediante Pull Requests después de su revisión.
 
 # Contenido
 
