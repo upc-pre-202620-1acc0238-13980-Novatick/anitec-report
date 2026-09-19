@@ -7,7 +7,9 @@ docs/capitulo-1/segmentos-objetivo.md
 docs/capitulo-2/competidores.md
 docs/capitulo-2/entrevistas.md
 docs/capitulo-2/needfinding.md
+docs/capitulo-2/requirements-specification.md
 docs/capitulo-2/strategic-ddd.md
+docs/capitulo-2/tactical-ddd.md
 docs/cierre/conclusiones.md
 docs/cierre/bibliografia.md
 docs/anexos/README.md
