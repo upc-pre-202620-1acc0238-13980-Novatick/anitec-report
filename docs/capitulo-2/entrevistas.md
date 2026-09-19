@@ -99,6 +99,37 @@ La entrevista permitió reconocer que Porfirio necesita una solución que no sol
 
 ### Entrevistas al segmento de veterinarios
 
+#### Entrevista 2: Hugo Jorge Quichua
+
+<div align="center">
+
+| Campo                   | Información                            |
+| ----------------------- | -------------------------------------- |
+| Segmento                | Veterinario                            |
+| Nombres y apellidos     | Hugo Jorge Quichua                     |
+| Edad                    | 27 años                                |
+| Distrito                | Ventanilla, Lima                       |
+| Ocupación               | Médico veterinario                     |
+| Zona de trabajo         | Selva central del Perú                 |
+| Tipo de atención        | Atención clínica y sanitaria de ganado |
+| Inicio de la entrevista | 00:00                                  |
+| Duración                | 00:08:09                               |
+| URL del video           | https://tinyurl.com/yzzakdyk           |
+
+</div>
+
+<div align="center">
+   <img src="../../assets/images/interviews/veterinarians/jorge-quichua.png" width="420">
+</div>
+
+**Resumen de la entrevista:**
+
+Hugo Jorge Quichua comentó que una dificultad frecuente en la atención veterinaria ganadera es encontrar información incompleta o inexistente sobre los animales. Explicó que, cuando se incorporan nuevos animales sin historial médico previo, el veterinario debe tomar decisiones con datos limitados, lo que puede afectar la planificación de tratamientos, vacunaciones y seguimientos. También señaló que muchos registros se manejan en cuadernos, notas, Excel o conversaciones de WhatsApp, por lo que no siempre existe una fuente única y confiable.
+
+El entrevistado mostró una personalidad analítica, práctica y orientada a la solución de problemas. Valora contar con datos antes de intervenir y considera importante que el productor pueda compartir información de manera rápida. Sus canales de trabajo más frecuentes son WhatsApp, llamadas, hojas de cálculo y documentos enviados por celular. Utiliza smartphone y laptop, además de navegador web para consultar información técnica o coordinar actividades. Sus influencias provienen de la experiencia clínica, colegas veterinarios, productores de campo y casos donde la falta de trazabilidad sanitaria afectó el seguimiento de los animales.
+
+Según sus respuestas, AniTec podría aportar valor si permite acceder al historial sanitario del animal, registrar diagnósticos y tratamientos, programar próximas visitas y mantener comunicación clara con el ganadero. También resaltó que la herramienta debe ser intuitiva, rápida y adaptada al contexto de campo, donde puede haber conectividad limitada. La entrevista refuerza el arquetipo de veterinario de campo que ya usa herramientas digitales básicas, pero necesita una plataforma integrada para reducir errores, evitar pérdida de información y mejorar la continuidad del tratamiento.
+
 ## 2.2.3. Análisis de entrevistas
 
 Pendiente de completar a partir de las entrevistas realizadas.
