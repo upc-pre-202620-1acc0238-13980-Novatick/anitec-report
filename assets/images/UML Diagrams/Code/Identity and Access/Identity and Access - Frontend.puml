@@ -1,0 +1,134 @@
+@startuml
+title Identity and Access - Frontend
+
+top to bottom direction
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package "Identity and Access" {
+
+    class RegisterPage {
+        - viewModel: IdentityViewModel
+        - email: String
+        - password: String
+        - profile: AccountProfile
+
+        + build(): Widget
+        + validateForm(): bool
+        + submit(): void
+    }
+
+    class EmailVerificationPage {
+        - viewModel: IdentityViewModel
+        - code: String
+
+        + build(): Widget
+        + submitCode(): void
+        + requestNewCode(): void
+    }
+
+    class SignInPage {
+        - viewModel: IdentityViewModel
+        - email: String
+        - password: String
+
+        + build(): Widget
+        + validateForm(): bool
+        + submit(): void
+    }
+
+    class SessionGate {
+        - viewModel: IdentityViewModel
+
+        + build(): Widget
+        + restoreSession(): void
+    }
+
+    class IdentityViewModel {
+        - service: IdentityApplicationService
+        - identity: AccountIdentity
+        - verification: VerificationReference
+        - isLoading: bool
+        - errorMessage: String
+
+        + register(): void
+        + verifyEmail(): void
+        + resendVerification(): void
+        + signIn(): void
+        + restoreSession(): void
+        + signOut(): void
+    }
+
+    class IdentityApplicationService {
+        - repository: IdentityRepository
+
+        + register(): Future
+        + verifyEmail(): Future
+        + resendVerification(): Future
+        + signIn(): Future
+        + restoreSession(): Future
+        + signOut(): Future
+    }
+
+    interface IdentityRepository {
+        + register(): Future<VerificationReference>
+        + verifyEmail(): Future
+        + resendVerification(): Future<VerificationReference>
+        + signIn(): Future<SessionCredentials>
+        + getCurrentIdentity(): Future<AccountIdentity>
+        + signOut(): Future
+    }
+
+    class IdentityRepositoryImpl {
+        + register(): Future<VerificationReference>
+        + verifyEmail(): Future
+        + resendVerification(): Future<VerificationReference>
+        + signIn(): Future<SessionCredentials>
+        + getCurrentIdentity(): Future<AccountIdentity>
+        + signOut(): Future
+    }
+
+    class AccountIdentity {
+        - accountId: String
+        - email: String
+        - profile: AccountProfile
+    }
+
+    class SessionCredentials {
+        - sessionId: String
+        - token: String
+        - expiresAt: DateTime
+        - identity: AccountIdentity
+
+        + isLocallyValidAt(now: DateTime): bool
+    }
+
+    class VerificationReference {
+        - accountId: String
+        - verificationId: String
+        - expiresAt: DateTime
+        - emailAccepted: bool
+    }
+
+    RegisterPage --> IdentityViewModel
+    EmailVerificationPage --> IdentityViewModel
+    SignInPage --> IdentityViewModel
+    SessionGate --> IdentityViewModel
+
+    IdentityViewModel --> IdentityApplicationService
+
+    IdentityApplicationService --> IdentityRepository
+
+    IdentityRepositoryImpl ..|> IdentityRepository
+
+    IdentityRepository --> AccountIdentity
+    IdentityRepository --> SessionCredentials
+    IdentityRepository --> VerificationReference
+
+    SessionCredentials --> AccountIdentity
+}
+
+@enduml
