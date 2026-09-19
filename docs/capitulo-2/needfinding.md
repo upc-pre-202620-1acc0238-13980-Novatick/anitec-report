@@ -4,11 +4,80 @@
 
 ### 2.3.1. User Personas
 
+**Segmento 1: Ganaderos**
+
+![Segmento 1 - UserPersonas](../../assets/images/NeedFinding/UserPersonas/userPersonas_1.png)
+
+
 ### 2.3.2. User Task Matrix
+
+**Segmento 1: Ganaderos**
+
+
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Task</th>
+      <th colspan="2">Porfirio Salazar Rodríguez</th>
+    </tr>
+    <tr>
+      <th>Frequency</th>
+      <th>Importance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Supervisar el estado general de los animales</td>
+      <td>Alta</td>
+      <td>Alta</td>
+    </tr>
+    <tr>
+      <td>Revisar la alimentación y el cuidado diario del ganado</td>
+      <td>Alta</td>
+      <td>Alta</td>
+    </tr>
+    <tr>
+      <td>Identificar posibles problemas de salud en los animales</td>
+      <td>Alta</td>
+      <td>Alta</td>
+    </tr>
+    <tr>
+      <td>Consultar los antecedentes sanitarios de cada animal</td>
+      <td>Media</td>
+      <td>Alta</td>
+    </tr>
+    <tr>
+      <td>Coordinar atenciones con un veterinario</td>
+      <td>Media</td>
+      <td>Alta</td>
+    </tr>
+    <tr>
+      <td>Dar seguimiento a tratamientos e indicaciones veterinarias</td>
+      <td>Media</td>
+      <td>Alta</td>
+    </tr>
+    <tr>
+      <td>Controlar vacunas y cuidados pendientes de los animales</td>
+      <td>Media</td>
+      <td>Alta</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
 
 ### 2.3.3. User Journey Mapping
 
+**Segmento 1: Ganaderos**
+
+![Segmento 1 - JourneyMapping](../../assets/images/NeedFinding/UserJourneyMapping/userJourneyMapping_1.jpg)
+
 ### 2.3.4. Empathy Mapping
+
+**Segmento 1: Ganaderos**
+
+![Segmento 1 - EmpathyMapping](../../assets/images/NeedFinding/EmpathyMapping/empathyMapping_1.jpg)
 
 ### 2.3.5. Big Picture EventStorming
 
