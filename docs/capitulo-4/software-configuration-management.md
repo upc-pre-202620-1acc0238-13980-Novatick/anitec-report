@@ -4,7 +4,7 @@
 
 La configuración del proyecto establece las herramientas y convenciones que utilizará el equipo para desarrollar la aplicación móvil, los servicios del backend y la landing page.
 
-ANITEC contempla Flutter y Dart para la aplicación móvil, Java con Spring Boot para el backend y MySQL para la base de datos central. SQLite se utiliza para conservar información de consulta en el dispositivo. La landing page se plantea como un sitio estático publicado mediante GitHub Pages.
+ANITEC contempla Flutter y Dart para la aplicación móvil, Java con Spring Boot para el backend y MySQL para la base de datos central. SQLite se utiliza para conservar información de consulta en el dispositivo. La publicación de la landing page, el backend y la base de datos central se realizará en Microsoft Azure.
 
 #### 4.1.1. Software Development Environment Configuration
 
@@ -29,6 +29,7 @@ El entorno de desarrollo de ANITEC reúne las herramientas utilizadas para elabo
 | ------------------------ | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
 | Flutter y Dart           | Desarrollar la aplicación móvil para Android e iOS desde una base de código compartida.           | [Instalación](https://docs.flutter.dev/install)         |
 | Android Studio           | Configurar las herramientas de Android y utilizar un emulador para ejecutar la aplicación.        | [Descarga](https://developer.android.com/studio)        |
+| IntelliJ IDEA            | Desarrollar, ejecutar y depurar el backend de ANITEC con Java y Spring Boot.                      | [Sitio oficial](https://www.jetbrains.com/idea/)        |
 | Xcode                    | Compilar y probar la versión de iOS en un equipo con macOS.                                       | [Sitio oficial](https://developer.apple.com/xcode/)     |
 | Java Development Kit     | Proporcionar las herramientas necesarias para compilar y ejecutar el backend en Java.             | [Descarga de Eclipse Temurin](https://adoptium.net/)    |
 | Spring Boot              | Desarrollar los servicios del backend y aplicar las reglas de negocio.                            | [Sitio oficial](https://spring.io/projects/spring-boot) |
@@ -45,7 +46,7 @@ Se propone utilizar las siguientes herramientas durante la implementación.
 | GitHub Projects | Organizar las historias de usuario, las tareas del sprint y sus estados.                  | [Documentación](https://docs.github.com/en/issues/planning-and-tracking-with-projects) |
 | Postman         | Enviar solicitudes al backend y revisar sus respuestas durante las pruebas.               | [Descarga](https://www.postman.com/downloads/)                                         |
 | JUnit           | Automatizar pruebas de los comportamientos del backend desarrollado en Java.              | [Sitio oficial](https://junit.org/)                                                    |
-| GitHub Pages    | Publicar la landing page estática.                                                        | [Documentación](https://docs.github.com/en/pages)                                      |
+| Microsoft Azure | Alojar la landing page, el backend y la base de datos MySQL de ANITEC.                    | [Portal de Azure](https://portal.azure.com/)                                           |
 | GitHub Actions  | Ejecutar tareas automatizadas del repositorio, incluida la generación del informe en PDF. | [Documentación](https://docs.github.com/en/actions)                                    |
 
 ##### Configuración compartida
@@ -201,3 +202,39 @@ Cada escenario comprueba un comportamiento concreto y se relaciona con una histo
 - [Gherkin Reference](https://cucumber.io/docs/gherkin/reference/)
 
 #### 4.1.4. Software Deployment Configuration
+
+El despliegue de ANITEC contempla la publicación de la landing page, el backend y la base de datos central en Microsoft Azure. La aplicación móvil se instalará en los dispositivos y accederá al backend mediante una dirección pública con HTTPS.
+
+##### Distribución de los productos
+
+| Producto              | Tecnología             | Destino previsto                                             |
+| --------------------- | ---------------------- | ------------------------------------------------------------ |
+| Landing page          | HTML, CSS y JavaScript | Alojamiento en Microsoft Azure.                              |
+| Backend               | Java y Spring Boot     | Entorno de ejecución compatible con Java en Microsoft Azure. |
+| Base de datos central | MySQL                  | Servicio de base de datos en Microsoft Azure.                |
+| Aplicación móvil      | Flutter y Dart         | Dispositivos Android e iOS.                                  |
+| Almacenamiento local  | SQLite                 | Almacenamiento privado de la aplicación en cada dispositivo. |
+
+Los servicios específicos de Azure y sus recursos se definirán al configurar el entorno de publicación.
+
+##### Configuración prevista
+
+La landing page se publicará desde su repositorio y se comprobará que sus páginas, imágenes y enlaces puedan consultarse desde el navegador.
+
+El backend se compilará desde su repositorio y se configurará con los datos de conexión a MySQL y las credenciales de los servicios externos. Las contraseñas y claves se mantendrán fuera del código publicado.
+
+La base de datos central permitirá el acceso del backend. La aplicación móvil realizará sus operaciones a través de los servicios del backend, sin conectarse directamente a MySQL.
+
+En la aplicación móvil se configurará la dirección del backend publicado. SQLite conservará los datos descargados para su consulta local.
+
+##### Comprobaciones previstas
+
+Antes de presentar el despliegue se comprobarán los siguientes aspectos:
+
+- Acceso a la landing page y funcionamiento de sus enlaces.
+- Disponibilidad del backend mediante HTTPS.
+- Conexión del backend con MySQL.
+- Ejecución de las operaciones implementadas desde la aplicación o una herramienta de pruebas.
+- Configuración de los servicios externos incluidos en el alcance de la entrega.
+
+Los pasos concretos, los recursos utilizados y las direcciones de acceso se incorporarán cuando se configure el despliegue.
