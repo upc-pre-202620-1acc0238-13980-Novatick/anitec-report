@@ -129,4 +129,75 @@ Durante el desarrollo inicial se utilizarán versiones 0.x.y. Las entregas se id
 
 #### 4.1.3. Source Code Style Guide & Conventions
 
+El equipo establece convenciones para mantener el código legible y consistente. Los nombres de clases, métodos, variables, archivos y otros elementos se redactan en inglés y utilizan los términos definidos en el lenguaje del dominio. Los textos visibles para los usuarios se presentan en español.
+
+##### Convenciones generales
+
+- Utilizar nombres descriptivos que indiquen la responsabilidad de cada elemento.
+- Mantener el código organizado por contexto y por las capas definidas en el diseño táctico.
+- Escribir funciones con una responsabilidad clara.
+- Evitar código duplicado, archivos sin uso y bloques de código comentado.
+- Agregar comentarios cuando sea necesario explicar una decisión o una regla de negocio.
+- Aplicar el formato acordado antes de enviar los cambios a revisión.
+
+##### Backend: Java y Spring Boot
+
+Se toma como referencia Google Java Style Guide.
+
+| Elemento            | Convención                                                 | Ejemplo                    |
+| ------------------- | ---------------------------------------------------------- | -------------------------- |
+| Clases e interfaces | UpperCamelCase: cada palabra comienza con mayúscula.       | AnimalController           |
+| Métodos y variables | lowerCamelCase: la primera palabra comienza con minúscula. | registerAnimal, animalCode |
+| Constantes          | Mayúsculas con guiones bajos.                              | DEFAULT_ANIMAL_LIMIT       |
+| Paquetes            | Minúsculas, sin guiones ni guiones bajos.                  | livestockmanagement        |
+| Archivos Java       | Mismo nombre de la clase principal.                        | AnimalController.java      |
+
+Se utilizan espacios para la indentación, con dos espacios por nivel según la guía adoptada. Los imports se declaran de forma explícita y se eliminan los que no se utilizan.
+
+La organización del backend conserva las responsabilidades de las capas Domain, Application, Interface e Infrastructure. Las reglas del dominio se mantienen separadas de la recepción de solicitudes y del acceso a la base de datos.
+
+##### Aplicación móvil: Dart y Flutter
+
+Se toma como referencia Effective Dart.
+
+| Elemento                             | Convención                    | Ejemplo                      |
+| ------------------------------------ | ----------------------------- | ---------------------------- |
+| Clases y enumeraciones               | UpperCamelCase.               | AnimalProfilePage            |
+| Métodos, variables y constantes      | lowerCamelCase.               | loadAnimals, defaultPageSize |
+| Archivos y carpetas                  | Minúsculas con guiones bajos. | animal_profile_page.dart     |
+| Elementos privados de una biblioteca | Prefijo con guion bajo.       | \_selectedAnimal             |
+
+El formato se aplica mediante dart format y la revisión estática mediante flutter analyze. Las pantallas y componentes visuales se organizan en archivos con responsabilidades definidas.
+
+Los colores y estilos compartidos se centralizan para mantener la identidad visual de ANITEC. Las solicitudes al backend y el acceso al almacenamiento local se gestionan fuera de los componentes visuales.
+
+##### Landing page: HTML, CSS y JavaScript
+
+Se toman como referencia las guías de estilo de Google para HTML, CSS y JavaScript.
+
+| Elemento                               | Convención                                                 | Ejemplo        |
+| -------------------------------------- | ---------------------------------------------------------- | -------------- |
+| Archivos                               | Minúsculas y palabras separadas por guiones.               | main-menu.js   |
+| Clases e identificadores de HTML y CSS | Nombres descriptivos en minúsculas, separados por guiones. | feature-card   |
+| Variables y funciones de JavaScript    | lowerCamelCase.                                            | toggleMenu     |
+| Clases de JavaScript                   | UpperCamelCase.                                            | NavigationMenu |
+
+Se emplean etiquetas HTML que expresen la función del contenido, como header, nav, main y footer. Los estilos y scripts se organizan en archivos separados, y las imágenes informativas incluyen una descripción alternativa.
+
+##### Pruebas de aceptación: Gherkin
+
+Los archivos de pruebas de aceptación utilizan la extensión .feature y nombres descriptivos en inglés, como animal_registration.feature.
+
+Los escenarios se redactan en inglés con la estructura Given, When y Then. Given establece la situación inicial, When describe la acción y Then indica el resultado esperado. And permite agregar condiciones o resultados relacionados.
+
+Cada escenario comprueba un comportamiento concreto y se relaciona con una historia de usuario. Se evitan detalles internos del código para mantener el enfoque en las reglas y resultados del sistema.
+
+##### Referencias
+
+- [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
+- [Effective Dart: Style](https://dart.dev/effective-dart/style)
+- [Google HTML/CSS Style Guide](https://google.github.io/styleguide/htmlcssguide.html)
+- [Google JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html)
+- [Gherkin Reference](https://cucumber.io/docs/gherkin/reference/)
+
 #### 4.1.4. Software Deployment Configuration
