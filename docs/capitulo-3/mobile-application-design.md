@@ -351,3 +351,19 @@ La pantalla reúne los accesos a suscripción, perfil, preferencias, ayuda y doc
 Los recorridos completos pueden consultarse y ampliarse en Figma. [Consultar los user flows en Figma](https://www.figma.com/design/VRl8XdC5NZzvfBijUy0zYy/ANITEC?node-id=134-2169&t=Wqp9Dw4KNOatonVO-1)
 
 #### 3.1.4.5. Mobile Applications Prototyping
+
+El prototipo interactivo de ANITEC se elaboró en Figma a partir de los mock-ups. Permite explorar la navegación y simular las principales tareas de ganaderos y veterinarios.
+
+Incluye los recorridos de acceso, gestión del ganado, vinculación veterinaria, programación de visitas y registro y consulta de atenciones. Las conexiones entre pantallas permiten representar estas interacciones sin implementar todavía la lógica del aplicativo.
+
+##### Prototipo en Figma
+
+[Explorar el prototipo interactivo de ANITEC](https://www.figma.com/proto/VRl8XdC5NZzvfBijUy0zYy/ANITEC?node-id=104-2025&viewport=206%2C322%2C0.15&t=QRAzzOxnQCtiP183-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=104%3A2025&page-id=104%3A2024)
+
+##### Video de demostración
+
+El video presenta la navegación del prototipo y las principales tareas de ambos perfiles.
+
+![Vista previa del video del prototipo de ANITEC](../../assets/images/capitulo-3/mobile/prototype/prototype-video-preview.png)
+
+[Ver la demostración del prototipo en Microsoft Stream](URL_VIDEO_STREAM)
