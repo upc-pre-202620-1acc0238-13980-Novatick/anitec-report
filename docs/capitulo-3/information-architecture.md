@@ -40,7 +40,7 @@ Los iconos acompañan las etiquetas para facilitar su reconocimiento. Se mantien
 
 #### 3.1.2.3. SEO Tags and Meta Tags
 
-Para la landing page se proponen etiquetas que permitan identificar el sitio y describir su contenido en los buscadores. SEO se refiere a la optimización de la presencia del sitio en los resultados de búsqueda.
+Para la landing page se proponen etiquetas que permitan identificar el sitio y describir su contenido en los buscadores.
 
 | Etiqueta    | Contenido propuesto                                                                                                               |
 | ----------- | --------------------------------------------------------------------------------------------------------------------------------- |
