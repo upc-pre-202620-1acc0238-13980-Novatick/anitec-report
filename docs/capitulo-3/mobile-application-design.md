@@ -170,4 +170,184 @@ Los mock-ups completos pueden consultarse y ampliarse en Figma. [Consultar los m
 
 #### 3.1.4.4. Mobile Applications User Flow Diagrams
 
+Los user flows presentan los recorridos propuestos mediante las pantallas del aplicativo y sus conexiones. Se organizan según el perfil y el objetivo del usuario.
+
+##### Acceso y cuenta
+
+###### Registro y verificación
+
+Objetivo: crear una cuenta y verificar el correo electrónico.
+
+El recorrido comprende el ingreso de datos, la selección del perfil y la verificación mediante un código.
+
+![User flow de registro y verificación](../../assets/images/capitulo-3/mobile/userflows/acceso/registro-y-verificacion.png)
+
+###### Inicio de sesión
+
+Objetivo: acceder a la aplicación con una cuenta registrada.
+
+Se presenta el recorrido desde la bienvenida hasta el formulario de inicio de sesión.
+
+![User flow de inicio de sesión](../../assets/images/capitulo-3/mobile/userflows/acceso/iniciar-sesion.png)
+
+##### Ganadero
+
+###### Registrar un animal
+
+Objetivo: agregar un animal al inventario.
+
+El usuario accede al formulario desde las opciones de registro e ingresa los datos del animal.
+
+![User flow de registro de un animal](../../assets/images/capitulo-3/mobile/userflows/ganadero/registrar-animal.png)
+
+###### Editar un animal
+
+Objetivo: actualizar la información de un animal.
+
+El recorrido parte de su perfil y permite acceder al formulario de edición.
+
+![User flow de edición de un animal](../../assets/images/capitulo-3/mobile/userflows/ganadero/editar-animal.png)
+
+###### Dar de baja a un animal
+
+Objetivo: retirar un animal del inventario activo.
+
+Desde el perfil del animal se accede a la confirmación de baja.
+
+![User flow de baja de un animal](../../assets/images/capitulo-3/mobile/userflows/ganadero/dar-de-baja-animal.png)
+
+###### Registrar una observación
+
+Objetivo: agregar información observada por el ganadero.
+
+El recorrido permite consultar las observaciones del animal y acceder al formulario para agregar una nueva.
+
+![User flow de registro de una observación](../../assets/images/capitulo-3/mobile/userflows/ganadero/registrar-observacion.png)
+
+###### Consultar el historial de atenciones
+
+Objetivo: revisar las atenciones registradas de un animal.
+
+Se accede al historial desde su perfil y se selecciona una atención para consultar el detalle.
+
+![User flow de consulta del historial](../../assets/images/capitulo-3/mobile/userflows/ganadero/consultar-historial-atenciones.png)
+
+###### Consultar indicaciones de cuidado
+
+Objetivo: revisar los cuidados indicados por el veterinario.
+
+El recorrido muestra el acceso a las indicaciones relacionadas con una atención.
+
+![User flow de consulta de indicaciones](../../assets/images/capitulo-3/mobile/userflows/ganadero/consultar-indicaciones-cuidado.png)
+
+###### Invitar a un veterinario
+
+Objetivo: solicitar una vinculación veterinaria.
+
+El ganadero accede al formulario de invitación e ingresa el correo del destinatario.
+
+![User flow de invitación a un veterinario](../../assets/images/capitulo-3/mobile/userflows/ganadero/enviar-invitacion-veterinario.png)
+
+###### Consultar una próxima visita
+
+Objetivo: revisar la información de una visita programada.
+
+Se selecciona una visita para consultar la fecha, la hora, el animal y el veterinario.
+
+![User flow de consulta de una visita](../../assets/images/capitulo-3/mobile/userflows/ganadero/consultar-detalle-visita.png)
+
+###### Consultar Mi cuenta
+
+Objetivo: acceder a las opciones de la cuenta del ganadero.
+
+La pantalla reúne los accesos a suscripción, perfil, preferencias, ayuda y documentos legales.
+
+![User flow de consulta de la cuenta del ganadero](../../assets/images/capitulo-3/mobile/userflows/ganadero/consultar-mi-cuenta.png)
+
+##### Veterinario
+
+###### Consultar invitaciones de vinculación
+
+Objetivo: revisar las invitaciones recibidas de los ganaderos.
+
+Se presentan las invitaciones pendientes y las opciones para aceptarlas o rechazarlas.
+
+![User flow de consulta de invitaciones](../../assets/images/capitulo-3/mobile/userflows/veterinario/consultar-invitaciones-vinculacion.png)
+
+###### Programar una visita desde el inicio
+
+Objetivo: acceder a la programación desde las opciones principales.
+
+El formulario permite seleccionar al ganadero y al animal e ingresar los datos de la visita.
+
+![User flow de programación desde el inicio](../../assets/images/capitulo-3/mobile/userflows/veterinario/programar-visita-desde-inicio.png)
+
+###### Programar una visita desde el perfil
+
+Objetivo: programar una visita para un animal consultado.
+
+El recorrido comienza en los ganaderos vinculados y continúa hacia el animal y el formulario de programación.
+
+![User flow de programación desde el perfil](../../assets/images/capitulo-3/mobile/userflows/veterinario/programar-visita-desde-perfil.png)
+
+###### Consultar el detalle de una visita
+
+Objetivo: revisar los datos de una visita programada.
+
+Desde la agenda se accede al detalle y a las opciones relacionadas con la atención.
+
+![User flow de consulta del detalle de una visita](../../assets/images/capitulo-3/mobile/userflows/veterinario/consultar-detalle-visita.png)
+
+###### Registrar una atención desde el inicio
+
+Objetivo: acceder al registro desde las opciones principales.
+
+Se presenta el formulario para identificar al ganadero y al animal y registrar la atención.
+
+![User flow de registro de atención desde el inicio](../../assets/images/capitulo-3/mobile/userflows/veterinario/registrar-atencion-desde-inicio.png)
+
+###### Registrar una atención desde el perfil
+
+Objetivo: registrar una atención para el animal consultado.
+
+El recorrido parte del ganadero vinculado y del perfil del animal hasta llegar al formulario de atención.
+
+![User flow de registro de atención desde el perfil](../../assets/images/capitulo-3/mobile/userflows/veterinario/registrar-atencion-desde-perfil.png)
+
+###### Editar una atención
+
+Objetivo: acceder a la modificación de una atención registrada.
+
+Se consulta el historial y el detalle de la atención para abrir la opción de edición.
+
+![User flow de edición de una atención](../../assets/images/capitulo-3/mobile/userflows/veterinario/editar-atencion.png)
+
+###### Agregar indicaciones de cuidado
+
+Objetivo: incorporar instrucciones relacionadas con una atención.
+
+Desde las indicaciones de cuidado se abre la ventana para agregar una nueva instrucción.
+
+![User flow de incorporación de indicaciones](../../assets/images/capitulo-3/mobile/userflows/veterinario/agregar-indicaciones-cuidado.png)
+
+###### Consultar observaciones del animal
+
+Objetivo: revisar la información registrada por el ganadero.
+
+El veterinario accede a las observaciones desde el perfil de un animal autorizado.
+
+![User flow de consulta de observaciones](../../assets/images/capitulo-3/mobile/userflows/veterinario/consultar-observaciones-animal.png)
+
+###### Consultar Mi cuenta
+
+Objetivo: acceder a las opciones de la cuenta del veterinario.
+
+La pantalla reúne los accesos a suscripción, perfil, preferencias, ayuda y documentos legales.
+
+![User flow de consulta de la cuenta del veterinario](../../assets/images/capitulo-3/mobile/userflows/veterinario/consultar-mi-cuenta.png)
+
+##### Diagramas en Figma
+
+Los recorridos completos pueden consultarse y ampliarse en Figma. [Consultar los user flows en Figma](https://www.figma.com/design/VRl8XdC5NZzvfBijUy0zYy/ANITEC?node-id=134-2169&t=Wqp9Dw4KNOatonVO-1)
+
 #### 3.1.4.5. Mobile Applications Prototyping
