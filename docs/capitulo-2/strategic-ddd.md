@@ -232,6 +232,6 @@ Cuando se requiera registrar o actualizar información, la aplicación se comuni
 
 El backend también se integrará con servicios externos como Stripe para gestionar pagos y suscripciones en modo de prueba, Resend para el envío de correos de verificación e invitaciones, y Firebase Cloud Messaging para el envío de notificaciones relacionadas con indicaciones y seguimientos veterinarios.
 
-Por otro lado, la landing page de ANITEC será una aplicación web estática alojada en GitHub Pages y podrá ser consultada desde cualquier navegador mediante internet.
+Por otro lado, la landing page de ANITEC será una aplicación web estática alojada en Microsoft Azure y podrá ser consultada desde cualquier navegador mediante internet.
 
 </div>
