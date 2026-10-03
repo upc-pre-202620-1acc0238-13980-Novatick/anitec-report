@@ -40,7 +40,6 @@
 <br>
 Repositorio de GitHub: https://github.com/upc-pre-202620-1acc0238-13980-Novatick
 
-
 ## Project Report Collaboration Insights
 
 Cada integrante participó en la elaboración de diferentes secciones del proyecto, mientras que la integración de los cambios se realizó mediante ramas de trabajo y Pull Requests hacia la rama `develop` del repositorio.
@@ -95,6 +94,12 @@ Para el control de versiones se utilizó Git y GitHub. El equipo trabajó con un
     - [2.5.2. Context Mapping](docs/capitulo-2/strategic-ddd.md#252-context-mapping)
     - [2.5.3. Software Architecture](docs/capitulo-2/strategic-ddd.md#253-software-architecture)
   - [2.6. Tactical-Level Domain-Driven Design](docs/capitulo-2/tactical-ddd.md)
+- [Capítulo III: Solution UI/UX Design](docs/capitulo-3/product-design.md)
+  - [3.1. Product design](docs/capitulo-3/product-design.md#31-product-design)
+    - [3.1.1. Style Guidelines](docs/capitulo-3/style-guidelines.md)
+    - [3.1.2. Information Architecture](docs/capitulo-3/information-architecture.md)
+    - [3.1.3. Landing Page UI Design](docs/capitulo-3/landing-page-design.md)
+    - [3.1.4. Mobile Applications UX/UI Design](docs/capitulo-3/mobile-application-design.md)
 
 - [Conclusiones](docs/cierre/conclusiones.md)
 - [Bibliografía](docs/cierre/bibliografia.md)
