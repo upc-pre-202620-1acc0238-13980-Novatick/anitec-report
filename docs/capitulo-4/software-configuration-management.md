@@ -58,6 +58,75 @@ El desarrollo y las pruebas de Android podrán realizarse desde Windows. La comp
 
 #### 4.1.2. Source Code Management
 
+El equipo utiliza Git para registrar los cambios y GitHub para alojar los repositorios y revisar las contribuciones. Los productos de ANITEC se organizan en repositorios separados dentro de la organización NOVATICK.
+
+##### Organización de repositorios
+
+| Producto         | Contenido                                                                              | Repositorio                                                                              |
+| ---------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Informe          | Documentación, diagramas y diseños del proyecto.                                       | [anitec-report](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-report) |
+| Landing page     | Código del sitio de presentación de ANITEC.                                            | Pendiente de incorporar.                                                                 |
+| Backend          | Servicios desarrollados con Java y Spring Boot, configuración y pruebas automatizadas. | Pendiente de incorporar.                                                                 |
+| Aplicación móvil | Código Flutter, recursos visuales y pruebas de la aplicación.                          | Pendiente de incorporar.                                                                 |
+
+##### Organización de ramas
+
+Se adopta un flujo de trabajo basado en GitFlow. Cada funcionalidad se desarrolla en una rama independiente y se integra mediante un Pull Request.
+
+| Rama       | Propósito                                                                    | Ejemplo                     |
+| ---------- | ---------------------------------------------------------------------------- | --------------------------- |
+| main       | Mantener las versiones revisadas y preparadas para su entrega o publicación. | main                        |
+| develop    | Integrar los avances del equipo antes de preparar una versión.               | develop                     |
+| feature/\* | Desarrollar una funcionalidad o sección del informe.                         | feature/animal-registration |
+| release/\* | Preparar una versión y realizar los ajustes necesarios para su entrega.      | release/0.1.0               |
+| hotfix/\*  | Corregir un problema urgente de una versión publicada.                       | hotfix/login-error          |
+
+Los nombres de las ramas se escriben en inglés, en minúsculas y con guiones para separar palabras.
+
+Las ramas feature se crean desde develop y regresan a esa rama mediante un Pull Request. Las ramas release se crean desde develop y, al finalizar, se integran en main y develop. Las ramas hotfix parten de main y sus correcciones se incorporan también a develop.
+
+##### Revisión e integración
+
+Antes de abrir un Pull Request, cada integrante revisa sus cambios y ejecuta las comprobaciones correspondientes. En el código se comprueba la compilación y las pruebas relacionadas. En el informe se revisan el contenido, los enlaces y las imágenes.
+
+Otro integrante revisa el Pull Request antes de su integración. Su descripción indica qué se modificó, por qué se realizó el cambio y cómo se comprobó su funcionamiento.
+
+##### Convenciones de commits
+
+Los mensajes siguen la estructura de Conventional Commits:
+
+`tipo(alcance): descripción`
+
+Se redactan en inglés y describen un cambio concreto.
+
+| Tipo     | Uso                                               | Ejemplo                                               |
+| -------- | ------------------------------------------------- | ----------------------------------------------------- |
+| feat     | Incorporar una funcionalidad.                     | feat(livestock): add animal registration              |
+| fix      | Corregir un error.                                | fix(identity): validate expired verification codes    |
+| docs     | Actualizar documentación.                         | docs(report): add mobile application mockups          |
+| test     | Agregar o actualizar pruebas.                     | test(livestock): cover inventory capacity limit       |
+| refactor | Reorganizar código sin cambiar su comportamiento. | refactor(veterinary-care): simplify care registration |
+| chore    | Realizar tareas de mantenimiento.                 | chore(project): configure development tools           |
+| ci       | Modificar procesos automatizados.                 | ci(report): update PDF generation workflow            |
+
+##### Versionado
+
+Las versiones de cada producto siguen el formato MAJOR.MINOR.PATCH.
+
+| Componente | Criterio                                                    |
+| ---------- | ----------------------------------------------------------- |
+| MAJOR      | Cambios incompatibles con la versión anterior.              |
+| MINOR      | Nuevas funcionalidades compatibles con la versión anterior. |
+| PATCH      | Correcciones compatibles con la versión anterior.           |
+
+Durante el desarrollo inicial se utilizarán versiones 0.x.y. Las entregas se identificarán mediante etiquetas como v0.1.0, indicando las funcionalidades y limitaciones de cada versión.
+
+##### Referencias
+
+- [A successful Git branching model](https://nvie.com/posts/a-successful-git-branching-model/)
+- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+- [Semantic Versioning](https://semver.org/)
+
 #### 4.1.3. Source Code Style Guide & Conventions
 
 #### 4.1.4. Software Deployment Configuration
