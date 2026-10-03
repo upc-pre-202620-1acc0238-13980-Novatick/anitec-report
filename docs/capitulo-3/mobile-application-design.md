@@ -136,11 +136,37 @@ Se presentan las pantallas de consulta y las opciones relacionadas con la gesti�
 
 ##### Diagramas en Figma
 
-Los wireflows pueden consultarse y ampliarse en Figma.
-
-[Consultar los wireflows en Figma](URL_WIREFLOWS_FIGMA)
+Los wireflows pueden consultarse y ampliarse en Figma. [Consultar los wireflows en Figma](https://www.figma.com/design/VRl8XdC5NZzvfBijUy0zYy/ANITEC?node-id=131-52&t=Wqp9Dw4KNOatonVO-1)
 
 #### 3.1.4.3. Mobile Applications Mock-ups
+
+Los mock-ups presentan el diseño visual de ANITEC mediante colores, tipografía, iconos y contenido de ejemplo. Se organizan en tres grupos: acceso y cuenta, ganadero y veterinario.
+
+##### Acceso y cuenta
+
+Incluye la pantalla de carga, la bienvenida, el inicio de sesión, el registro y la verificación del correo. El registro permite seleccionar el perfil de ganadero o veterinario.
+
+![Mock-ups de acceso y cuenta](../../assets/images/capitulo-3/mobile/mockups/acceso-y-cuenta.png)
+
+##### Ganadero
+
+Este grupo presenta el inicio, el inventario y las pantallas para registrar y editar animales. Incluye las observaciones, la vinculación con veterinarios, las próximas visitas y la consulta de atenciones e indicaciones de cuidado.
+
+El perfil del animal reúne sus datos y los accesos a su información. También se presenta la confirmación de baja y la pantalla de Mi cuenta.
+
+![Mock-ups del perfil ganadero](../../assets/images/capitulo-3/mobile/mockups/pantallas-ganadero.png)
+
+##### Veterinario
+
+Este grupo presenta el inicio, la agenda, los ganaderos vinculados y las invitaciones. Desde el perfil del ganadero se consultan sus datos y animales.
+
+Las pantallas permiten programar visitas, registrar atenciones y agregar tratamientos, vacunas e indicaciones de cuidado. También incluyen la consulta del historial y la pantalla de Mi cuenta.
+
+![Mock-ups del perfil veterinario](../../assets/images/capitulo-3/mobile/mockups/pantallas-veterinario.png)
+
+##### Diseños en Figma
+
+Los mock-ups completos pueden consultarse y ampliarse en Figma. [Consultar los mock-ups en Figma](https://www.figma.com/design/VRl8XdC5NZzvfBijUy0zYy/ANITEC?node-id=150-771&t=Wqp9Dw4KNOatonVO-1)
 
 #### 3.1.4.4. Mobile Applications User Flow Diagrams
 
