@@ -1,11 +1,5 @@
 <div align="justify">
 
-# Capítulo I: Presentación
-
-## 1.1. Startup Profile
-
-En esta sección se presenta a Novatick, el equipo responsable del desarrollo de ANITEC, y se describen los conocimientos y habilidades que sus integrantes aportan al proyecto.
-
 ## 1.1.1. Descripción de la Startup
 
 Novatick es una iniciativa emprendedora conformada por cinco estudiantes de la carrera de Ingeniería de Software de la Universidad Peruana de Ciencias Aplicadas. Su propósito es desarrollar soluciones digitales que faciliten la organización de información y apoyen la mejora de procesos mediante tecnologías móviles.
