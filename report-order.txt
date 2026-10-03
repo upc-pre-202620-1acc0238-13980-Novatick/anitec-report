@@ -8,6 +8,12 @@ docs/capitulo-2/competidores.md
 docs/capitulo-2/entrevistas.md
 docs/capitulo-2/needfinding.md
 docs/capitulo-2/strategic-ddd.md
+docs/capitulo-2/tactical-ddd.md
+docs/capitulo-3/product-design.md
+docs/capitulo-3/style-guidelines.md
+docs/capitulo-3/information-architecture.md
+docs/capitulo-3/landing-page-design.md
+docs/capitulo-3/mobile-application-design.md
 docs/cierre/conclusiones.md
 docs/cierre/bibliografia.md
 docs/anexos/README.md
