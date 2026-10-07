@@ -218,7 +218,7 @@ ANITEC se integra con Stripe para gestionar pagos y suscripciones en modo de pru
 
 ![Diagrama de contenedores de ANITEC](../../assets/images/software-architecture/02-anitec-container-diagram.png)
 
-La aplicación móvil se desarrollará con Flutter y Dart para Android e iOS. Se comunicará mediante HTTPS y JSON con una API REST implementada en Java y Spring Boot. Esta API concentrará las reglas de negocio y los permisos, organizados en los módulos de identidad y acceso, gestión del ganado, vinculación veterinaria, atención veterinaria y suscripciones. La información central se almacenará en MySQL mediante Spring Data JPA e Hibernate.
+La aplicación móvil utiliza Kotlin Multiplatform. Se adopta Kotlin Multiplatform para compartir lógica entre Android e iOS y Jetpack Compose para la interfaz Android. Si se comparte también la interfaz con iOS, se utiliza Compose Multiplatform. Las evidencias del sprint identifican las plataformas efectivamente probadas. Se comunicará mediante HTTPS y JSON con una API REST implementada en Java y Spring Boot. Esta API concentrará las reglas de negocio y los permisos, organizados en los módulos de identidad y acceso, gestión del ganado, vinculación veterinaria, atención veterinaria y suscripciones. La información central se almacenará en PostgreSQL mediante Spring Data JPA e Hibernate.
 
 En cada dispositivo, SQLite conservará los datos descargados de la cuenta: inventario, fichas consultadas, últimas atenciones e indicaciones y agenda, según el perfil y sus permisos. Estos datos podrán consultarse sin conexión mostrando su fecha de actualización; las operaciones de registro y modificación requerirán internet. La API gestionará las integraciones con Stripe, Resend y Firebase Cloud Messaging, mientras la aplicación recibirá las notificaciones push.
 
@@ -226,12 +226,14 @@ En cada dispositivo, SQLite conservará los datos descargados de la cuenta: inve
 
 ![Diagrama de despliegue propuesto de ANITEC](../../assets/images/software-architecture/03-anitec-deployment-diagram.png)
 
-El diagrama muestra cómo se desplegarán los principales componentes de ANITEC. La aplicación móvil desarrollada en Flutter se instalará en dispositivos Android o iOS y utilizará SQLite para almacenar información local y permitir la consulta de datos previamente descargados cuando no exista conexión a internet.
+El diagrama representa la distribución de los principales componentes de ANITEC. La aplicación móvil desarrollada en Kotlin se instalará en dispositivos Android o iOS y utilizará SQLite para almacenar información local y permitir la consulta de datos previamente descargados cuando no exista conexión a internet.
 
-Cuando se requiera registrar o actualizar información, la aplicación se comunicará mediante internet con el backend desarrollado en Java y Spring Boot. Este backend será responsable de procesar las solicitudes, validar los permisos de los usuarios y aplicar las reglas de negocio. La información principal del sistema será almacenada en una base de datos MySQL.
+Cuando se requiera registrar o actualizar información, la aplicación se comunicará mediante internet con el backend desarrollado en Java y Spring Boot. El backend se aloja en Render y es responsable de procesar las solicitudes, validar los permisos de los usuarios y aplicar las reglas de negocio. La información principal del sistema será almacenada en una base de datos PostgreSQL.
 
 El backend también se integrará con servicios externos como Stripe para gestionar pagos y suscripciones en modo de prueba, Resend para el envío de correos de verificación e invitaciones, y Firebase Cloud Messaging para el envío de notificaciones relacionadas con indicaciones y seguimientos veterinarios.
 
-Por otro lado, la landing page de ANITEC será una aplicación web estática alojada en Microsoft Azure y podrá ser consultada desde cualquier navegador mediante internet.
+Por otro lado, la landing page de ANITEC es una aplicación web estática alojada en GitHub Pages y podrá ser consultada desde cualquier navegador mediante internet.
+
+Swagger UI permite consultar la documentación de los servicios del backend y ejecutar solicitudes de prueba. La dirección pública del backend y el enlace de Swagger UI se registran con las evidencias de despliegue. PostgreSQL se aloja en Render y su conexión con el backend se comprueba en las evidencias del sprint.
 
 </div>

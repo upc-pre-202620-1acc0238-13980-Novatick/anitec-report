@@ -8,7 +8,7 @@ workspace "ANITEC - Arquitectura de software" "Diagramas de contexto y contenedo
         anitec = softwareSystem "ANITEC" "Aplicación de gestión ganadera y apoyo veterinario." {
             tags "ANITEC"
 
-            mobile = container "Aplicación móvil" "Aplicación para Android e iOS que permite gestionar animales, vinculaciones, visitas, atenciones y suscripciones según el perfil del usuario." "Flutter / Dart" {
+            mobile = container "Aplicación móvil" "Aplicación para Android e iOS que permite gestionar animales, vinculaciones, visitas, atenciones y suscripciones según el perfil del usuario." "Kotlin Multiplatform / Jetpack Compose (Android)" {
                 tags "Mobile"
             }
             localDb = container "Base de datos local del dispositivo" "Conserva por cuenta el inventario, las fichas consultadas, las últimas atenciones e indicaciones y la agenda descargada, con su fecha de actualización, para consulta sin conexión." "SQLite" {
@@ -17,7 +17,7 @@ workspace "ANITEC - Arquitectura de software" "Diagramas de contexto y contenedo
             api = container "API REST" "Organiza identidad, ganado, vinculaciones, atención veterinaria y suscripciones en módulos. Aplica reglas de negocio, permisos e integraciones externas." "Java / Spring Boot" {
                 tags "API"
             }
-            database = container "Base de datos central" "Almacena cuentas, animales, vinculaciones, citas, atenciones, indicaciones y suscripciones." "MySQL" {
+            database = container "Base de datos central" "Almacena cuentas, animales, vinculaciones, citas, atenciones, indicaciones y suscripciones." "PostgreSQL" {
                 tags "Database"
             }
         }
@@ -48,7 +48,7 @@ workspace "ANITEC - Arquitectura de software" "Diagramas de contexto y contenedo
         api -> stripe "Gestiona pagos y suscripciones; recibe confirmaciones y cambios de estado" "HTTPS / API y webhooks"
         api -> resend "Solicita el envío de códigos de verificación e invitaciones" "HTTPS"
         api -> fcm "Solicita el envío de notificaciones de nuevas indicaciones y sus actualizaciones" "HTTPS"
-        mobile -> fcm "Registra el dispositivo para notificaciones y recibe mensajes push" "SDK de FCM para Flutter"
+        mobile -> fcm "Registra el dispositivo para notificaciones y recibe mensajes push" "Integración FCM específica por plataforma"
     }
 
     views {
@@ -65,7 +65,7 @@ workspace "ANITEC - Arquitectura de software" "Diagramas de contexto y contenedo
             autoLayout tb
 
             title "ANITEC - Diagrama de contenedores"
-            description "Aplicación Flutter para Android e iOS, almacenamiento local, API REST con Spring Boot, base de datos central e integraciones externas."
+            description "Aplicación Kotlin Multiplatform para Android e iOS, almacenamiento local, API REST con Spring Boot, base de datos central e integraciones externas."
         }
 
         styles {
