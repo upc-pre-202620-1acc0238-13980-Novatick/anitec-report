@@ -366,4 +366,4 @@ El video presenta la navegación del prototipo y las principales tareas de ambos
 
 ![Vista previa del video del prototipo de ANITEC](../../assets/images/capitulo-3/mobile/prototype/prototype-video-preview.png)
 
-[Ver la demostración del prototipo en Microsoft Stream](URL_VIDEO_STREAM)
+[Ver la demostración del prototipo en Microsoft Stream](https://upcedupe-my.sharepoint.com/:v:/g/personal/u20241e242_upc_edu_pe/IQB0NfYlEwPtTK0gOYIetfW3AQUohh4jxREBv_KmW_Xu1A8?e=hv5UB8&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
