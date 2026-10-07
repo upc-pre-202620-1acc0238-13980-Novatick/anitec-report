@@ -1,17 +1,33 @@
-# Anexo: Páginas oficiales de los competidores
+# Anexos
 
-Las siguientes páginas oficiales fueron consultadas para elaborar el análisis competitivo de Livestock Manager, Herdwatch y AgriWebb.
+## Anexo 1. Repositorios del proyecto
 
-## Referencias
+Organización: [NOVATICK en GitHub](https://github.com/upc-pre-202620-1acc0238-13980-Novatick)
 
-AgriWebb. (s. f.). *Livestock management software for smarter farming*. Recuperado el 17 de septiembre de 2026, de https://www.agriwebb.com/
+| Recurso              | Enlace                                                                                       |
+| -------------------- | -------------------------------------------------------------------------------------------- |
+| Informe del proyecto | [ANITEC Report](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-report)     |
+| Landing page         | [ANITEC Website](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-website)   |
+| Backend              | [ANITEC Platform](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform) |
+| Aplicación móvil     | Pendiente de incorporar el enlace del repositorio.                                           |
 
-AgriWebb. (s. f.). *Pricing*. Recuperado el 17 de septiembre de 2026, de https://www.agriwebb.com/pricing/
+## Anexo 2. Productos publicados
 
-Herdwatch. (s. f.). *Livestock management software*. Recuperado el 17 de septiembre de 2026, de https://herdwatch.com/
+| Producto                        | Enlace o estado                                                                          |
+| ------------------------------- | ---------------------------------------------------------------------------------------- |
+| Landing page                    | [Abrir ANITEC](https://upc-pre-202620-1acc0238-13980-novatick.github.io/anitec-website/) |
+| Backend y documentación Swagger | Despliegue en Render en preparación. Enlace público pendiente.                           |
 
-Herdwatch. (s. f.). *Ranch management made simple with Herdwatch*. Recuperado el 17 de septiembre de 2026, de https://herdwatch.com/price/
+## Anexo 3. Diseño de interfaces y prototipo
 
-Livestock Manager. (s. f.). *Livestock records that add up*. Recuperado el 17 de septiembre de 2026, de https://livestockfarm.co/
+Los siguientes enlaces permiten consultar las interfaces y los recorridos de navegación de ANITEC.
 
-Google Play. (s. f.). *Livestock Manager Farm Tracker*. Recuperado el 17 de septiembre de 2026, de https://play.google.com/store/apps/details?id=co.livestock.manager
+| Recurso               | Enlace                                                                                                                                                                                          |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Wireframes            | [Consultar en Figma](https://www.figma.com/design/VRl8XdC5NZzvfBijUy0zYy/ANITEC?node-id=104-6028)                                                                                               |
+| Wireflows             | [Consultar en Figma](https://www.figma.com/design/VRl8XdC5NZzvfBijUy0zYy/ANITEC?node-id=131-52)                                                                                                 |
+| Mock-ups              | [Consultar en Figma](https://www.figma.com/design/VRl8XdC5NZzvfBijUy0zYy/ANITEC?node-id=150-771)                                                                                                |
+| User flows            | [Consultar en Figma](https://www.figma.com/design/VRl8XdC5NZzvfBijUy0zYy/ANITEC?node-id=134-2169)                                                                                               |
+| Prototipo interactivo | [Explorar el prototipo](https://www.figma.com/proto/VRl8XdC5NZzvfBijUy0zYy/ANITEC?node-id=104-2025&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=104%3A2025&page-id=104%3A2024) |
+
+## Anexo 4. Páginas oficiales de los competidores
