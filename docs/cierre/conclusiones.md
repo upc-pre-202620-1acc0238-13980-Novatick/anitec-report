@@ -2,12 +2,16 @@
 
 ## Conclusiones
 
-- El desarrollo de ANITEC permitió definir una solución digital orientada a mejorar la gestión de información ganadera y veterinaria, centralizando datos de los animales, observaciones, atenciones, tratamientos, vacunaciones e indicaciones que normalmente pueden encontrarse dispersos o ser difíciles de consultar.
+- La investigación de usuarios y el análisis de requisitos permitieron orientar ANITEC hacia la gestión de información ganadera y la coordinación con veterinarios. Las historias de usuario y el Product Backlog organizaron estas necesidades para su desarrollo progresivo.
 
-- El proceso de investigación y diseño permitió identificar las principales necesidades de ganaderos y veterinarios, utilizando entrevistas, User Personas, User Task Matrix, Journey Maps y otros artefactos de UX para orientar las funcionalidades de la solución hacia situaciones reales de ambos segmentos.
+- El modelado del dominio permitió definir cinco contextos con responsabilidades diferenciadas: gestión del ganado, atención veterinaria, vinculación veterinaria, suscripciones e identidad y acceso. Este diseño sirve como referencia para revisar y mejorar la implementación.
 
-- La aplicación de Domain-Driven Design permitió dividir el sistema en los bounded contexts **Livestock Management, Veterinary Care, Veterinary Linking, Subscriptions e Identity and Access**, estableciendo responsabilidades específicas y reduciendo el acoplamiento entre las distintas funcionalidades de ANITEC.
+- Durante TB1 se elaboraron wireframes, mock-ups, diagramas de navegación y un prototipo interactivo en Figma. Estos recursos permiten representar los recorridos de ganaderos y veterinarios antes de completar su implementación en la aplicación móvil.
 
-- La arquitectura propuesta diferencia las responsabilidades del backend desarrollado con Java y Spring Boot y de la aplicación móvil desarrollada con Kotlin, incorporando además mecanismos de persistencia, autenticación, consulta sin conexión e integración con servicios externos según las necesidades de cada bounded context.
+- La landing page se implementó y publicó en GitHub Pages. Las pruebas manuales comprobaron su navegación y adaptación a distintas pantallas. Los contenidos definitivos de los avisos legales y de contacto permanecen pendientes.
 
-- En conjunto, el diseño de ANITEC establece una base organizada y escalable para una plataforma que facilite el seguimiento de los animales y la coordinación entre ganaderos y veterinarios, manteniendo separadas las responsabilidades del negocio y permitiendo ampliar progresivamente sus funcionalidades.
+- El backend incorpora operaciones de cuentas, sesiones y gestión del ganado mediante Java, Spring Boot y PostgreSQL. Las evidencias locales muestran resultados satisfactorios en el inicio de sesión, la consulta y actualización de animales y el rechazo de solicitudes sin autenticación.
+
+- El siguiente paso consiste en comprobar el despliegue público, integrar las pantallas móviles con el backend y resolver las diferencias entre el diseño documentado y el código. También queda pendiente completar las integraciones externas de pagos y notificaciones.
+
+</div>

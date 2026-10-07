@@ -1,4 +1,5 @@
 <div align="center">
+
 <img src="assets/images/UPC_logo.png" alt="UPC Logo" width="200">
 
 <h4>Universidad Peruana de Ciencias Aplicadas</h4>
@@ -25,34 +26,50 @@
 | U20241E126 | Montes Zamora, Edgar Alexander Mauricio |
 
 <h3>Período 2026-02</h3>
-<h3>Septiembre, 2026</h3>
+<h3>Octubre, 2026</h3>
+
 <br>
+
 </div>
 
 ## Registro de Versiones del Informe
 
-| Versión | Fecha      | Autor(es)       | Descripción de la modificación                                                                                       |
-| ------- | ---------- | --------------- | -------------------------------------------------------------------------------------------------------------------- |
-| 0.1     | 04/09/2026 | Equipo NOVATICK | Creación de la estructura inicial del informe y definición de la propuesta ANITEC.                                   |
-| 0.2     | 11/09/2026 | Equipo NOVATICK | Incorporación de Startup Profile, Solution Profile, Lean UX, segmentos objetivo y diseño de entrevistas.             |
-| 0.3     | 18/09/2026 | Equipo NOVATICK | Incorporación del análisis competitivo, Domain-Driven Design y documentación inicial de la arquitectura de software. |
+| Versión | Fecha      | Autor(es)       | Descripción de la modificación                                                                                                                                       |
+| ------- | ---------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0.1     | 04/09/2026 | Equipo NOVATICK | Creación de la estructura inicial del informe y definición de la propuesta ANITEC.                                                                                   |
+| 0.2     | 11/09/2026 | Equipo NOVATICK | Incorporación de Startup Profile, Solution Profile, Lean UX, segmentos objetivo y diseño de entrevistas.                                                             |
+| 0.3     | 18/09/2026 | Equipo NOVATICK | Incorporación del análisis competitivo, Domain-Driven Design y documentación inicial de la arquitectura de software.                                                 |
+| 0.4     | 07/10/2026 | Equipo NOVATICK | Incorporación del diseño UI/UX, documentación del Sprint 1, evidencias de la landing page y pruebas locales del backend. Actualización del Student Outcome para TB1. |
 
-<br>
-Repositorio de GitHub: https://github.com/upc-pre-202620-1acc0238-13980-Novatick
+Organización en GitHub: [NOVATICK](https://github.com/upc-pre-202620-1acc0238-13980-Novatick)
+
+Repositorio del informe: [ANITEC Report](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-report)
 
 ## Project Report Collaboration Insights
 
-Cada integrante participó en la elaboración de diferentes secciones del proyecto, mientras que la integración de los cambios se realizó mediante ramas de trabajo y Pull Requests hacia la rama `develop` del repositorio.
+El equipo organiza la elaboración del informe mediante ramas de trabajo y Pull Requests hacia develop. Las siguientes tablas resumen las contribuciones registradas por avance.
 
-| Integrante                              | Principales contribuciones                                                                                                                                                                                 |
-| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| León Morales, Johan Yonel               | Coordinación general del proyecto, Startup Profile, entrevistas, User Stories, EventStorming, Strategic-Level DDD, Tactical-Level DDD, Software Architecture, conclusiones y revisión general del informe. |
-| Lozano Leon, Richard Enrique            | Startup Profile, antecedentes y problemática, análisis de competidores, entrevistas, User Stories, Impact Mapping, Product Backlog, Strategic-Level DDD, Context Mapping y Tactical-Level DDD.             |
-| Montes Zamora, Edgar Alexander Mauricio | Lean UX Process, segmentos objetivo, entrevistas, User Personas, User Task Matrix, User Journey Mapping, Empathy Mapping, análisis de entrevistas, User Stories y apoyo en Software Architecture.          |
-| Mauricio Silva, Ghiou Justinn           | Lean UX Canvas, Big Picture EventStorming, Strategic-Level DDD, Context Mapping y Tactical-Level DDD.                                                                                                      |
-| Ayala Fernandez, Jorge Brayan           | Análisis de competidores, Impact Mapping, Product Backlog, Software Architecture y anexos.                                                                                                                 |
+### AV1
 
-Para el control de versiones se utilizó Git y GitHub. El equipo trabajó con una rama principal `main`, una rama de integración `develop` y ramas `feature/*` para el desarrollo de secciones específicas. Los cambios fueron integrados mediante Pull Requests después de su revisión.
+| Integrante                              | Principales contribuciones                                                                                                                                                                 |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| León Morales, Johan Yonel               | Coordinación del proyecto, Startup Profile, entrevistas, User Stories, EventStorming, Strategic-Level DDD, Tactical-Level DDD, Software Architecture, conclusiones y revisión del informe. |
+| Lozano Leon, Richard Enrique            | Startup Profile, antecedentes y problemática, competidores, entrevistas, User Stories, Impact Mapping, Product Backlog, Strategic-Level DDD, Context Mapping y Tactical-Level DDD.         |
+| Montes Zamora, Edgar Alexander Mauricio | Lean UX, segmentos objetivo, entrevistas, User Personas, User Task Matrix, User Journey Mapping, Empathy Mapping, análisis de entrevistas, User Stories y apoyo en Software Architecture.  |
+| Mauricio Silva, Ghiou Justinn           | Lean UX Canvas, Big Picture EventStorming, Strategic-Level DDD, Context Mapping y Tactical-Level DDD.                                                                                      |
+| Ayala Fernandez, Jorge Brayan           | Análisis de competidores, Impact Mapping, Product Backlog, Software Architecture y anexos.                                                                                                 |
+
+### TB1
+
+| Integrante                              | Principales contribuciones                                                                                          |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| León Morales, Johan Yonel               | Diseño de interfaces y prototipo en Figma, actualización del informe y organización de las evidencias del Sprint 1. |
+| Lozano Leon, Richard Enrique            | Implementación de la landing page con HTML, CSS y JavaScript, y publicación en GitHub Pages.                        |
+| Ayala Fernandez, Jorge Brayan           | Desarrollo del backend, pruebas locales mediante Swagger y avance de las pantallas móviles.                         |
+| Mauricio Silva, Ghiou Justinn           | Revisión de pantallas y navegación frente a los mock-ups, prevista para el cierre de TB1.                           |
+| Montes Zamora, Edgar Alexander Mauricio | Comprobación del backend público y recopilación de evidencias de Render, previstas para el cierre de TB1.           |
+
+Para el control de versiones se utilizan Git y GitHub. El equipo mantiene una rama principal main, una rama de integración develop y ramas de trabajo para funcionalidades, correcciones y documentación. Los cambios se integran mediante Pull Requests.
 
 # Contenido
 
@@ -104,12 +121,22 @@ Para el control de versiones se utilizó Git y GitHub. El equipo trabajó con un
 
 - [Capítulo IV: Product Implementation & Validation](docs/capitulo-4/introduction.md)
   - [4. Product Implementation & Validation](docs/capitulo-4/introduction.md#4-product-implementation--validation)
+  - [4.1. Software Configuration Management](docs/capitulo-4/software-configuration-management.md)
     - [4.1.1. Software Development Environment Configuration](docs/capitulo-4/software-configuration-management.md#411-software-development-environment-configuration)
     - [4.1.2. Source Code Management](docs/capitulo-4/software-configuration-management.md#412-source-code-management)
     - [4.1.3. Source Code Style Guide & Conventions](docs/capitulo-4/software-configuration-management.md#413-source-code-style-guide--conventions)
     - [4.1.4. Software Deployment Configuration](docs/capitulo-4/software-configuration-management.md#414-software-deployment-configuration)
-  - [4.2. Landing Page & Mobile Application Implementation](docs/capitulo-4/sprint-1.md)
+  - [4.2. Landing Page, Services & Applications Implementation](docs/capitulo-4/sprint-1.md)
     - [4.2.1. Sprint 1](docs/capitulo-4/sprint-1.md#421-sprint-1)
+      - [4.2.1.1. Sprint Planning 1](docs/capitulo-4/sprint-1.md#4211-sprint-planning-1)
+      - [4.2.1.2. Aspect Leaders and Collaborators](docs/capitulo-4/sprint-1.md#4212-aspect-leaders-and-collaborators)
+      - [4.2.1.3. Sprint Backlog 1](docs/capitulo-4/sprint-1.md#4213-sprint-backlog-1)
+      - [4.2.1.4. Development Evidence for Sprint Review](docs/capitulo-4/sprint-1.md#4214-development-evidence-for-sprint-review)
+      - [4.2.1.5. Testing Suite Evidence for Sprint Review](docs/capitulo-4/sprint-1.md#4215-testing-suite-evidence-for-sprint-review)
+      - [4.2.1.6. Execution Evidence for Sprint Review](docs/capitulo-4/sprint-1.md#4216-execution-evidence-for-sprint-review)
+      - [4.2.1.7. Services Documentation Evidence for Sprint Review](docs/capitulo-4/sprint-1.md#4217-services-documentation-evidence-for-sprint-review)
+      - [4.2.1.8. Software Deployment Evidence for Sprint Review](docs/capitulo-4/sprint-1.md#4218-software-deployment-evidence-for-sprint-review)
+      - [4.2.1.9. Team Collaboration Insights during Sprint](docs/capitulo-4/sprint-1.md#4219-team-collaboration-insights-during-sprint)
   - [4.3. Validation Interviews](docs/capitulo-4/validation-interviews.md)
     - [4.3.1. Diseño de Entrevistas](docs/capitulo-4/validation-interviews.md#431-diseño-de-entrevistas)
     - [4.3.2. Registro de Entrevistas](docs/capitulo-4/validation-interviews.md#432-registro-de-entrevistas)
