@@ -4,7 +4,7 @@
 
 La configuración del proyecto establece las herramientas y convenciones que utilizará el equipo para desarrollar la aplicación móvil, los servicios del backend y la landing page.
 
-ANITEC contempla Flutter y Dart para la aplicación móvil, Java con Spring Boot para el backend y MySQL para la base de datos central. SQLite se utiliza para conservar información de consulta en el dispositivo. La publicación de la landing page, el backend y la base de datos central se realizará en Microsoft Azure.
+ANITEC contempla Kotlin Multiplatform y Jetpack Compose para la aplicación móvil, Java con Spring Boot para el backend y PostgreSQL para la base de datos central. SQLite se utiliza para conservar información de consulta en el dispositivo. La landing page se publica en GitHub Pages y el backend se aloja en Render. PostgreSQL también se aloja en Render. Swagger UI permite consultar y probar los servicios del backend.
 
 #### 4.1.1. Software Development Environment Configuration
 
@@ -27,15 +27,16 @@ El entorno de desarrollo de ANITEC reúne las herramientas utilizadas para elabo
 
 | Herramienta o tecnología | Propósito en ANITEC                                                                               | Enlace                                                  |
 | ------------------------ | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| Flutter y Dart           | Desarrollar la aplicación móvil para Android e iOS desde una base de código compartida.           | [Instalación](https://docs.flutter.dev/install)         |
-| Android Studio           | Configurar las herramientas de Android y utilizar un emulador para ejecutar la aplicación.        | [Descarga](https://developer.android.com/studio)        |
+| Kotlin Multiplatform     | Compartir lógica de la aplicación entre Android e iOS.                                            | [Documentación](https://kotlinlang.org/docs/home.html)  |
+| Android Studio           | Desarrollar la aplicación en Kotlin y probarla en dispositivos o emuladores Android.              | [Descarga](https://developer.android.com/studio)        |
 | IntelliJ IDEA            | Desarrollar, ejecutar y depurar el backend de ANITEC con Java y Spring Boot.                      | [Sitio oficial](https://www.jetbrains.com/idea/)        |
-| Xcode                    | Compilar y probar la versión de iOS en un equipo con macOS.                                       | [Sitio oficial](https://developer.apple.com/xcode/)     |
 | Java Development Kit     | Proporcionar las herramientas necesarias para compilar y ejecutar el backend en Java.             | [Descarga de Eclipse Temurin](https://adoptium.net/)    |
 | Spring Boot              | Desarrollar los servicios del backend y aplicar las reglas de negocio.                            | [Sitio oficial](https://spring.io/projects/spring-boot) |
 | Spring Initializr        | Generar la estructura inicial del proyecto Spring Boot con sus dependencias.                      | [Generador de proyectos](https://start.spring.io/)      |
-| MySQL                    | Almacenar la información central de cuentas, animales, vinculaciones, atenciones y suscripciones. | [Descargas](https://dev.mysql.com/downloads/)           |
+| PostgreSQL               | Almacenar la información central de cuentas, animales, vinculaciones, atenciones y suscripciones. | [Descargas](https://www.postgresql.org/download/)       |
 | SQLite                   | Conservar en el dispositivo los datos descargados para su consulta sin conexión.                  | [Documentación](https://www.sqlite.org/docs.html)       |
+| Jetpack Compose          | Construir la interfaz de Android mediante funciones de interfaz.                                  | [Documentación](https://developer.android.com/compose)  |
+| Xcode                    | Compilar y probar el destino iOS en macOS.                                                        | [Sitio oficial](https://developer.apple.com/xcode/)     |
 
 ##### Pruebas, seguimiento y publicación
 
@@ -46,7 +47,9 @@ Se propone utilizar las siguientes herramientas durante la implementación.
 | GitHub Projects | Organizar las historias de usuario, las tareas del sprint y sus estados.                  | [Documentación](https://docs.github.com/en/issues/planning-and-tracking-with-projects) |
 | Postman         | Enviar solicitudes al backend y revisar sus respuestas durante las pruebas.               | [Descarga](https://www.postman.com/downloads/)                                         |
 | JUnit           | Automatizar pruebas de los comportamientos del backend desarrollado en Java.              | [Sitio oficial](https://junit.org/)                                                    |
-| Microsoft Azure | Alojar la landing page, el backend y la base de datos MySQL de ANITEC.                    | [Portal de Azure](https://portal.azure.com/)                                           |
+| GitHub Pages    | Publicar la landing page estática.                                                        | [Documentación](https://docs.github.com/en/pages)                                      |
+| Render          | Alojar el backend desarrollado con Java y Spring Boot.                                    | [Documentación](https://render.com/docs)                                               |
+| Swagger UI      | Consultar los servicios, sus parámetros y respuestas, y ejecutar solicitudes de prueba.   | [Documentación](https://swagger.io/tools/swagger-ui/)                                  |
 | GitHub Actions  | Ejecutar tareas automatizadas del repositorio, incluida la generación del informe en PDF. | [Documentación](https://docs.github.com/en/actions)                                    |
 
 ##### Configuración compartida
@@ -55,7 +58,7 @@ Cada repositorio incluirá en su README las versiones utilizadas, los requisitos
 
 Las credenciales de la base de datos y las claves de los servicios externos se configurarán fuera del código publicado. Se incluirán ejemplos de configuración sin datos privados.
 
-El desarrollo y las pruebas de Android podrán realizarse desde Windows. La compilación y las pruebas de iOS requerirán un equipo con macOS y Xcode.
+El desarrollo y las pruebas de Android se realizan con Android Studio. Kotlin Multiplatform permite compartir lógica con iOS. La compilación y las pruebas de iOS requieren macOS y Xcode. La interfaz compartida, si se utiliza, corresponde a Compose Multiplatform.
 
 #### 4.1.2. Source Code Management
 
@@ -68,7 +71,7 @@ El equipo utiliza Git para registrar los cambios y GitHub para alojar los reposi
 | Informe          | Documentación, diagramas y diseños del proyecto.                                       | [anitec-report](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-report) |
 | Landing page     | Código del sitio de presentación de ANITEC.                                            | Pendiente de incorporar.                                                                 |
 | Backend          | Servicios desarrollados con Java y Spring Boot, configuración y pruebas automatizadas. | Pendiente de incorporar.                                                                 |
-| Aplicación móvil | Código Flutter, recursos visuales y pruebas de la aplicación.                          | Pendiente de incorporar.                                                                 |
+| Aplicación móvil | Código Kotlin, recursos visuales y pruebas de la aplicación.                           | Pendiente de incorporar.                                                                 |
 
 ##### Organización de ramas
 
@@ -157,20 +160,22 @@ Se utilizan espacios para la indentación, con dos espacios por nivel según la 
 
 La organización del backend conserva las responsabilidades de las capas Domain, Application, Interface e Infrastructure. Las reglas del dominio se mantienen separadas de la recepción de solicitudes y del acceso a la base de datos.
 
-##### Aplicación móvil: Dart y Flutter
+##### Aplicación móvil: Kotlin
 
-Se toma como referencia Effective Dart.
+Se toma como referencia la guía oficial de convenciones de Kotlin.
 
-| Elemento                             | Convención                    | Ejemplo                      |
-| ------------------------------------ | ----------------------------- | ---------------------------- |
-| Clases y enumeraciones               | UpperCamelCase.               | AnimalProfilePage            |
-| Métodos, variables y constantes      | lowerCamelCase.               | loadAnimals, defaultPageSize |
-| Archivos y carpetas                  | Minúsculas con guiones bajos. | animal_profile_page.dart     |
-| Elementos privados de una biblioteca | Prefijo con guion bajo.       | \_selectedAnimal             |
+| Elemento                | Convención                                            | Ejemplo                     |
+| ----------------------- | ----------------------------------------------------- | --------------------------- |
+| Clases e interfaces     | UpperCamelCase.                                       | AnimalViewModel             |
+| Funciones y propiedades | lowerCamelCase.                                       | loadAnimals, selectedAnimal |
+| Constantes              | Mayúsculas con guiones bajos.                         | DEFAULT_PAGE_SIZE           |
+| Archivos Kotlin         | Nombre descriptivo en UpperCamelCase y extensión .kt. | AnimalViewModel.kt          |
+| Paquetes                | Nombres en minúsculas.                                | livestockmanagement         |
+| Miembros privados       | Modificador private.                                  | private val repository      |
 
-El formato se aplica mediante dart format y la revisión estática mediante flutter analyze. Las pantallas y componentes visuales se organizan en archivos con responsabilidades definidas.
+Se utilizan cuatro espacios por nivel de indentación y el formato de Kotlin de Android Studio. Las funciones de interfaz de Jetpack Compose marcadas con @Composable y que devuelven Unit usan nombres en UpperCamelCase. Kotlin Multiplatform organiza el código compartido y las implementaciones específicas de Android e iOS. Compose Multiplatform permite compartir la interfaz cuando el repositorio incorpora esa configuración.
 
-Los colores y estilos compartidos se centralizan para mantener la identidad visual de ANITEC. Las solicitudes al backend y el acceso al almacenamiento local se gestionan fuera de los componentes visuales.
+Los colores y estilos se centralizan para mantener la identidad visual de ANITEC. Las solicitudes al backend y el acceso a SQLite se gestionan fuera de los componentes visuales. Los nombres de las operaciones del dominio se conservan según el diseño táctico y se ajustan sus tipos a Kotlin.
 
 ##### Landing page: HTML, CSS y JavaScript
 
@@ -196,34 +201,35 @@ Cada escenario comprueba un comportamiento concreto y se relaciona con una histo
 ##### Referencias
 
 - [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
-- [Effective Dart: Style](https://dart.dev/effective-dart/style)
+- [Kotlin Coding Conventions](https://kotlinlang.org/docs/coding-conventions.html)
 - [Google HTML/CSS Style Guide](https://google.github.io/styleguide/htmlcssguide.html)
 - [Google JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html)
 - [Gherkin Reference](https://cucumber.io/docs/gherkin/reference/)
 
 #### 4.1.4. Software Deployment Configuration
 
-El despliegue de ANITEC contempla la publicación de la landing page, el backend y la base de datos central en Microsoft Azure. La aplicación móvil se instalará en los dispositivos y accederá al backend mediante una dirección pública con HTTPS.
+La landing page de ANITEC se publica en GitHub Pages y el backend desarrollado con Java y Spring Boot se aloja en Render. PostgreSQL conserva la información central y SQLite los datos locales de consulta. La aplicación móvil accede al backend mediante una dirección pública con HTTPS.
 
 ##### Distribución de los productos
 
-| Producto              | Tecnología             | Destino previsto                                             |
-| --------------------- | ---------------------- | ------------------------------------------------------------ |
-| Landing page          | HTML, CSS y JavaScript | Alojamiento en Microsoft Azure.                              |
-| Backend               | Java y Spring Boot     | Entorno de ejecución compatible con Java en Microsoft Azure. |
-| Base de datos central | MySQL                  | Servicio de base de datos en Microsoft Azure.                |
-| Aplicación móvil      | Flutter y Dart         | Dispositivos Android e iOS.                                  |
-| Almacenamiento local  | SQLite                 | Almacenamiento privado de la aplicación en cada dispositivo. |
+| Producto                   | Tecnología                     | Destino                                                    |
+| -------------------------- | ------------------------------ | ---------------------------------------------------------- |
+| Landing page               | HTML, CSS y JavaScript         | GitHub Pages.                                              |
+| Backend                    | Java y Spring Boot             | Render.                                                    |
+| Base de datos central      | PostgreSQL                     | Render.                                                    |
+| Aplicación móvil           | Kotlin Multiplatform / Compose | Android e iOS, según el avance de cada plataforma.         |
+| Almacenamiento local       | SQLite                         | Almacenamiento privado de la aplicación en el dispositivo. |
+| Documentación de servicios | Swagger UI y OpenAPI           | Dirección configurada para la documentación del backend.   |
 
-Los servicios específicos de Azure y sus recursos se definirán al configurar el entorno de publicación.
+Se utiliza Kotlin Multiplatform para la estrategia Android e iOS y Jetpack Compose en Android. Las pruebas y el alcance completado por plataforma se documentan en el Sprint 1. Compartir lógica no implica que todas las pantallas o integraciones estén implementadas y probadas en ambas plataformas.
 
-##### Configuración prevista
+##### Configuración del despliegue
 
-La landing page se publicará desde su repositorio y se comprobará que sus páginas, imágenes y enlaces puedan consultarse desde el navegador.
+La landing page se publica mediante GitHub Pages desde su repositorio y se comprobará que sus páginas, imágenes y enlaces puedan consultarse desde el navegador.
 
-El backend se compilará desde su repositorio y se configurará con los datos de conexión a MySQL y las credenciales de los servicios externos. Las contraseñas y claves se mantendrán fuera del código publicado.
+El backend se aloja en Render y se compila desde su repositorio y se configurará con los datos de conexión a PostgreSQL y las credenciales de los servicios externos. Las contraseñas y claves se mantendrán fuera del código publicado.
 
-La base de datos central permitirá el acceso del backend. La aplicación móvil realizará sus operaciones a través de los servicios del backend, sin conectarse directamente a MySQL.
+La base de datos central permitirá el acceso del backend. La aplicación móvil realizará sus operaciones a través de los servicios del backend, sin conectarse directamente a PostgreSQL.
 
 En la aplicación móvil se configurará la dirección del backend publicado. SQLite conservará los datos descargados para su consulta local.
 
@@ -233,8 +239,9 @@ Antes de presentar el despliegue se comprobarán los siguientes aspectos:
 
 - Acceso a la landing page y funcionamiento de sus enlaces.
 - Disponibilidad del backend mediante HTTPS.
-- Conexión del backend con MySQL.
+- Conexión del backend con PostgreSQL.
+- Acceso a Swagger UI y correspondencia de su documentación con las operaciones implementadas.
 - Ejecución de las operaciones implementadas desde la aplicación o una herramienta de pruebas.
 - Configuración de los servicios externos incluidos en el alcance de la entrega.
 
-Los pasos concretos, los recursos utilizados y las direcciones de acceso se incorporarán cuando se configure el despliegue.
+Las direcciones públicas de GitHub Pages, Render y Swagger UI, el servicio PostgreSQL de Render y las evidencias de funcionamiento se registrarán en el Sprint 1. No se considera comprobado un servicio únicamente por haber elegido su plataforma de alojamiento.

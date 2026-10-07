@@ -17,7 +17,7 @@ workspace "ANITEC - Deployment" "Despliegue propuesto de ANITEC." {
 
         anitec = softwareSystem "ANITEC" "Aplicación de gestión ganadera y apoyo veterinario." {
 
-            mobile = container "Aplicación móvil" "Gestiona animales, vinculaciones, atenciones y suscripciones según el perfil del usuario." "Flutter / Dart" {
+            mobile = container "Aplicación móvil" "Gestiona animales, vinculaciones, atenciones y suscripciones según el perfil del usuario." "Kotlin Multiplatform / Jetpack Compose (Android)" {
                 tags "Mobile"
             }
 
@@ -29,7 +29,7 @@ workspace "ANITEC - Deployment" "Despliegue propuesto de ANITEC." {
                 tags "API"
             }
 
-            database = container "Base de datos central" "Almacena cuentas, animales, vinculaciones, citas, atenciones, indicaciones y suscripciones." "MySQL" {
+            database = container "Base de datos central" "Almacena cuentas, animales, vinculaciones, citas, atenciones, indicaciones y suscripciones." "PostgreSQL" {
                 tags "Database"
             }
 
@@ -56,14 +56,14 @@ workspace "ANITEC - Deployment" "Despliegue propuesto de ANITEC." {
                 }
             }
 
-            applicationServer = deploymentNode "Servidor de aplicación" "Aloja el backend de ANITEC. Proveedor por definir." "Entorno de servidor compatible con Java" {
+            applicationServer = deploymentNode "Render" "Aloja el backend de ANITEC desarrollado con Java y Spring Boot." "Servicio de alojamiento del backend" {
                 jvm = deploymentNode "Entorno de ejecución Java" "Ejecuta la API REST desarrollada con Spring Boot." "JVM" {
                     apiInstance = containerInstance api
                 }
             }
 
-            databaseServer = deploymentNode "Servidor de base de datos" "Aloja la información central de ANITEC. Proveedor por definir." "Servicio de base de datos" {
-                mysql = deploymentNode "Motor MySQL" "Gestiona la persistencia central del sistema." "MySQL" {
+            databaseServer = deploymentNode "PostgreSQL en Render" "Aloja la información central de ANITEC en Render." "Servicio PostgreSQL" {
+                postgresql = deploymentNode "Motor PostgreSQL" "Gestiona la persistencia central del sistema." "PostgreSQL" {
                     databaseInstance = containerInstance database
                 }
             }
@@ -72,7 +72,7 @@ workspace "ANITEC - Deployment" "Despliegue propuesto de ANITEC." {
                 browser = infrastructureNode "Navegador web" "Solicita y muestra la landing page." "Navegador compatible con HTML5"
             }
 
-            webHosting = deploymentNode "Hosting de la landing page" "Publica los archivos del sitio. Proveedor por definir." "Hosting estático con HTTPS" {
+            webHosting = deploymentNode "GitHub Pages" "Publica los archivos estáticos de la landing page." "Alojamiento estático con HTTPS" {
                 landingInstance = containerInstance landing
             }
 

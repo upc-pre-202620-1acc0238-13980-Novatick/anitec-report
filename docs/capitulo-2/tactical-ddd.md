@@ -2,7 +2,17 @@
 
 # 2.6. Tactical-Level Domain-Driven Design
 
-El diseño táctico de ANITEC documenta las clases y relaciones de Livestock Management, Veterinary Care, Veterinary Linking, Subscriptions e Identity and Access. Comprende Flutter y Java con Spring Boot, siguiendo las historias de usuario y el Event Storming.
+El diseño táctico de ANITEC documenta las clases y relaciones de Livestock Management, Veterinary Care, Veterinary Linking, Subscriptions e Identity and Access. Comprende Kotlin Multiplatform para la aplicación móvil, Jetpack Compose para la interfaz Android y Java con Spring Boot para el backend, siguiendo las historias de usuario y el Event Storming. PostgreSQL se aloja en Render junto con el backend, y SQLite conserva las copias locales autorizadas. Swagger UI permite consultar y probar los servicios del backend.
+
+## Convenciones del diseño móvil
+
+Kotlin Multiplatform permite compartir la lógica entre Android e iOS. Jetpack Compose se utiliza en Android. Si se comparte también la interfaz con iOS, corresponde utilizar Compose Multiplatform. Los diagramas describen el diseño propuesto y las evidencias del sprint deben identificar las plataformas realmente implementadas y probadas.
+
+Los elementos terminados en `Page` y los formularios representan pantallas conceptuales. Su contenido se presenta mediante funciones `@Composable`, mientras el ViewModel conserva el estado y recibe las acciones del usuario. Los nombres funcionales se mantienen para facilitar la trazabilidad, sin exigir que cada pantalla sea una clase con los mismos métodos que el modelo conceptual.
+
+En el código compartido se usan `String`, `Int`, `Boolean` y `List<T>`, con `?` para datos opcionales. `LocalDate` representa fechas sin hora, como el nacimiento, e `Instant` los momentos de registro, atención, vigencia y expiración. Se deben utilizar tipos temporales compatibles con Kotlin Multiplatform y convertir los valores introducidos por el usuario según la zona horaria correspondiente. Estos nombres describen el contrato de diseño, sin fijar una versión de librería no comprobada en el repositorio.
+
+Las operaciones de red y almacenamiento se modelan como funciones `suspend`, que permiten esperar el resultado sin bloquear la interfaz. Devuelven el tipo de resultado del contrato, o `Unit` cuando no hay un valor de retorno. Los ViewModels coordinan su ejecución. La selección concreta de librerías de red, fechas y acceso a SQLite debe coincidir con el código del proyecto.
 
 ## 2.6.1. Bounded Context: Livestock Management
 
@@ -112,19 +122,19 @@ Se mantienen los eventos "Observación sobre un animal registrada" y "Límite de
 
 Los usuarios se referencian por identificador. El acceso entre contextos requiere autorización y se realiza sin consultar directamente repositorios ajenos.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
-Flutter representa la información y solicita operaciones. El servidor conserva la validación final de propiedad, códigos duplicados y capacidad.
+Kotlin Multiplatform representa la información y solicita operaciones. El servidor conserva la validación final de propiedad, códigos duplicados y capacidad.
 
-Los modelos móviles son inmutables (solo lectura). Usan `String` para identificadores, `DateTime` para fechas y `?` para datos opcionales. La fecha de nacimiento se interpreta sin hora.
+Los modelos móviles son inmutables (solo lectura). Usan `String` para identificadores, `Instant` para momentos de registro, `LocalDate` para la fecha de nacimiento y `?` para datos opcionales.
 
 | Elemento              | Atributos                                                                                                                                                                                                                                   | Operaciones y responsabilidad                                                                                                                     |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Animal`              | `id: String`, `ownerId: String`, `code: String`, `species: String`, `sex: AnimalSex`, `name: String?`, `breed: String?`, `birthDate: DateTime?`, `status: AnimalStatus`, `registeredAt: DateTime`, `observations: List<AnimalObservation>`. | Representar la ficha y el estado del animal. `isActive` permite consultar si está activo. La lista de observaciones es de solo lectura.           |
-| `AnimalObservation`   | `id: String`, `authorId: String`, `content: String`, `registeredAt: DateTime`.                                                                                                                                                              | Representar una observación descargada. Sus datos se consultan sin modificarlos directamente.                                                     |
+| `Animal`              | `id: String`, `ownerId: String`, `code: String`, `species: String`, `sex: AnimalSex`, `name: String?`, `breed: String?`, `birthDate: LocalDate?`, `status: AnimalStatus`, `registeredAt: Instant`, `observations: List<AnimalObservation>`. | Representar la ficha y el estado del animal. `isActive` permite consultar si está activo. La lista de observaciones es de solo lectura.           |
+| `AnimalObservation`   | `id: String`, `authorId: String`, `content: String`, `registeredAt: Instant`.                                                                                                                                                               | Representar una observación descargada. Sus datos se consultan sin modificarlos directamente.                                                     |
 | `AnimalStatus`        | Valores `ACTIVE` e `INACTIVE`.                                                                                                                                                                                                              | Identificar el estado del animal.                                                                                                                 |
 | `AnimalSex`           | Valores `MALE`, `FEMALE` y `UNKNOWN`.                                                                                                                                                                                                       | Representar el sexo registrado.                                                                                                                   |
-| `InventoryCapacity`   | `ownerId: String`, `allowedAnimals: int`, `activeAnimals: int`.                                                                                                                                                                             | Mostrar el límite y su ocupación. `hasAvailableSlot` orienta al usuario con el último estado disponible. No sustituye la validación del servidor. |
+| `InventoryCapacity`   | `ownerId: String`, `allowedAnimals: Int`, `activeAnimals: Int`.                                                                                                                                                                             | Mostrar el límite y su ocupación. `hasAvailableSlot` orienta al usuario con el último estado disponible. No sustituye la validación del servidor. |
 | `LivestockRepository` | Sin atributos de implementación.                                                                                                                                                                                                            | Definir las consultas y solicitudes del módulo sin depender de llamadas de red ni de SQLite.                                                      |
 
 Contrato del repositorio móvil
@@ -139,7 +149,7 @@ Contrato del repositorio móvil
 | `deactivateAnimal`    | Solicitar la baja y recibir el estado confirmado.                       |
 | `registerObservation` | Solicitar el registro del contenido de una observación para un animal.  |
 
-Los métodos devuelven `Future`, resultados disponibles al terminar una operación. Inventario y fichas admiten consulta local. Los registros y modificaciones requieren conexión y no quedan pendientes.
+Los métodos de acceso se definen como funciones `suspend` y devuelven el resultado del contrato al terminar la operación. Inventario y fichas admiten consulta local. Los registros y modificaciones requieren conexión y no quedan pendientes.
 
 El acceso al servidor y al almacenamiento local se coordina entre las capas de aplicación e infraestructura. Las copias incluyen fecha de descarga, se separan por cuenta y se eliminan al cerrar sesión. Al reconectar se revalidan permisos y se eliminan copias cuyo acceso fue revocado.
 
@@ -147,7 +157,7 @@ El acceso al servidor y al almacenamiento local se coordina entre las capas de a
 
 ### 2.6.1.2. Interface Layer
 
-Esta capa recibe las solicitudes del usuario y presenta sus resultados. En el servidor incluye controladores y objetos de solicitud y respuesta. En Flutter, pantallas, formularios y estado de presentación. Las operaciones se delegan a Application Layer, que coordina las reglas del dominio.
+Esta capa recibe las solicitudes del usuario y presenta sus resultados. En el servidor incluye controladores y objetos de solicitud y respuesta. En Kotlin Multiplatform, pantallas, formularios y estado de presentación. Las operaciones se delegan a Application Layer, que coordina las reglas del dominio.
 
 #### API REST - Java
 
@@ -174,19 +184,19 @@ Estos objetos transportan datos entre la aplicación móvil y el servidor. Sus a
 
 `AnimalController` recibe `AnimalDataRequest` u `ObservationRequest` y devuelve `AnimalResponse` o `AnimalObservationResponse`. El inventario devuelve una lista de animales. Cada `AnimalResponse` contiene cero o más observaciones. `InventoryCapacityController` devuelve `InventoryCapacityResponse`. Los métodos `fromDomain` convierten datos sin modificar los agregados.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
 Las pantallas muestran los datos y recogen acciones. `LivestockViewModel` mantiene el estado de presentación y comunica esas acciones a `LivestockApplicationService`, de Application Layer. El término ViewModel identifica la clase que prepara los datos y resultados para la interfaz.
 
-| Clase                    | Propósito                                                                                        | Atributos principales                                                                                                                                                                                                             | Métodos                                                                                                                                                                                      |
-| ------------------------ | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `LivestockViewModel`     | Coordinar el estado visible del módulo: carga, resultados, errores y disponibilidad de conexión. | `applicationService: LivestockApplicationService`, `animals: List<Animal>`, `selectedAnimal: Animal?`, `capacity: InventoryCapacity?`, `isLoading: bool`, `errorMessage: String?`, `isOffline: bool`, `lastUpdatedAt: DateTime?`. | `loadInventory()`, `loadAnimal(animalId)`, `loadCapacity()`, `registerAnimal(data)`, `updateAnimal(animalId, data)`, `deactivateAnimal(animalId)`, `registerObservation(animalId, content)`. |
-| `LivestockInventoryPage` | Mostrar animales activos e inactivos, capacidad y acceso al registro.                            | `viewModel: LivestockViewModel`.                                                                                                                                                                                                  | `build(context)`, `refreshInventory()`, `openAnimal(animalId)`, `openRegistration()`.                                                                                                        |
-| `AnimalDetailPage`       | Mostrar la ficha y las observaciones. Permitir editar, dar de baja y agregar observaciones.      | `animalId: String`, `viewModel: LivestockViewModel`.                                                                                                                                                                              | `build(context)`, `openEdition()`, `confirmDeactivation()`, `openObservationForm()`.                                                                                                         |
-| `AnimalFormPage`         | Recoger y validar los datos para registrar o editar.                                             | `initialAnimal: Animal?`, `viewModel: LivestockViewModel`. Estado del formulario: `code: String`, `species: String`, `sex: AnimalSex?`, `name: String?`, `breed: String?`, `birthDate: DateTime?`.                                | `build(context)`, `validateForm()`, `submit()`.                                                                                                                                              |
-| `ObservationForm`        | Recoger el contenido de una observación del animal.                                              | `animalId: String`, `content: String`, `viewModel: LivestockViewModel`.                                                                                                                                                           | `build(context)`, `validateContent()`, `submit()`.                                                                                                                                           |
+| Clase                    | Propósito                                                                                        | Atributos principales                                                                                                                                                                                                                  | Métodos                                                                                                                                                                                      |
+| ------------------------ | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `LivestockViewModel`     | Coordinar el estado visible del módulo: carga, resultados, errores y disponibilidad de conexión. | `applicationService: LivestockApplicationService`, `animals: List<Animal>`, `selectedAnimal: Animal?`, `capacity: InventoryCapacity?`, `isLoading: Boolean`, `errorMessage: String?`, `isOffline: Boolean`, `lastUpdatedAt: Instant?`. | `loadInventory()`, `loadAnimal(animalId)`, `loadCapacity()`, `registerAnimal(data)`, `updateAnimal(animalId, data)`, `deactivateAnimal(animalId)`, `registerObservation(animalId, content)`. |
+| `LivestockInventoryPage` | Mostrar animales activos e inactivos, capacidad y acceso al registro.                            | `viewModel: LivestockViewModel`.                                                                                                                                                                                                       | `refreshInventory()`, `openAnimal(animalId)`, `openRegistration()`.                                                                                                                          |
+| `AnimalDetailPage`       | Mostrar la ficha y las observaciones. Permitir editar, dar de baja y agregar observaciones.      | `animalId: String`, `viewModel: LivestockViewModel`.                                                                                                                                                                                   | `openEdition()`, `confirmDeactivation()`, `openObservationForm()`.                                                                                                                           |
+| `AnimalFormPage`         | Recoger y validar los datos para registrar o editar.                                             | `initialAnimal: Animal?`, `viewModel: LivestockViewModel`. Estado del formulario: `code: String`, `species: String`, `sex: AnimalSex?`, `name: String?`, `breed: String?`, `birthDate: LocalDate?`.                                    | `validateForm()`, `submit()`.                                                                                                                                                                |
+| `ObservationForm`        | Recoger el contenido de una observación del animal.                                              | `animalId: String`, `content: String`, `viewModel: LivestockViewModel`.                                                                                                                                                                | `validateContent()`, `submit()`.                                                                                                                                                             |
 
-`build` construye la vista. Los campos editables se mantienen en el estado de cada formulario. Los métodos de envío delegan al ViewModel. `AnimalFormPage` usa `initialAnimal` para distinguir registro de edición y transmite sus seis datos editables. La validación local detecta campos vacíos y fechas inválidas. El servidor confirma las reglas de negocio.
+La función `@Composable` de cada pantalla describe su contenido visual. Los campos editables se mantienen en el estado de cada formulario. Los métodos de envío delegan al ViewModel. `AnimalFormPage` usa `initialAnimal` para distinguir registro de edición y transmite sus seis datos editables. La validación local detecta campos vacíos y fechas inválidas. El servidor confirma las reglas de negocio.
 
 Relaciones y comportamiento de presentación
 
@@ -243,15 +253,15 @@ Los controladores construyen estos objetos con la identidad validada del ganader
 
 `AnimalController` delega al servicio de comandos o al de consultas. `InventoryCapacityController` utiliza el de consultas. `InventoryCapacityService` accede a su repositorio y al contrato de Subscriptions. Las operaciones de escritura se delimitan como transacciones, es decir, se confirman completas o se deshacen si fallan.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
-`LivestockApplicationService` coordina las acciones del ViewModel. Utiliza la sesión de la cuenta, el repositorio y las copias locales. Las operaciones de acceso devuelven `Future`.
+`LivestockApplicationService` coordina las acciones del ViewModel. Utiliza la sesión de la cuenta, el repositorio y las copias locales. Las operaciones de acceso se definen como funciones `suspend`.
 
 | Clase o interfaz              | Propósito                                                                                                | Atributos principales                                                                                                                   | Métodos                                                                                                                                                                                                                                                                                          |
 | ----------------------------- | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `LivestockApplicationService` | Coordinar consultas y modificaciones del módulo.                                                         | `repository: LivestockRepository`, `cache: LivestockCacheGateway`, `session: LivestockSessionGateway`, `connection: ConnectionGateway`. | `getInventory()`, `getAnimal(animalId)`, `getCapacity()`, `registerAnimal(data)`, `updateAnimal(animalId, data)`, `deactivateAnimal(animalId)`, `registerObservation(animalId, content)`, `onSessionClosed(accountId)`, `onConnectionRestored()`.                                                |
-| `AnimalInput`                 | Reunir los seis datos editables del formulario.                                                          | `code: String`, `species: String`, `sex: AnimalSex`, `name: String?`, `breed: String?`, `birthDate: DateTime?`.                         | Constructor y lectura de atributos.                                                                                                                                                                                                                                                              |
-| `LivestockReadResult<T>`      | Entregar datos de consulta y su procedencia. `T` representa el tipo de dato, como un animal o una lista. | `data: T`, `fromCache: bool`, `updatedAt: DateTime`.                                                                                    | Constructor y lectura de atributos.                                                                                                                                                                                                                                                              |
+| `AnimalInput`                 | Reunir los seis datos editables del formulario.                                                          | `code: String`, `species: String`, `sex: AnimalSex`, `name: String?`, `breed: String?`, `birthDate: LocalDate?`.                        | Constructor y lectura de atributos.                                                                                                                                                                                                                                                              |
+| `LivestockReadResult<T>`      | Entregar datos de consulta y su procedencia. `T` representa el tipo de dato, como un animal o una lista. | `data: T`, `fromCache: Boolean`, `updatedAt: Instant`.                                                                                  | Constructor y lectura de atributos.                                                                                                                                                                                                                                                              |
 | `LivestockSessionGateway`     | Consultar la sesión administrada por Identity and Access.                                                | Sin atributos de implementación.                                                                                                        | `requireValidSession()`, `getAccountId()`.                                                                                                                                                                                                                                                       |
 | `ConnectionGateway`           | Consultar la disponibilidad de conexión.                                                                 | Sin atributos de implementación.                                                                                                        | `isOnline()`.                                                                                                                                                                                                                                                                                    |
 | `LivestockCacheGateway`       | Definir el acceso a copias locales por cuenta.                                                           | Sin atributos de implementación.                                                                                                        | `readInventory(accountId)`, `readAnimal(accountId, animalId)`, `listCachedAnimalIds(accountId)`, `storeInventory(accountId, animals, updatedAt)`, `storeAnimal(accountId, animal, updatedAt)`, `invalidateInventory(accountId)`, `removeAnimal(accountId, animalId)`, `clearAccount(accountId)`. |
@@ -270,11 +280,11 @@ Un fallo de red puede permitir una consulta local. Una respuesta de sesión inv�
 
 ### 2.6.1.4. Infrastructure Layer
 
-Esta capa implementa los contratos de persistencia e integración. El servidor utiliza MySQL y la aplicación móvil utiliza la API y SQLite. Las dependencias de las clases son privadas y las operaciones de sus contratos son públicas.
+Esta capa implementa los contratos de persistencia e integración. El servidor utiliza PostgreSQL y la aplicación móvil utiliza la API y SQLite. Las dependencias de las clases son privadas y las operaciones de sus contratos son públicas.
 
 #### API REST - Java
 
-Se propone utilizar JPA con Hibernate, herramientas que relacionan los objetos Java con las tablas de MySQL. Los objetos de persistencia se mantienen separados de los agregados del dominio.
+Se propone utilizar JPA con Hibernate, herramientas que relacionan los objetos Java con las tablas de PostgreSQL. Los objetos de persistencia se mantienen separados de los agregados del dominio.
 
 | Clase                            | Propósito                                                                                  | Atributos principales                                                 | Métodos                                                                                                                                                        |
 | -------------------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -285,7 +295,7 @@ Se propone utilizar JPA con Hibernate, herramientas que relacionan los objetos J
 | `SubscriptionEventsAdapter`      | Recibir los eventos internos de activación y vencimiento y entregarlos al manejador.       | `handler: SubscriptionLimitChangedHandler`.                           | `onPremiumActivated(event)`, `onPremiumExpired(event)`.                                                                                                        |
 | `LivestockContextAdapter`        | Proporcionar datos a Veterinary Care mediante el contrato interno autorizado.              | `queryService: LivestockQueryService`.                                | `getAnimalForCare(ownerId, animalId)`.                                                                                                                         |
 
-`EntityManager` es el componente de persistencia que ejecuta las operaciones sobre MySQL. `LivestockContextAdapter` convierte el resultado autorizado a `AnimalResponse`, sin exponer repositorios ni agregados modificables al otro contexto. Las integraciones se realizan dentro del servidor modular y no requieren un servicio independiente por contexto.
+`EntityManager` es el componente de persistencia que ejecuta las operaciones sobre PostgreSQL. `LivestockContextAdapter` convierte el resultado autorizado a `AnimalResponse`, sin exponer repositorios ni agregados modificables al otro contexto. Las integraciones se realizan dentro del servidor modular y no requieren un servicio independiente por contexto.
 
 Objetos de persistencia
 
@@ -301,9 +311,9 @@ Al registrar, editar, dar de baja o agregar observaciones, se bloquea primero la
 
 Spring administra las transacciones. Si falla el guardado del animal o del cupo, se deshacen ambos cambios. Los eventos se entregan después de confirmar la transacción de origen. Las revisiones permiten repetir la aplicación de un límite sin duplicar efectos. Si falla la entrega de un cambio de límite, `getOrCreate` recupera la revisión vigente de Subscriptions al consultar la capacidad o iniciar otra operación. Si no puede verificarla, informa el fallo sin autorizar nuevas altas.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
-La implementación del repositorio comunica Flutter con la API. SQLite conserva únicamente las copias de consulta. Los datos de sesión permanecen en el almacenamiento seguro administrado por Identity and Access.
+La implementación del repositorio comunica Kotlin Multiplatform con la API. SQLite conserva únicamente las copias de consulta. Los datos de sesión permanecen en el almacenamiento seguro administrado por Identity and Access.
 
 | Clase                       | Propósito                                                                                          | Atributos principales                                               | Métodos                                                                                                                                                                                                                                                                                          |
 | --------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -323,13 +333,13 @@ JSON es el formato de datos intercambiado con el servidor. El repositorio transf
 | Integridad local        | Guarda cada copia y su fecha en una transacción de SQLite. Antes de guardarla comprueba que siga activa la misma cuenta que inició la solicitud.                                                                   |
 | Modificación confirmada | Actualiza o invalida las copias afectadas y vuelve a consultar la capacidad después de un alta o una baja. Un fallo local no convierte una modificación ya confirmada en una operación rechazada.                  |
 | Acceso denegado         | Elimina la copia del recurso afectado. Una sesión inválida bloquea la consulta y limpia las copias de esa cuenta.                                                                                                  |
-| Cierre de sesión        | `clearAccount` borra animales, observaciones y metadatos locales de la cuenta. No elimina registros de MySQL.                                                                                                      |
+| Cierre de sesión        | `clearAccount` borra animales, observaciones y metadatos locales de la cuenta. No elimina registros de PostgreSQL.                                                                                                 |
 
 El indicador de conexión no garantiza que la API responda. Los errores de comunicación se distinguen de los rechazos de autorización. Los intentos de escritura sin respuesta concluyente se informan sin asumir que fallaron ni repetirlos automáticamente.
 
 ### 2.6.1.5. Bounded Context Software Architecture Component Level Diagrams
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
 El diagrama de componentes del frontend muestra la descomposición de Livestock Management Context en Presentation, Application, Infrastructure y Domain. Presentation gestiona las pantallas y formularios relacionados con el inventario de animales; Application coordina las operaciones del módulo; Domain contiene los modelos y contratos principales; e Infrastructure implementa la comunicación con la REST API y el almacenamiento local en SQLite. El módulo también utiliza Shared para navegación, sesión y elementos comunes de la aplicación móvil.
 
@@ -337,7 +347,7 @@ El diagrama de componentes del frontend muestra la descomposición de Livestock 
 
 #### API REST - Java
 
-El diagrama de componentes del backend representa Livestock Management Context mediante Interfaces, Application, Infrastructure y Domain. Interfaces expone los endpoints relacionados con animales, observaciones y capacidad del inventario; Application coordina los casos de uso; Domain concentra las reglas y modelos del dominio; e Infrastructure implementa la persistencia mediante JPA e Hibernate sobre MySQL. El backend utiliza además un Shared Kernel para los elementos comunes entre bounded contexts.
+El diagrama de componentes del backend representa Livestock Management Context mediante Interfaces, Application, Infrastructure y Domain. Interfaces expone los endpoints relacionados con animales, observaciones y capacidad del inventario; Application coordina los casos de uso; Domain concentra las reglas y modelos del dominio; e Infrastructure implementa la persistencia mediante JPA e Hibernate sobre PostgreSQL. El backend utiliza además un módulo Shared para los elementos comunes entre bounded contexts.
 
 ![Backend - Livestock Management](<../../assets/images/componets-level-diagrams/Backend - Livestock Management.png>)
 
@@ -345,7 +355,7 @@ El diagrama de componentes del backend representa Livestock Management Context m
 
 #### 2.6.1.6.1. Bounded Context Domain Layer Class Diagrams
 
-Aplicación móvil - Flutter
+Aplicación móvil - Kotlin Multiplatform
 
 ![Livestock Management - Frontend](../../assets/images/UML%20Diagrams/Images/Livestock%20Management/Livestock%20Management%20-%20Frontend.png)
 
@@ -355,7 +365,7 @@ API REST - Java
 
 #### 2.6.1.6.2. Bounded Context Database Diagram
 
-Base de datos central - MySQL
+Base de datos central - PostgreSQL
 
 Base de datos local - SQLite
 
@@ -464,20 +474,20 @@ Repositorios y eventos
 
 Los identificadores de animales y usuarios son referencias a otros contextos. Dar de baja a un animal no elimina sus atenciones ni impide consultar el historial con autorización. Una observación del ganadero tampoco crea automáticamente una cita o atención.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
-Los modelos móviles son de solo lectura. Usan `String` para identificadores, `DateTime` para fechas y `?` para campos opcionales. El texto clínico se representa como `String` y el servidor valida las operaciones.
+Los modelos móviles son de solo lectura. Usan `String` para identificadores, `Instant` para fechas y `?` para campos opcionales. El texto clínico se representa como `String` y el servidor valida las operaciones.
 
-| Clase                                   | Atributos                                                                                                                                                                                                                                                                                          | Métodos y propósito                                                                                               |
-| --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `VeterinaryAppointment`                 | `id: String`, `animalId: String`, `ownerId: String`, `veterinarianId: String`, `type: AppointmentType`, `scheduledAt: DateTime`, `originCareRecordId: String?`, `status: AppointmentStatus`, `createdAt: DateTime`.                                                                                | Lectura de la cita y `isCompleted` para consultar su estado.                                                      |
-| `CareRecord`                            | `id: String`, `animalId: String`, `ownerId: String`, `veterinarianId: String`, `attendedAt: DateTime`, `description: String`, `appointmentId: String?`, `registeredAt: DateTime`, `treatments: List<TreatmentRecord>`, `vaccinations: List<VaccinationRecord>`, `instructions: CareInstructions?`. | Lectura de la atención. `isAuthoredBy(userId)` identifica a su autor, sin sustituir la autorización del servidor. |
-| `TreatmentRecord`                       | `id: String`, `description: String`, `performedAt: DateTime`.                                                                                                                                                                                                                                      | Constructor y lectura del tratamiento.                                                                            |
-| `VaccinationRecord`                     | `id: String`, `vaccineName: String`, `appliedAt: DateTime`.                                                                                                                                                                                                                                        | Constructor y lectura de la vacunación.                                                                           |
-| `CareInstructions`                      | `id: String`, `authorId: String`, `revisions: List<InstructionRevision>`.                                                                                                                                                                                                                          | Lectura de las indicaciones y `getCurrentRevision()`.                                                             |
-| `InstructionRevision`                   | `number: int`, `content: String`, `authorId: String`, `createdAt: DateTime`.                                                                                                                                                                                                                       | Constructor y lectura de una versión.                                                                             |
-| `AppointmentType` / `AppointmentStatus` | Los mismos valores definidos para Java.                                                                                                                                                                                                                                                            | Identificar el tipo y el estado de una cita.                                                                      |
-| `CareRepository`                        | Sin atributos de implementación.                                                                                                                                                                                                                                                                   | Contrato de consultas y modificaciones descrito a continuación.                                                   |
+| Clase                                   | Atributos                                                                                                                                                                                                                                                                                        | Métodos y propósito                                                                                               |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| `VeterinaryAppointment`                 | `id: String`, `animalId: String`, `ownerId: String`, `veterinarianId: String`, `type: AppointmentType`, `scheduledAt: Instant`, `originCareRecordId: String?`, `status: AppointmentStatus`, `createdAt: Instant`.                                                                                | Lectura de la cita y `isCompleted` para consultar su estado.                                                      |
+| `CareRecord`                            | `id: String`, `animalId: String`, `ownerId: String`, `veterinarianId: String`, `attendedAt: Instant`, `description: String`, `appointmentId: String?`, `registeredAt: Instant`, `treatments: List<TreatmentRecord>`, `vaccinations: List<VaccinationRecord>`, `instructions: CareInstructions?`. | Lectura de la atención. `isAuthoredBy(userId)` identifica a su autor, sin sustituir la autorización del servidor. |
+| `TreatmentRecord`                       | `id: String`, `description: String`, `performedAt: Instant`.                                                                                                                                                                                                                                     | Constructor y lectura del tratamiento.                                                                            |
+| `VaccinationRecord`                     | `id: String`, `vaccineName: String`, `appliedAt: Instant`.                                                                                                                                                                                                                                       | Constructor y lectura de la vacunación.                                                                           |
+| `CareInstructions`                      | `id: String`, `authorId: String`, `revisions: List<InstructionRevision>`.                                                                                                                                                                                                                        | Lectura de las indicaciones y `getCurrentRevision()`.                                                             |
+| `InstructionRevision`                   | `number: Int`, `content: String`, `authorId: String`, `createdAt: Instant`.                                                                                                                                                                                                                      | Constructor y lectura de una versión.                                                                             |
+| `AppointmentType` / `AppointmentStatus` | Los mismos valores definidos para Java.                                                                                                                                                                                                                                                          | Identificar el tipo y el estado de una cita.                                                                      |
+| `CareRepository`                        | Sin atributos de implementación.                                                                                                                                                                                                                                                                 | Contrato de consultas y modificaciones descrito a continuación.                                                   |
 
 | Métodos de `CareRepository`                                   | Propósito                                                   |
 | ------------------------------------------------------------- | ----------------------------------------------------------- |
@@ -486,7 +496,7 @@ Los modelos móviles son de solo lectura. Usan `String` para identificadores, `D
 | `registerCareRecord`, `addTreatment`, `addVaccination`        | Solicitar registros realizados.                             |
 | `registerInstructions`, `updateInstructions`                  | Solicitar la creación o modificación de indicaciones.       |
 
-Los métodos devuelven `Future`. Las relaciones entre modelos reproducen las del servidor. Las pantallas no modifican directamente sus colecciones ni construyen atenciones realizadas a partir de citas programadas.
+Los métodos de acceso se definen como funciones `suspend`. Las relaciones entre modelos reproducen las del servidor. Las pantallas no modifican directamente sus colecciones ni construyen atenciones realizadas a partir de citas programadas.
 
 ### 2.6.2.2. Interface Layer
 
@@ -525,20 +535,20 @@ Las respuestas copian los atributos de las clases indicadas en Domain Layer. Los
 
 Los controladores delegan a los servicios de aplicación y transforman sus resultados autorizados. Agenda e historial devuelven listas. La confirmación de un registro no afirma que una notificación haya sido entregada al teléfono.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
-| Clase                    | Propósito y atributos principales                                                                                                                                                                                                                                                   | Métodos                                                                                                                                                                                                                      |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `CareViewModel`          | Estado de presentación: `service: CareApplicationService`, `appointments: List<VeterinaryAppointment>`, `history: List<CareRecord>`, `selectedRecord: CareRecord?`, `actor: CareActor?`, `isLoading: bool`, `isOffline: bool`, `errorMessage: String?`, `lastUpdatedAt: DateTime?`. | `loadSession`, `loadAgenda`, `loadHistory`, `loadCareRecord`, `loadInstructions`, `scheduleVisit`, `scheduleFollowUp`, `registerCareRecord`, `addTreatment`, `addVaccination`, `registerInstructions`, `updateInstructions`. |
-| `CareAgendaPage`         | Agenda del veterinario: `viewModel: CareViewModel`, `from: DateTime`, `to: DateTime`.                                                                                                                                                                                               | `build`, `changePeriod`, `openAppointmentForm`.                                                                                                                                                                              |
-| `AnimalCareHistoryPage`  | Historial del animal: `viewModel: CareViewModel`, `animalId: String`, `ownerId: String`.                                                                                                                                                                                            | `build`, `refreshHistory`, `openCareRecord`.                                                                                                                                                                                 |
-| `CareRecordDetailPage`   | Atención y registros complementarios: `viewModel: CareViewModel`, `recordId: String`.                                                                                                                                                                                               | `build`, `openTreatmentForm`, `openVaccinationForm`, `openInstructionsForm`, `openRevisionHistory`.                                                                                                                          |
-| `AppointmentFormPage`    | Datos de programación: `viewModel: CareViewModel`, `animalId: String`, `ownerId: String`, `type: AppointmentType`, `scheduledAt: DateTime?`, `originCareRecordId: String?`.                                                                                                         | `build`, `validateForm`, `submit`.                                                                                                                                                                                           |
-| `CareRecordFormPage`     | Datos de atención: `viewModel: CareViewModel`, `animalId: String`, `ownerId: String`, `appointmentId: String?`, `attendedAt: DateTime?`, `description: String`.                                                                                                                     | `build`, `validateForm`, `submit`.                                                                                                                                                                                           |
-| `TreatmentForm`          | Tratamiento: `viewModel: CareViewModel`, `recordId: String`, `description: String`, `performedAt: DateTime?`.                                                                                                                                                                       | `build`, `validateForm`, `submit`.                                                                                                                                                                                           |
-| `VaccinationForm`        | Vacunación: `viewModel: CareViewModel`, `recordId: String`, `vaccineName: String`, `appliedAt: DateTime?`.                                                                                                                                                                          | `build`, `validateForm`, `submit`.                                                                                                                                                                                           |
-| `CareInstructionsForm`   | Indicaciones: `viewModel: CareViewModel`, `recordId: String`, `content: String`, `expectedRevision: int?`.                                                                                                                                                                          | `build`, `validateForm`, `submit`.                                                                                                                                                                                           |
-| `CareNotificationRouter` | Abrir una atención desde un aviso: `service: CareApplicationService`.                                                                                                                                                                                                               | `onNotificationOpened(recordId)`.                                                                                                                                                                                            |
+| Clase                    | Propósito y atributos principales                                                                                                                                                                                                                                                        | Métodos                                                                                                                                                                                                                      |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CareViewModel`          | Estado de presentación: `service: CareApplicationService`, `appointments: List<VeterinaryAppointment>`, `history: List<CareRecord>`, `selectedRecord: CareRecord?`, `actor: CareActor?`, `isLoading: Boolean`, `isOffline: Boolean`, `errorMessage: String?`, `lastUpdatedAt: Instant?`. | `loadSession`, `loadAgenda`, `loadHistory`, `loadCareRecord`, `loadInstructions`, `scheduleVisit`, `scheduleFollowUp`, `registerCareRecord`, `addTreatment`, `addVaccination`, `registerInstructions`, `updateInstructions`. |
+| `CareAgendaPage`         | Agenda del veterinario: `viewModel: CareViewModel`, `from: Instant`, `to: Instant`.                                                                                                                                                                                                      | `changePeriod`, `openAppointmentForm`.                                                                                                                                                                                       |
+| `AnimalCareHistoryPage`  | Historial del animal: `viewModel: CareViewModel`, `animalId: String`, `ownerId: String`.                                                                                                                                                                                                 | `refreshHistory`, `openCareRecord`.                                                                                                                                                                                          |
+| `CareRecordDetailPage`   | Atención y registros complementarios: `viewModel: CareViewModel`, `recordId: String`.                                                                                                                                                                                                    | `openTreatmentForm`, `openVaccinationForm`, `openInstructionsForm`, `openRevisionHistory`.                                                                                                                                   |
+| `AppointmentFormPage`    | Datos de programación: `viewModel: CareViewModel`, `animalId: String`, `ownerId: String`, `type: AppointmentType`, `scheduledAt: Instant?`, `originCareRecordId: String?`.                                                                                                               | `validateForm`, `submit`.                                                                                                                                                                                                    |
+| `CareRecordFormPage`     | Datos de atención: `viewModel: CareViewModel`, `animalId: String`, `ownerId: String`, `appointmentId: String?`, `attendedAt: Instant?`, `description: String`.                                                                                                                           | `validateForm`, `submit`.                                                                                                                                                                                                    |
+| `TreatmentForm`          | Tratamiento: `viewModel: CareViewModel`, `recordId: String`, `description: String`, `performedAt: Instant?`.                                                                                                                                                                             | `validateForm`, `submit`.                                                                                                                                                                                                    |
+| `VaccinationForm`        | Vacunación: `viewModel: CareViewModel`, `recordId: String`, `vaccineName: String`, `appliedAt: Instant?`.                                                                                                                                                                                | `validateForm`, `submit`.                                                                                                                                                                                                    |
+| `CareInstructionsForm`   | Indicaciones: `viewModel: CareViewModel`, `recordId: String`, `content: String`, `expectedRevision: Int?`.                                                                                                                                                                               | `validateForm`, `submit`.                                                                                                                                                                                                    |
+| `CareNotificationRouter` | Abrir una atención desde un aviso: `service: CareApplicationService`.                                                                                                                                                                                                                    | `onNotificationOpened(recordId)`.                                                                                                                                                                                            |
 
 Las pantallas y formularios usan `CareViewModel`. El ganadero dispone de consultas y el veterinario de las acciones permitidas por su autoría. El servidor vuelve a comprobar la vinculación. Sin conexión se muestran las copias con su fecha y se deshabilitan las modificaciones. Un conflicto de revisión solicita recargar las indicaciones antes de volver a editarlas.
 
@@ -589,13 +599,13 @@ Los comandos son inmutables y disponen de constructor y métodos de lectura. Los
 
 `CareCommandService` utiliza los agregados y repositorios. `CareQueryService` utiliza los repositorios y la autorización. `CareInstructionsChangedHandler` utiliza el contrato de notificaciones. La revocación de una vinculación impide nuevas operaciones clínicas, sin borrar ni cancelar automáticamente los registros existentes.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
 | Clase o interfaz         | Propósito y atributos                                                                                                                                          | Métodos                                                                                                                                                                                                                                                                                    |
 | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `CareApplicationService` | Coordinar las acciones del ViewModel: `repository: CareRepository`, `cache: CareCacheGateway`, `session: CareSessionGateway`, `connection: ConnectionGateway`. | `getActor`, `getAgenda`, `getHistory`, `getCareRecord`, `getInstructions`, `scheduleVisit`, `scheduleFollowUp`, `registerCareRecord`, `addTreatment`, `addVaccination`, `registerInstructions`, `updateInstructions`, `openNotifiedCareRecord`, `onSessionClosed`, `onConnectionRestored`. |
 | `CareActor`              | Identidad móvil de la sesión: `userId: String`, `profile: String`.                                                                                             | Constructor y lectura.                                                                                                                                                                                                                                                                     |
-| `CareReadResult<T>`      | Resultado de consulta: `data: T`, `fromCache: bool`, `updatedAt: DateTime`.                                                                                    | Constructor y lectura. `T` identifica el tipo de dato devuelto.                                                                                                                                                                                                                            |
+| `CareReadResult<T>`      | Resultado de consulta: `data: T`, `fromCache: Boolean`, `updatedAt: Instant`.                                                                                  | Constructor y lectura. `T` identifica el tipo de dato devuelto.                                                                                                                                                                                                                            |
 | `CareSessionGateway`     | Consultar la sesión de Identity and Access. Sin atributos de implementación.                                                                                   | `requireValidSession()`, `getActor()`.                                                                                                                                                                                                                                                     |
 | `CareCacheGateway`       | Acceder a las copias por cuenta. Sin atributos de implementación.                                                                                              | Operaciones de consulta, guardado y limpieza descritas a continuación.                                                                                                                                                                                                                     |
 
@@ -617,7 +627,7 @@ Al cerrar sesión se eliminan las copias de la cuenta. Al reconectar se validan 
 
 ### 2.6.2.4. Infrastructure Layer
 
-Esta capa implementa los contratos de acceso a MySQL, SQLite, otros contextos y notificaciones. Los datos veterinarios se mantienen dentro de Veterinary Care, relacionados con animales y usuarios mediante sus identificadores.
+Esta capa implementa los contratos de acceso a PostgreSQL, SQLite, otros contextos y notificaciones. Los datos veterinarios se mantienen dentro de Veterinary Care, relacionados con animales y usuarios mediante sus identificadores.
 
 #### API REST - Java
 
@@ -653,7 +663,7 @@ Los eventos de indicaciones se procesan después del guardado. Los errores de no
 
 El aviso contiene una referencia a la atención y un mensaje general. No incluye contenido clínico. El registro de dispositivos respeta la cuenta activa y su cierre de sesión. La aplicación valida el acceso al abrir la referencia.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
 | Clase                        | Propósito                                                                               | Atributos principales                                        | Métodos                                                                                                                                                                                                                 |
 | ---------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -679,7 +689,7 @@ SQLite no conserva credenciales ni funciona como una cola de modificaciones. Las
 
 ### 2.6.2.5. Bounded Context Software Architecture Component Level Diagrams
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
 El diagrama de componentes del frontend de Veterinary Care Context se organiza en Presentation, Application, Infrastructure y Domain. Presentation gestiona la agenda, el historial y los formularios de atención veterinaria; Application coordina las consultas y registros del módulo; Domain representa citas, atenciones, tratamientos, vacunaciones e indicaciones; e Infrastructure implementa la comunicación con la REST API, el almacenamiento local en SQLite y la integración técnica con notificaciones. Shared proporciona los elementos comunes de la aplicación móvil.
 
@@ -687,7 +697,7 @@ El diagrama de componentes del frontend de Veterinary Care Context se organiza e
 
 #### API REST - Java
 
-El backend de Veterinary Care Context se descompone en Interfaces, Application, Infrastructure y Domain. Interfaces recibe las solicitudes relacionadas con visitas, controles y atenciones; Application coordina los casos de uso y las autorizaciones; Domain concentra las reglas de las citas y registros veterinarios; e Infrastructure gestiona la persistencia en MySQL y las integraciones con Livestock Management, Veterinary Linking y Firebase Cloud Messaging. También se utiliza el Shared Kernel para elementos comunes del backend.
+El backend de Veterinary Care Context se descompone en Interfaces, Application, Infrastructure y Domain. Interfaces recibe las solicitudes relacionadas con visitas, controles y atenciones; Application coordina los casos de uso y las autorizaciones; Domain concentra las reglas de las citas y registros veterinarios; e Infrastructure gestiona la persistencia en PostgreSQL y las integraciones con Livestock Management, Veterinary Linking y Firebase Cloud Messaging. También se utiliza el módulo Shared para elementos comunes del backend.
 
 ![Backend - Veterinary Care](<../../assets/images/componets-level-diagrams/Backend - Veterinary Care.png>)
 
@@ -695,7 +705,7 @@ El backend de Veterinary Care Context se descompone en Interfaces, Application, 
 
 #### 2.6.2.6.1. Bounded Context Domain Layer Class Diagrams
 
-Aplicación móvil - Flutter
+Aplicación móvil - Kotlin Multiplatform
 
 ![Veterinary Care - Frontend](../../assets/images/UML%20Diagrams/Images/Veterinary%20Care/Veterinary%20Care%20-%20Frontend.png)
 
@@ -705,7 +715,7 @@ API REST - Java
 
 #### 2.6.2.6.2. Bounded Context Database Diagram
 
-Base de datos central - MySQL
+Base de datos central - PostgreSQL
 
 Base de datos local - SQLite
 
@@ -809,21 +819,21 @@ Relaciones principales
 
 No se incorporan vencimiento de invitaciones ni cancelación automática de citas. La revocación cambia la autorización consultada por Atención veterinaria, sin modificar directamente sus registros.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
-El móvil utiliza modelos de lectura. Los identificadores se representan con `String`, las fechas con `DateTime` y los valores opcionales con `?`. Las reglas de autorización y capacidad se aplican en el servidor.
+El móvil utiliza modelos de lectura. Los identificadores se representan con `String`, las fechas con `Instant` y los valores opcionales con `?`. Las reglas de autorización y capacidad se aplican en el servidor.
 
-| Elemento               | Atributos                                                                                                                                                 | Métodos y propósito                                                                                                                                                                |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `LinkingInvitation`    | `id: String`, `ownerId: String`, `veterinarianId: String`, `status: InvitationStatus`, `createdAt: DateTime`, `respondedAt: DateTime?`.                   | Constructor, lectura e `isPending()`. Mostrar una invitación.                                                                                                                      |
-| `VeterinaryLink`       | `id: String`, `invitationId: String`, `ownerId: String`, `veterinarianId: String`, `status: LinkStatus`, `activatedAt: DateTime`, `revokedAt: DateTime?`. | Constructor, lectura e `isActive()`. Mostrar la autorización.                                                                                                                      |
-| `LinkingCapacity`      | `veterinarianId: String`, `allowedRanchers: int`, `activeLinks: int`.                                                                                     | Constructor, lectura y `hasAvailableSlot()`. Mostrar la capacidad informada por el servidor.                                                                                       |
-| `InvitationStatus`     | Valores `pending`, `accepted`, `rejected`.                                                                                                                | Representar el estado de la invitación.                                                                                                                                            |
-| `LinkStatus`           | Valores `active`, `revoked`.                                                                                                                              | Representar el estado de la vinculación.                                                                                                                                           |
-| `InvitationSubmission` | `invitation: LinkingInvitation`, `emailAccepted: bool`.                                                                                                   | Constructor y lectura. Distinguir el registro de la invitación de la aceptación del envío de correo.                                                                               |
-| `LinkingRepository`    | Sin atributos por ser una interfaz.                                                                                                                       | `sendInvitation(email)`, `acceptInvitation(invitationId)`, `rejectInvitation(invitationId)`, `getPendingInvitations()`, `getActiveLinks()`, `revokeLink(linkId)`, `getCapacity()`. |
+| Elemento               | Atributos                                                                                                                                               | Métodos y propósito                                                                                                                                                                |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `LinkingInvitation`    | `id: String`, `ownerId: String`, `veterinarianId: String`, `status: InvitationStatus`, `createdAt: Instant`, `respondedAt: Instant?`.                   | Constructor, lectura e `isPending()`. Mostrar una invitación.                                                                                                                      |
+| `VeterinaryLink`       | `id: String`, `invitationId: String`, `ownerId: String`, `veterinarianId: String`, `status: LinkStatus`, `activatedAt: Instant`, `revokedAt: Instant?`. | Constructor, lectura e `isActive()`. Mostrar la autorización.                                                                                                                      |
+| `LinkingCapacity`      | `veterinarianId: String`, `allowedRanchers: Int`, `activeLinks: Int`.                                                                                   | Constructor, lectura y `hasAvailableSlot()`. Mostrar la capacidad informada por el servidor.                                                                                       |
+| `InvitationStatus`     | Valores `pending`, `accepted`, `rejected`.                                                                                                              | Representar el estado de la invitación.                                                                                                                                            |
+| `LinkStatus`           | Valores `active`, `revoked`.                                                                                                                            | Representar el estado de la vinculación.                                                                                                                                           |
+| `InvitationSubmission` | `invitation: LinkingInvitation`, `emailAccepted: Boolean`.                                                                                              | Constructor y lectura. Distinguir el registro de la invitación de la aceptación del envío de correo.                                                                               |
+| `LinkingRepository`    | Sin atributos por ser una interfaz.                                                                                                                     | `sendInvitation(email)`, `acceptInvitation(invitationId)`, `rejectInvitation(invitationId)`, `getPendingInvitations()`, `getActiveLinks()`, `revokeLink(linkId)`, `getCapacity()`. |
 
-Las operaciones del repositorio devuelven resultados mediante `Future`, que representa una respuesta que llegará después de la solicitud. La aplicación puede mostrar los identificadores de los participantes sin descargar sus cuentas completas.
+Las operaciones del repositorio se definen como funciones `suspend` y devuelven los resultados descritos en sus contratos. La aplicación puede mostrar los identificadores de los participantes sin descargar sus cuentas completas.
 
 ### 2.6.3.2. Interface Layer
 
@@ -849,14 +859,14 @@ Datos de entrada y salida
 
 Aceptar, rechazar y revocar requieren el identificador del recurso, sin datos de autor enviados en el formulario. Las consultas devuelven únicamente recursos del usuario autenticado. `emailAccepted` no confirma que el destinatario haya recibido o leído el correo.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
-| Clase                    | Propósito y atributos                                                                                                                                                                                                                                          | Métodos                                                                                                                                              |
-| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `LinkingViewModel`       | Estado de presentación: `service: LinkingApplicationService`, `invitations: List<LinkingInvitation>`, `links: List<VeterinaryLink>`, `capacity: LinkingCapacity?`, `actor: LinkingActor?`, `isLoading: bool`, `errorMessage: String?`, `emailAccepted: bool?`. | `loadSession`, `loadInvitations`, `loadLinks`, `loadCapacity`, `sendInvitation`, `acceptInvitation`, `rejectInvitation`, `revokeLink`, `clearState`. |
-| `InvitationFormPage`     | Formulario del ganadero: `viewModel: LinkingViewModel`, `email: String`.                                                                                                                                                                                       | `build`, `validateForm`, `submit`.                                                                                                                   |
-| `PendingInvitationsPage` | Invitaciones del veterinario: `viewModel: LinkingViewModel`.                                                                                                                                                                                                   | `build`, `refreshInvitations`, `acceptInvitation`, `rejectInvitation`.                                                                               |
-| `ActiveLinksPage`        | Vinculaciones del usuario: `viewModel: LinkingViewModel`.                                                                                                                                                                                                      | `build`, `refreshLinks`, `confirmRevocation`.                                                                                                        |
+| Clase                    | Propósito y atributos                                                                                                                                                                                                                                                | Métodos                                                                                                                                              |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `LinkingViewModel`       | Estado de presentación: `service: LinkingApplicationService`, `invitations: List<LinkingInvitation>`, `links: List<VeterinaryLink>`, `capacity: LinkingCapacity?`, `actor: LinkingActor?`, `isLoading: Boolean`, `errorMessage: String?`, `emailAccepted: Boolean?`. | `loadSession`, `loadInvitations`, `loadLinks`, `loadCapacity`, `sendInvitation`, `acceptInvitation`, `rejectInvitation`, `revokeLink`, `clearState`. |
+| `InvitationFormPage`     | Formulario del ganadero: `viewModel: LinkingViewModel`, `email: String`.                                                                                                                                                                                             | `validateForm`, `submit`.                                                                                                                            |
+| `PendingInvitationsPage` | Invitaciones del veterinario: `viewModel: LinkingViewModel`.                                                                                                                                                                                                         | `refreshInvitations`, `acceptInvitation`, `rejectInvitation`.                                                                                        |
+| `ActiveLinksPage`        | Vinculaciones del usuario: `viewModel: LinkingViewModel`.                                                                                                                                                                                                            | `refreshLinks`, `confirmRevocation`.                                                                                                                 |
 
 El ganadero puede invitar y revocar. El veterinario puede responder y consultar su capacidad. Alcanzar el límite no deshabilita el rechazo de invitaciones. Después de una aceptación se actualizan las listas y el contador. Si falla el correo, se informa que la invitación existe y que su envío no está confirmado.
 
@@ -912,7 +922,7 @@ Flujos de aplicación
 
 El envío de correo se realiza después de confirmar el guardado. Si Resend rechaza la solicitud o no responde, la invitación permanece pendiente y la operación informa que el correo no está confirmado. El correo no activa la vinculación.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
 | Clase o interfaz            | Propósito y atributos                                                                                                                | Métodos                                                                                                                                                          |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -926,7 +936,7 @@ El servicio devuelve modelos del dominio y `InvitationSubmission` al invitar. La
 
 ### 2.6.3.4. Infrastructure Layer
 
-Esta capa implementa la persistencia en MySQL y la comunicación con Identidad y acceso, Suscripciones y Resend. Las vinculaciones se consultan en el servidor y no se almacenan como permisos permanentes del dispositivo.
+Esta capa implementa la persistencia en PostgreSQL y la comunicación con Identidad y acceso, Suscripciones y Resend. Las vinculaciones se consultan en el servidor y no se almacenan como permisos permanentes del dispositivo.
 
 #### API REST - Java
 
@@ -964,7 +974,7 @@ Así, solo una solicitud puede validar y modificar a la vez las relaciones de un
 
 Atención veterinaria utiliza `VeterinaryLinkingFacade.isActive`, compatible con `CareLinkingGateway` del apartado anterior. Una revocación confirmada hace que las nuevas comprobaciones devuelvan acceso inactivo. No se eliminan atenciones ni se cancelan citas automáticamente.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
 | Clase                           | Propósito y atributos                                                                           | Métodos                                                                                                                                   |
 | ------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -981,7 +991,7 @@ Los contextos que conservan historiales o indicaciones descargadas comprueban nu
 
 ### 2.6.3.5. Bounded Context Software Architecture Component Level Diagrams
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
 El frontend de Veterinary Linking Context se divide en Presentation, Application, Infrastructure y Domain. Presentation muestra los formularios de invitación, invitaciones pendientes y vinculaciones activas; Application coordina el envío, aceptación, rechazo y revocación de vinculaciones; Domain representa las invitaciones, vinculaciones y capacidad; e Infrastructure implementa la comunicación con la REST API y los servicios técnicos requeridos. Este contexto no utiliza SQLite, debido a que sus datos se consultan directamente al servidor y se mantienen durante la sesión.
 
@@ -989,7 +999,7 @@ El frontend de Veterinary Linking Context se divide en Presentation, Application
 
 #### API REST - Java
 
-El backend de Veterinary Linking Context está compuesto por Interfaces, Application, Infrastructure y Domain. Interfaces expone las operaciones relacionadas con invitaciones y vinculaciones; Application coordina los casos de uso y el control de capacidad; Domain contiene las reglas correspondientes a invitaciones, vínculos y límites; e Infrastructure implementa la persistencia en MySQL y las integraciones con Identity and Access, Subscriptions y Resend. Asimismo, el contexto expone la autorización de vinculaciones para Veterinary Care y utiliza el Shared Kernel del backend.
+El backend de Veterinary Linking Context está compuesto por Interfaces, Application, Infrastructure y Domain. Interfaces expone las operaciones relacionadas con invitaciones y vinculaciones; Application coordina los casos de uso y el control de capacidad; Domain contiene las reglas correspondientes a invitaciones, vínculos y límites; e Infrastructure implementa la persistencia en PostgreSQL y las integraciones con Identity and Access, Subscriptions y Resend. Asimismo, el contexto expone la autorización de vinculaciones para Veterinary Care y utiliza el módulo Shared del backend.
 
 ![Backend - Veterinary Linking](<../../assets/images/componets-level-diagrams/Backend - Veterinary Linking.png>)
 
@@ -1001,13 +1011,13 @@ API REST - Java
 
 ![Veterinary Linking - Backend](../../assets/images/UML%20Diagrams/Images/Veterinary%20Linking/Veterinary%20Linking%20-%20Backend.png)
 
-Aplicación móvil - Flutter
+Aplicación móvil - Kotlin Multiplatform
 
 ![Veterinary Linking - Frontend](../../assets/images/UML%20Diagrams/Images/Veterinary%20Linking/Veterinary%20Linking%20-%20Frontend.png)
 
 #### 2.6.3.6.2. Bounded Context Database Diagram
 
-Base de datos central - MySQL
+Base de datos central - PostgreSQL
 
 Este contexto no requiere persistencia local en SQLite para el alcance definido.
 
@@ -1102,21 +1112,21 @@ Repositorios y relaciones
 
 Las interfaces no tienen atributos de implementación. Cada cuenta tiene una suscripción para su único perfil. Muchas suscripciones pueden referenciar un mismo plan. `Plan` contiene un `Money` y `Subscription` contiene cero o un `PaidPeriod`. Las cuentas de Identidad y acceso se referencian por identificador, sin incorporar sus entidades al agregado.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
-El móvil presenta los resultados del servidor. Los identificadores utilizan `String`, las fechas `DateTime` y los campos opcionales `?`. No calcula una activación a partir de la pantalla del proveedor de pago.
+El móvil presenta los resultados del servidor. Los identificadores utilizan `String`, las fechas `Instant` y los campos opcionales `?`. No calcula una activación a partir de la pantalla del proveedor de pago.
 
 | Elemento                 | Atributos                                                                                                                                           | Métodos y propósito                                                                                     |
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `Plan`                   | `id: String`, `name: String`, `profile: SubscriberProfile`, `type: PlanType`, `price: Money`, `billingPeriod: BillingPeriod`, `capacityLimit: int`. | Constructor, lectura y `supports(profile)`. Mostrar el catálogo compatible.                             |
+| `Plan`                   | `id: String`, `name: String`, `profile: SubscriberProfile`, `type: PlanType`, `price: Money`, `billingPeriod: BillingPeriod`, `capacityLimit: Int`. | Constructor, lectura y `supports(profile)`. Mostrar el catálogo compatible.                             |
 | `Money`                  | `amount: String`, `currency: String`.                                                                                                               | Constructor y lectura. Conservar la representación decimal recibida, sin calcular cobros en el móvil.   |
-| `PaidPeriod`             | `startsAt: DateTime`, `endsAt: DateTime`.                                                                                                           | Constructor y lectura. Mostrar la vigencia confirmada.                                                  |
-| `Subscription`           | Los once atributos de la suscripción Java, usando `String`, `DateTime`, `int` y `bool` según corresponda. `paidPeriod: PaidPeriod?`.                | Constructor y lectura. Mostrar plan, límite y renovación.                                               |
+| `PaidPeriod`             | `startsAt: Instant`, `endsAt: Instant`.                                                                                                             | Constructor y lectura. Mostrar la vigencia confirmada.                                                  |
+| `Subscription`           | Los once atributos de la suscripción Java, usando `String`, `Instant`, `Int` y `Boolean` según corresponda. `paidPeriod: PaidPeriod?`.              | Constructor y lectura. Mostrar plan, límite y renovación.                                               |
 | `CheckoutSession`        | `operationId: String`, `url: String`.                                                                                                               | Constructor y lectura. Abrir el proceso de pago de prueba.                                              |
-| `CancellationResult`     | `confirmed: bool`, `subscription: Subscription`.                                                                                                    | Constructor y lectura. Distinguir cancelación confirmada de solicitud sin confirmar.                    |
+| `CancellationResult`     | `confirmed: Boolean`, `subscription: Subscription`.                                                                                                 | Constructor y lectura. Distinguir cancelación confirmada de solicitud sin confirmar.                    |
 | `SubscriptionRepository` | Sin atributos por ser interfaz.                                                                                                                     | `getPlans()`, `getSubscription()`, `requestPremium(planId, operationId)`, `cancelRenewal(operationId)`. |
 
-Se utilizan las mismas enumeraciones de perfil, tipo de plan, período y estado, con nombres adaptados a Dart. Los métodos del repositorio devuelven `Future`, una respuesta disponible cuando termina la operación.
+Se utilizan las mismas enumeraciones de perfil, tipo de plan, período y estado, con nombres adaptados a Kotlin. Los métodos del repositorio se definen como funciones `suspend` y devuelven sus resultados al completar la operación.
 
 ### 2.6.4.2. Interface Layer
 
@@ -1145,13 +1155,13 @@ Datos de entrada y salida
 
 El resultado del navegador o la pantalla de pago solo provoca una nueva consulta al servidor. No activa premium. Los fallos internos al procesar un aviso no se confirman al proveedor como si el cambio ya estuviera guardado.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
-| Clase                   | Propósito y atributos                                                                                                                                                                              | Métodos                                                                                                   |
-| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `SubscriptionViewModel` | Estado de presentación: `service: SubscriptionApplicationService`, `plans: List<Plan>`, `subscription: Subscription?`, `isLoading: bool`, `errorMessage: String?`, `cancellationConfirmed: bool?`. | `loadPlans`, `loadSubscription`, `requestPremium`, `cancelRenewal`, `refreshAfterCheckout`, `clearState`. |
-| `PlansPage`             | Catálogo: `viewModel: SubscriptionViewModel`.                                                                                                                                                      | `build`, `selectPlan`, `confirmSelection`.                                                                |
-| `SubscriptionPage`      | Plan actual: `viewModel: SubscriptionViewModel`.                                                                                                                                                   | `build`, `refreshSubscription`, `confirmCancellation`.                                                    |
+| Clase                   | Propósito y atributos                                                                                                                                                                                    | Métodos                                                                                                   |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `SubscriptionViewModel` | Estado de presentación: `service: SubscriptionApplicationService`, `plans: List<Plan>`, `subscription: Subscription?`, `isLoading: Boolean`, `errorMessage: String?`, `cancellationConfirmed: Boolean?`. | `loadPlans`, `loadSubscription`, `requestPremium`, `cancelRenewal`, `refreshAfterCheckout`, `clearState`. |
+| `PlansPage`             | Catálogo: `viewModel: SubscriptionViewModel`.                                                                                                                                                            | `selectPlan`, `confirmSelection`.                                                                         |
+| `SubscriptionPage`      | Plan actual: `viewModel: SubscriptionViewModel`.                                                                                                                                                         | `refreshSubscription`, `confirmCancellation`.                                                             |
 
 Las pantallas muestran precio, período, capacidad y fin de vigencia cuando corresponde. Durante un pago sin confirmación mantienen el plan anterior. Una cancelación confirmada muestra hasta cuándo se conservan los beneficios.
 
@@ -1215,7 +1225,7 @@ Al llegar al fin del período, una renovación no confirmada no extiende premium
 
 Los eventos se publican después del guardado. Los adaptadores de Livestock Management y Veterinary Linking convierten `allowedCapacity` en `allowedAnimals` o `allowedRanchers`, respectivamente, y conservan la revisión. Ambos contextos pueden consultar `EffectiveSubscriptionLimits` si necesitan contrastar el estado vigente.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
 | Clase o interfaz                 | Propósito y atributos                                                                                                                                                        | Métodos                                                                                                      |
 | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
@@ -1229,7 +1239,7 @@ El cierre o cambio de cuenta limpia el estado de presentación. Las respuestas d
 
 ### 2.6.4.4. Infrastructure Layer
 
-El servidor utiliza MySQL y un adaptador para Stripe en modo de prueba. Este adaptador actúa como capa de traducción entre el proveedor de pagos y los conceptos de ANITEC.
+El servidor utiliza PostgreSQL y un adaptador para Stripe en modo de prueba. Este adaptador actúa como capa de traducción entre el proveedor de pagos y los conceptos de ANITEC.
 
 #### API REST - Java
 
@@ -1247,7 +1257,7 @@ El servidor utiliza MySQL y un adaptador para Stripe en modo de prueba. Este ada
 | `SubscriptionExpirationJob`            | Ejecutar revisiones periódicas: `handler: SubscriptionExpirationHandler`.                                  | `run`.                                                                         |
 | `SubscriptionsFacade`                  | Exponer límites a otros contextos: `queries: SubscriptionQueryService`.                                    | `getLimits(accountId, profile)`.                                               |
 
-JPA es la interfaz de persistencia de Java y se utiliza con Hibernate para relacionar los objetos con las tablas. `EntityManager` ejecuta las consultas y administra los cambios. Las credenciales de Stripe permanecen en la configuración del servidor y no se incorporan a Flutter.
+JPA es la interfaz de persistencia de Java y se utiliza con Hibernate para relacionar los objetos con las tablas. `EntityManager` ejecuta las consultas y administra los cambios. Las credenciales de Stripe permanecen en la configuración del servidor y no se incorporan a Kotlin Multiplatform.
 
 Clases de persistencia
 
@@ -1269,7 +1279,7 @@ El cambio de la suscripción y el registro del aviso procesado se guardan en una
 
 Los eventos hacia otros contextos se procesan después de confirmar la transacción. Si su entrega interna falla, las consultas de límites permiten recuperar la revisión vigente. Los consumidores no modifican la suscripción ni sus datos de pago.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
 | Clase                                | Propósito y atributos                                                                                       | Métodos                                                                             |
 | ------------------------------------ | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
@@ -1287,7 +1297,7 @@ La integración utiliza el entorno de prueba durante el desarrollo académico. L
 
 ### 2.6.4.5. Bounded Context Software Architecture Component Level Diagrams
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
 El frontend de Subscriptions Context se estructura mediante Presentation, Application, Infrastructure y Domain. Presentation muestra los planes disponibles, la suscripción actual y su vigencia; Application coordina las consultas, contratación premium y cancelación de renovación; Domain contiene los modelos de planes, precios y suscripciones; e Infrastructure implementa la comunicación con la REST API y la apertura del proceso de pago. Este contexto no requiere SQLite y utiliza Stripe en modo de prueba para el proceso de checkout.
 
@@ -1295,7 +1305,7 @@ El frontend de Subscriptions Context se estructura mediante Presentation, Applic
 
 #### API REST - Java
 
-El backend de Subscriptions Context está conformado por Interfaces, Application, Infrastructure y Domain. Interfaces expone la consulta de planes, gestión de suscripciones y recepción de webhooks; Application coordina pagos, cancelaciones, vigencias y cambios de beneficios; Domain contiene las reglas de planes y suscripciones; e Infrastructure implementa la persistencia en MySQL y la integración con Stripe. El contexto también comunica los límites vigentes a Livestock Management y Veterinary Linking y utiliza el Shared Kernel del backend.
+El backend de Subscriptions Context está conformado por Interfaces, Application, Infrastructure y Domain. Interfaces expone la consulta de planes, gestión de suscripciones y recepción de webhooks; Application coordina pagos, cancelaciones, vigencias y cambios de beneficios; Domain contiene las reglas de planes y suscripciones; e Infrastructure implementa la persistencia en PostgreSQL y la integración con Stripe. El contexto también comunica los límites vigentes a Livestock Management y Veterinary Linking y utiliza el módulo Shared del backend.
 
 ![Backend - Subscriptions](<../../assets/images/componets-level-diagrams/Backend - Subscriptions.png>)
 
@@ -1307,13 +1317,13 @@ API REST - Java
 
 ![Subscriptions - Backend](../../assets/images/UML%20Diagrams/Images/Subscriptions/Subscriptions%20-%20Backend.png)
 
-Aplicación móvil - Flutter
+Aplicación móvil - Kotlin Multiplatform
 
 ![Subscriptions - Frontend](../../assets/images/UML%20Diagrams/Images/Subscriptions/Subscriptions%20-%20Frontend.png)
 
 #### 2.6.4.6.2. Bounded Context Database Diagram
 
-Base de datos central - MySQL
+Base de datos central - PostgreSQL
 
 Este contexto no requiere persistencia local en SQLite para el alcance definido.
 
@@ -1376,14 +1386,14 @@ EmailVerification y objetos de valor
 
 UserSession
 
-| Atributo      | Tipo      | Descripción                                                          |
-| ------------- | --------- | -------------------------------------------------------------------- |
-| `id`          | `UUID`    | Identificador de la sesión.                                          |
-| `accountId`   | `UUID`    | Cuenta autenticada.                                                  |
-| `tokenDigest` | `String`  | Huella del token de sesión. El token original no se guarda en MySQL. |
-| `createdAt`   | `Instant` | Fecha de inicio.                                                     |
-| `expiresAt`   | `Instant` | Fin de vigencia.                                                     |
-| `revokedAt`   | `Instant` | Fecha de cierre remoto. Ausente mientras no se haya revocado.        |
+| Atributo      | Tipo      | Descripción                                                               |
+| ------------- | --------- | ------------------------------------------------------------------------- |
+| `id`          | `UUID`    | Identificador de la sesión.                                               |
+| `accountId`   | `UUID`    | Cuenta autenticada.                                                       |
+| `tokenDigest` | `String`  | Huella del token de sesión. El token original no se guarda en PostgreSQL. |
+| `createdAt`   | `Instant` | Fecha de inicio.                                                          |
+| `expiresAt`   | `Instant` | Fin de vigencia.                                                          |
+| `revokedAt`   | `Instant` | Fecha de cierre remoto. Ausente mientras no se haya revocado.             |
 
 | Método                                           | Responsabilidad                                                    |
 | ------------------------------------------------ | ------------------------------------------------------------------ |
@@ -1402,17 +1412,17 @@ Repositorios y relaciones
 
 Las interfaces no tienen atributos. Una cuenta contiene una verificación actual y puede tener varias sesiones. Cada sesión pertenece a una cuenta. Reenviar un código reemplaza la verificación, pero no crea otra cuenta. Verificar el correo no inicia una sesión automáticamente.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
-| Elemento                | Atributos                                                                                    | Métodos y propósito                                                                                                                                                                    |
-| ----------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `AccountIdentity`       | `accountId: String`, `email: String`, `profile: AccountProfile`.                             | Constructor y lectura. Representar la cuenta autenticada sin datos secretos del servidor.                                                                                              |
-| `SessionCredentials`    | `sessionId: String`, `token: String`, `expiresAt: DateTime`, `identity: AccountIdentity`.    | Constructor, lectura restringida e `isLocallyValidAt(now)`. Conservar los datos necesarios para reabrir la sesión.                                                                     |
-| `VerificationReference` | `accountId: String`, `verificationId: String`, `expiresAt: DateTime`, `emailAccepted: bool`. | Constructor y lectura. Identificar el proceso pendiente y el resultado de la solicitud de correo.                                                                                      |
-| `AccountProfile`        | Valores `rancher`, `veterinarian`.                                                           | Representar los dos perfiles.                                                                                                                                                          |
-| `IdentityRepository`    | Sin atributos por ser interfaz.                                                              | `register(email, password, profile)`, `verifyEmail(accountId, verificationId, code)`, `resendVerification(accountId)`, `signIn(email, password)`, `getCurrentIdentity()`, `signOut()`. |
+| Elemento                | Atributos                                                                                      | Métodos y propósito                                                                                                                                                                    |
+| ----------------------- | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `AccountIdentity`       | `accountId: String`, `email: String`, `profile: AccountProfile`.                               | Constructor y lectura. Representar la cuenta autenticada sin datos secretos del servidor.                                                                                              |
+| `SessionCredentials`    | `sessionId: String`, `token: String`, `expiresAt: Instant`, `identity: AccountIdentity`.       | Constructor, lectura restringida e `isLocallyValidAt(now)`. Conservar los datos necesarios para reabrir la sesión.                                                                     |
+| `VerificationReference` | `accountId: String`, `verificationId: String`, `expiresAt: Instant`, `emailAccepted: Boolean`. | Constructor y lectura. Identificar el proceso pendiente y el resultado de la solicitud de correo.                                                                                      |
+| `AccountProfile`        | Valores `rancher`, `veterinarian`.                                                             | Representar los dos perfiles.                                                                                                                                                          |
+| `IdentityRepository`    | Sin atributos por ser interfaz.                                                                | `register(email, password, profile)`, `verifyEmail(accountId, verificationId, code)`, `resendVerification(accountId)`, `signIn(email, password)`, `getCurrentIdentity()`, `signOut()`. |
 
-Las operaciones devuelven `Future`, una respuesta disponible cuando termina la solicitud. El móvil no recibe la contraseña protegida, el código guardado ni los intentos internos del servidor. La validez local permite consultar copias autorizadas, pero no demuestra que la sesión siga activa en el servidor cuando no hay conexión.
+Las operaciones de acceso se definen como funciones `suspend` y devuelven sus resultados al completar la solicitud. El móvil no recibe la contraseña protegida, el código guardado ni los intentos internos del servidor. La validez local permite consultar copias autorizadas, pero no demuestra que la sesión siga activa en el servidor cuando no hay conexión.
 
 ### 2.6.5.2. Interface Layer
 
@@ -1440,15 +1450,15 @@ Datos de entrada y salida
 
 La verificación responde con una confirmación sin crear una sesión. El reenvío solo dirige el código al correo ya registrado y respeta los límites de solicitudes. Un código correcto de otra cuenta o de una verificación reemplazada no se acepta.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
-| Clase                   | Propósito y atributos                                                                                                                                                            | Métodos                                                                                               |
-| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `IdentityViewModel`     | Estado de presentación: `service: IdentityApplicationService`, `identity: AccountIdentity?`, `verification: VerificationReference?`, `isLoading: bool`, `errorMessage: String?`. | `register`, `verifyEmail`, `resendVerification`, `signIn`, `restoreSession`, `signOut`, `clearState`. |
-| `RegisterPage`          | Formulario: `viewModel: IdentityViewModel`, `email: String`, `password: String`, `profile: AccountProfile?`.                                                                     | `build`, `validateForm`, `submit`.                                                                    |
-| `EmailVerificationPage` | Verificación: `viewModel: IdentityViewModel`, `code: String`.                                                                                                                    | `build`, `submitCode`, `requestNewCode`.                                                              |
-| `SignInPage`            | Acceso: `viewModel: IdentityViewModel`, `email: String`, `password: String`.                                                                                                     | `build`, `validateForm`, `submit`.                                                                    |
-| `SessionGate`           | Resolver la pantalla inicial: `viewModel: IdentityViewModel`.                                                                                                                    | `build`, `restoreSession`.                                                                            |
+| Clase                   | Propósito y atributos                                                                                                                                                               | Métodos                                                                                               |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `IdentityViewModel`     | Estado de presentación: `service: IdentityApplicationService`, `identity: AccountIdentity?`, `verification: VerificationReference?`, `isLoading: Boolean`, `errorMessage: String?`. | `register`, `verifyEmail`, `resendVerification`, `signIn`, `restoreSession`, `signOut`, `clearState`. |
+| `RegisterPage`          | Formulario: `viewModel: IdentityViewModel`, `email: String`, `password: String`, `profile: AccountProfile?`.                                                                        | `validateForm`, `submit`.                                                                             |
+| `EmailVerificationPage` | Verificación: `viewModel: IdentityViewModel`, `code: String`.                                                                                                                       | `submitCode`, `requestNewCode`.                                                                       |
+| `SignInPage`            | Acceso: `viewModel: IdentityViewModel`, `email: String`, `password: String`.                                                                                                        | `validateForm`, `submit`.                                                                             |
+| `SessionGate`           | Resolver la pantalla inicial: `viewModel: IdentityViewModel`.                                                                                                                       | `restoreSession`.                                                                                     |
 
 Las contraseñas y códigos introducidos se eliminan de los formularios al terminar o abandonar el proceso. Si falla el correo, la pantalla conserva la referencia de la cuenta pendiente y permite solicitar otro código cuando corresponda. No presenta el envío como una verificación completada.
 
@@ -1512,7 +1522,7 @@ Las operaciones de verificación bloquean la cuenta durante la comprobación y e
 
 `getIdentity` no autentica por sí solo a un usuario. Los controladores de otros contextos reciben la identidad validada por el control de acceso y comprueban después propiedad, vinculación o autoría, según corresponda.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
 | Clase o interfaz             | Propósito y atributos                                                                                                                                                                            | Métodos                                                                                                                                    |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -1536,7 +1546,7 @@ La aplicación deja de mostrar datos protegidos desde que comienza el cierre. Si
 
 ### 2.6.5.4. Infrastructure Layer
 
-El servidor persiste cuentas y sesiones en MySQL. El móvil guarda la credencial en el almacenamiento seguro del dispositivo. SQLite se reserva para las copias de información de los contextos que requieren consulta sin conexión.
+El servidor persiste cuentas y sesiones en PostgreSQL. El móvil guarda la credencial en el almacenamiento seguro del dispositivo. SQLite se reserva para las copias de información de los contextos que requieren consulta sin conexión.
 
 #### API REST - Java
 
@@ -1553,7 +1563,7 @@ El servidor persiste cuentas y sesiones en MySQL. El móvil guarda la credencial
 | `SessionAuthenticationFilter`   | Proteger solicitudes: `sessions: SessionApplicationService`.                                                       | `authenticateRequest`. Extrae el token y establece la identidad validada de la solicitud.             |
 | `IdentityFacade`                | Exponer datos internos: `queries: IdentityQueryService`.                                                           | `getIdentity`, `findVeterinarianByEmail`.                                                             |
 
-Spring Security proporciona el control de acceso de las solicitudes. Los algoritmos y sus parámetros se configuran mediante componentes existentes, sin diseñar métodos de cifrado propios. JPA, la interfaz de persistencia de Java, se utiliza con Hibernate para guardar los objetos en MySQL.
+Spring Security proporciona el control de acceso de las solicitudes. Los algoritmos y sus parámetros se configuran mediante componentes existentes, sin diseñar métodos de cifrado propios. JPA, la interfaz de persistencia de Java, se utiliza con Hibernate para guardar los objetos en PostgreSQL.
 
 Clases de persistencia
 
@@ -1570,7 +1580,7 @@ Las rutas públicas de registro, verificación e inicio de sesión no requieren 
 
 `IdentityFacade.findVeterinarianByEmail` permite implementar `VeterinarianDirectoryGateway` de Veterinary Linking. El adaptador transforma `IdentityData` en `VeterinarianContact`. Los demás contextos reciben identidad y perfil, no entidades modificables de cuenta.
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
 | Clase                       | Propósito y atributos                                                                                                                                   | Métodos                                                                                       |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
@@ -1582,7 +1592,7 @@ Las rutas públicas de registro, verificación e inicio de sesión no requieren 
 | `FcmSessionAdapter`         | Coordinar notificaciones: `messagingClient`, cliente de Firebase Cloud Messaging, y `deviceRegistryClient`, acceso al registro técnico de dispositivos. | `attachCurrentDevice`, `detachCurrentDevice`, `clearLocalNotifications`.                      |
 | `SessionHttpInterceptor`    | Incorporar la credencial a solicitudes protegidas: `storage: SecureSessionGateway`.                                                                     | `attachToken`, `handleUnauthorized`.                                                          |
 
-`DeviceSecureSessionStore` utiliza la protección de Android o iOS mediante una integración de almacenamiento seguro de Flutter. Guarda el token y los datos mínimos de sesión, sin guardar la contraseña. No utiliza SQLite ni preferencias simples para la credencial.
+`DeviceSecureSessionStore` utiliza la protección de Android o iOS mediante adaptadores específicos de almacenamiento seguro para cada plataforma, accesibles desde el código compartido. Guarda el token y los datos mínimos de sesión, sin guardar la contraseña. No utiliza SQLite ni preferencias simples para la credencial.
 
 `SessionHttpInterceptor` añade el token a las solicitudes protegidas. Una sesión rechazada invalida el acceso local y activa la limpieza. Un error de permiso sobre un animal concreto no se trata como un cierre de sesión de toda la cuenta.
 
@@ -1592,7 +1602,7 @@ Los adaptadores `IdentitySessionAdapter`, `IdentityCareSessionAdapter`, `Identit
 
 ### 2.6.5.5. Bounded Context Software Architecture Component Level Diagrams
 
-#### Aplicación móvil - Flutter
+#### Aplicación móvil - Kotlin Multiplatform
 
 El frontend de Identity and Access Context se divide en Presentation, Application, Infrastructure y Domain. Presentation contiene las interfaces para registro, verificación de correo e inicio de sesión; Application coordina las operaciones relacionadas con cuenta y sesión; Domain representa la identidad, perfil y credenciales de sesión; e Infrastructure implementa la comunicación con la REST API, el almacenamiento seguro de credenciales y la integración con las notificaciones del dispositivo. Shared proporciona navegación, sesión y elementos comunes utilizados por la aplicación móvil.
 
@@ -1600,7 +1610,7 @@ El frontend de Identity and Access Context se divide en Presentation, Applicatio
 
 #### API REST - Java
 
-El backend de Identity and Access Context se descompone en Interfaces, Application, Infrastructure y Domain. Interfaces expone las operaciones de registro, verificación, autenticación y cierre de sesión; Application coordina la gestión de cuentas, códigos y sesiones; Domain contiene las reglas asociadas a cuentas, verificaciones e identidad; e Infrastructure implementa la persistencia en MySQL, mecanismos de seguridad e integración con Resend para el envío de códigos de verificación. Este contexto proporciona además la identidad autenticada requerida por los demás bounded contexts y utiliza el Shared Kernel del backend.
+El backend de Identity and Access Context se descompone en Interfaces, Application, Infrastructure y Domain. Interfaces expone las operaciones de registro, verificación, autenticación y cierre de sesión; Application coordina la gestión de cuentas, códigos y sesiones; Domain contiene las reglas asociadas a cuentas, verificaciones e identidad; e Infrastructure implementa la persistencia en PostgreSQL, mecanismos de seguridad e integración con Resend para el envío de códigos de verificación. Este contexto proporciona además la identidad autenticada requerida por los demás bounded contexts y utiliza el módulo Shared del backend.
 
 ![Backend - Identity and Access](<../../assets/images/componets-level-diagrams/Backend - Identity and Access.png>)
 
@@ -1611,12 +1621,12 @@ El backend de Identity and Access Context se descompone en Interfaces, Applicati
 API REST - Java
 ![Identity and Access - Backend](../../assets/images/UML%20Diagrams/Images/Identity%20and%20Access/Identity%20and%20Access%20-%20Backend.png)
 
-Aplicación móvil - Flutter
+Aplicación móvil - Kotlin Multiplatform
 ![Identity and Access - Frontend](../../assets/images/UML%20Diagrams/Images/Identity%20and%20Access/Identity%20and%20Access%20-%20Frontend.png)
 
 #### 2.6.5.6.2. Bounded Context Database Diagram
 
-Base de datos central - MySQL
+Base de datos central - PostgreSQL
 
 Almacenamiento seguro del dispositivo
 
