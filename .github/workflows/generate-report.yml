@@ -5,6 +5,8 @@ on:
     branches:
       - develop
 
+  workflow_dispatch:
+
 jobs:
   generate-pdf:
     runs-on: ubuntu-latest
@@ -22,9 +24,10 @@ jobs:
         run: |
           python3 <<'PY'
           from pathlib import Path
+          from urllib.parse import unquote
           import re
 
-          root = Path.cwd()
+          root = Path.cwd().resolve()
           order_file = root / "report-order.txt"
           build_dir = root / "build"
           output_file = build_dir / "ANITEC-develop.md"
@@ -38,8 +41,78 @@ jobs:
           ]
 
           result = []
+          missing_images = []
 
-          image_pattern = re.compile(r'!\[([^\]]*)\]\(([^)]+)\)')
+          # Archivos que deben comenzar en una página nueva.
+          page_break_files = {
+              "docs/preliminares/student-outcome.md",
+              "docs/preliminares/objetivos-smart.md",
+              "docs/capitulo-1/introduction.md",
+              "docs/capitulo-2/introduction.md",
+              "docs/capitulo-3/introduction.md",
+              "docs/capitulo-4/introduction.md",
+              "docs/cierre/conclusiones.md",
+              "docs/cierre/bibliografia.md",
+              "docs/anexos/README.md",
+          }
+
+          # Imágenes Markdown:
+          # ![Nombre](ruta/imagen.png)
+          markdown_image_pattern = re.compile(
+              r'!\[([^\]]*)\]\(([^)]+)\)'
+          )
+
+          # Imágenes HTML:
+          # <img src="ruta/imagen.png">
+          html_image_pattern = re.compile(
+              r'(<img\b[^>]*?\bsrc\s*=\s*["\'])([^"\']+)(["\'][^>]*>)',
+              re.IGNORECASE
+          )
+
+          def is_external(path):
+              return path.startswith((
+                  "http://",
+                  "https://",
+                  "data:",
+                  "mailto:",
+                  "#"
+              ))
+
+          def resolve_image(image, source_directory, source_file):
+              original = image.strip()
+
+              if is_external(original):
+                  return original
+
+              clean = original
+
+              # Permite rutas Markdown con espacios:
+              # ![Imagen](<ruta con espacios.png>)
+              if clean.startswith("<") and clean.endswith(">"):
+                  clean = clean[1:-1].strip()
+
+              clean = unquote(clean)
+              clean = clean.replace("\\", "/")
+
+              # Prueba primero respecto al archivo .md
+              # y luego respecto a la raíz del repositorio.
+              candidates = [
+                  (source_directory / clean).resolve(),
+                  (root / clean.lstrip("/")).resolve(),
+              ]
+
+              for candidate in candidates:
+                  if candidate.exists() and candidate.is_file():
+                      try:
+                          return candidate.relative_to(root).as_posix()
+                      except ValueError:
+                          pass
+
+              missing_images.append(
+                  f"{source_file}: {original}"
+              )
+
+              return None
 
           for relative_file in files:
               source = root / relative_file
@@ -51,26 +124,82 @@ jobs:
 
               print(f"Agregando: {relative_file}")
 
+              # Salto de página antes de secciones principales.
+              if result and relative_file in page_break_files:
+                  result.append(
+                      '\n\n<div class="page-break"></div>\n\n'
+                  )
+
               content = source.read_text(encoding="utf-8")
               source_directory = source.parent
 
-              def replace_image(match):
+              # El README contiene portada y secciones preliminares.
+              # Estas secciones comenzarán en una nueva página.
+              if relative_file == "README.md":
+                  preliminar_titles = [
+                      "Registro de Versiones del Informe",
+                      "Project Report Collaboration Insights",
+                      "Contenido",
+                  ]
+
+                  for title in preliminar_titles:
+                      pattern = re.compile(
+                          rf'(?m)^(#{{1,6}}\s+{re.escape(title)}\s*)$'
+                      )
+
+                      content = pattern.sub(
+                          r'<div class="page-break"></div>\n\n\1',
+                          content
+                      )
+
+              # Corregir imágenes escritas en Markdown.
+              def replace_markdown_image(match):
                   alt = match.group(1)
                   image = match.group(2).strip()
 
-                  if image.startswith(("http://", "https://", "data:")):
+                  resolved = resolve_image(
+                      image,
+                      source_directory,
+                      relative_file
+                  )
+
+                  if resolved is None:
                       return match.group(0)
 
-                  image_path = (source_directory / image).resolve()
-
-                  try:
-                      relative_image = image_path.relative_to(root.resolve())
-                  except ValueError:
+                  if is_external(resolved):
                       return match.group(0)
 
-                  return f"![{alt}]({relative_image.as_posix()})"
+                  return f"![{alt}](<{resolved}>)"
 
-              content = image_pattern.sub(replace_image, content)
+              content = markdown_image_pattern.sub(
+                  replace_markdown_image,
+                  content
+              )
+
+              # Corregir imágenes escritas con HTML.
+              def replace_html_image(match):
+                  prefix = match.group(1)
+                  image = match.group(2).strip()
+                  suffix = match.group(3)
+
+                  resolved = resolve_image(
+                      image,
+                      source_directory,
+                      relative_file
+                  )
+
+                  if resolved is None:
+                      return match.group(0)
+
+                  if is_external(resolved):
+                      return match.group(0)
+
+                  return f"{prefix}{resolved}{suffix}"
+
+              content = html_image_pattern.sub(
+                  replace_html_image,
+                  content
+              )
 
               result.append(content)
               result.append("\n\n")
@@ -81,6 +210,11 @@ jobs:
           )
 
           print("Markdown completo generado correctamente.")
+
+          if missing_images:
+              print("\nADVERTENCIA: imágenes que no pudieron encontrarse:")
+              for image in missing_images:
+                  print(f" - {image}")
           PY
 
       - name: Create PDF styles
@@ -88,14 +222,31 @@ jobs:
           cat > build/report.css <<'EOF'
           @page {
             size: A4;
-            margin: 2.5cm;
+            margin: 2cm;
           }
 
           body {
             font-family: Arial, sans-serif;
-            font-size: 11pt;
-            line-height: 1.5;
+            font-size: 10.5pt;
+            line-height: 1.45;
             color: #111;
+          }
+
+          /* Salto de página controlado */
+          .page-break {
+            break-before: page;
+            page-break-before: always;
+          }
+
+          /* Evita que un título quede solo al final de una página */
+          h1,
+          h2,
+          h3,
+          h4,
+          h5,
+          h6 {
+            break-after: avoid;
+            page-break-after: avoid;
           }
 
           h1 {
@@ -120,35 +271,81 @@ jobs:
 
           p {
             text-align: justify;
+            orphans: 3;
+            widows: 3;
           }
 
+          /* Imágenes */
           img {
             display: block;
             max-width: 100%;
+            max-height: 23cm;
+            width: auto;
             height: auto;
-            margin: 20px auto;
+            object-fit: contain;
+            margin: 12px auto;
+            break-inside: avoid;
+            page-break-inside: avoid;
           }
 
+          figure {
+            max-width: 100%;
+            break-inside: avoid;
+            page-break-inside: avoid;
+          }
+
+          /* Tablas */
           table {
             width: 100%;
+            max-width: 100%;
+            table-layout: fixed;
             border-collapse: collapse;
-            margin: 15px 0;
-            font-size: 9pt;
+            margin: 12px 0;
+            font-size: 8pt;
+          }
+
+          thead {
+            display: table-header-group;
+          }
+
+          tr {
+            break-inside: avoid;
+            page-break-inside: avoid;
           }
 
           th,
           td {
             border: 1px solid #555;
-            padding: 6px;
+            padding: 5px;
             vertical-align: top;
+
+            overflow-wrap: anywhere;
+            word-wrap: break-word;
+            word-break: break-word;
+            hyphens: auto;
           }
 
           th {
             font-weight: bold;
           }
 
+          /* Evitar que código o nombres largos rompan las tablas */
+          code,
+          td code,
+          th code {
+            white-space: normal;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+          }
+
           pre {
             white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+          }
+
+          a {
+            overflow-wrap: anywhere;
           }
           EOF
 
@@ -157,11 +354,10 @@ jobs:
           pandoc build/ANITEC-develop.md \
             --from=gfm+raw_html \
             --standalone \
-            --toc \
             --resource-path=. \
             --embed-resources \
             --css=build/report.css \
-            --metadata title="ANITEC - Informe del Trabajo Final" \
+            --metadata pagetitle="ANITEC - Informe del Trabajo Final" \
             -o build/ANITEC-develop.html
 
       - name: Generate PDF
