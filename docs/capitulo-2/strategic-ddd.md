@@ -4,11 +4,46 @@
 
 ## 2.5.1. EventStorming
 
-A partir del Big Picture EventStorming, se profundizó en los procesos de ANITEC mediante la incorporación de comandos, actores, políticas, modelos de lectura, sistemas externos y agregados. Estos elementos permitieron identificar responsabilidades y proponer límites entre los modelos del dominio.
+El modelado de ANITEC se presenta desde la exploración inicial de eventos hasta la identificación de bounded contexts candidatos. Se retoman las etapas del Big Picture EventStorming para mostrar cómo los acontecimientos del negocio dieron lugar a comandos, actores, políticas, modelos de lectura, sistemas externos y agregados.
 
 ### 2.5.1.1. Candidate Context Discovery
 
-La identificación de contextos candidatos se desarrolló progresivamente, considerando las operaciones realizadas por los usuarios, las reglas que intervienen y la información necesaria para cada proceso.
+La identificación de contextos candidatos se desarrolló progresivamente. Primero se reconocieron los eventos y sus relaciones. Luego se incorporaron las acciones, los participantes y las reglas necesarias para delimitar responsabilidades dentro del dominio.
+
+#### Exploración sin estructura
+
+![Exploración sin estructura](../../assets/images/event-storming/big-picture/01-unstructured-exploration.jpg)
+
+Se identificaron acontecimientos relevantes para ANITEC mediante notas naranjas redactadas en pasado, como Animal registrado, Invitación de vinculación aceptada y Atención veterinaria registrada. Esta exploración permitió reconocer el alcance inicial del negocio sin establecer todavía un orden temporal ni límites entre contextos.
+
+#### Líneas de tiempo
+
+![Líneas de tiempo](../../assets/images/event-storming/big-picture/02-timelines.jpg)
+
+Los eventos se organizaron en secuencias para representar los procesos de cuentas, gestión del ganado, vinculación veterinaria, atenciones y suscripciones. Se consideraron alternativas como la aceptación o el rechazo de una invitación y la confirmación o el rechazo de un pago.
+
+Las secuencias representan recorridos posibles. Por ejemplo, una observación del ganadero puede motivar una visita, pero su programación requiere coordinación. Asimismo, los tratamientos y las vacunaciones son registros opcionales de una atención.
+
+#### Pain Points
+
+![Pain Points](../../assets/images/event-storming/big-picture/03-pain-points.jpg)
+
+Se incorporaron notas rojas para registrar dudas y riesgos detectados durante el modelado. Entre ellos se encuentran la duplicidad de animales, la conservación del historial al dar de baja un registro, la revocación del acceso veterinario y el vencimiento de una suscripción.
+
+Estos puntos orientaron la revisión de las reglas de negocio. Representan preguntas del modelado y no necesariamente problemas comprobados mediante entrevistas.
+
+#### Pivotal Events
+
+![Pivotal Events](../../assets/images/event-storming/big-picture/04-pivotal-events.jpg)
+
+Se destacaron cuatro eventos por los cambios significativos que producen en el negocio:
+
+- Animal registrado: incorpora al animal al inventario y permite asociar información posterior.
+- Invitación de vinculación aceptada: establece una relación autorizada entre ganadero y veterinario.
+- Atención veterinaria registrada: conserva la información de una atención realizada y sirve de referencia para sus indicaciones.
+- Suscripción premium activada: habilita los beneficios correspondientes al plan contratado.
+
+A partir de estos eventos se identificaron las acciones que los originan y los actores responsables. Con ello se continuó el modelado mediante la incorporación de comandos y actores.
 
 #### Comandos y actores
 
