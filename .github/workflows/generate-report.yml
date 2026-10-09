@@ -232,7 +232,75 @@ jobs:
             color: #111;
           }
 
-          /* Salto de página controlado */
+          /* =========================
+             PORTADA
+             ========================= */
+
+          .cover {
+            text-align: center !important;
+            line-height: 1.15;
+          }
+
+          .cover img {
+            width: 115px;
+            max-width: 115px;
+            height: auto;
+            margin: 0 auto 8px auto;
+          }
+
+          .cover p {
+            text-align: center !important;
+            margin: 3px 0;
+          }
+
+          .cover-small {
+            font-size: 10pt;
+          }
+
+          .cover-main {
+            font-size: 11pt;
+          }
+
+          .cover-label {
+            font-size: 9pt;
+            margin-top: 6px !important;
+          }
+
+          .cover-title {
+            font-size: 13pt;
+            margin: 8px 0 !important;
+          }
+
+          .cover-period {
+            font-size: 10.5pt;
+            margin: 4px 0 !important;
+          }
+
+          .cover-members {
+            width: 70%;
+            max-width: 70%;
+            margin: 6px auto;
+            font-size: 7.5pt;
+            table-layout: auto;
+            break-inside: avoid;
+            page-break-inside: avoid;
+          }
+
+          .cover-members th,
+          .cover-members td {
+            padding: 3px 5px;
+            text-align: left;
+          }
+
+          .cover-members th:first-child,
+          .cover-members td:first-child {
+            width: 27%;
+          }
+
+          /* =========================
+             SALTOS DE PÁGINA
+             ========================= */
+
           .page-break {
             break-before: page;
             page-break-before: always;
@@ -288,7 +356,10 @@ jobs:
             text-align: center !important;
           }
 
-          /* Imágenes */
+          /* =========================
+             IMÁGENES
+             ========================= */
+
           img {
             display: block;
             max-width: 100%;
@@ -305,7 +376,10 @@ jobs:
             page-break-inside: avoid;
           }
 
-          /* Tablas */
+          /* =========================
+             TABLAS
+             ========================= */
+
           table {
             width: 100%;
             max-width: 100%;
