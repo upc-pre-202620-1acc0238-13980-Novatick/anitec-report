@@ -1,34 +1,62 @@
-<div align="center">
+<div class="cover" align="center">
 
-<img src="assets/images/UPC_logo.png" alt="UPC Logo" width="200">
+<img src="assets/images/UPC_logo.png" alt="UPC Logo" width="115">
 
-<h4>Universidad Peruana de Ciencias Aplicadas</h4>
-<h4>Carrera de Ingeniería de Software</h4>
-<h3>1ACC0238</h3>
-<h3>Aplicaciones para Dispositivos Móviles</h3>
-<h4>NRC</h4>
-<h3>7630</h3>
-<h4>Docente</h4>
-<h3>Mayta Guillermo, Jorge Luis</h3>
-<h3>Informe del Trabajo Final</h3>
-<h4>Equipo</h4>
-<h3>NOVATICK</h3>
-<h4>Proyecto</h4>
-<h3>ANITEC</h3>
-<h4>Integrantes</h4>
+<p class="cover-small"><strong>Universidad Peruana de Ciencias Aplicadas</strong></p>
+<p class="cover-small"><strong>Carrera de Ingeniería de Software</strong></p>
 
-| Código     | Apellidos y Nombres                     |
-| ---------- | --------------------------------------- |
-| U20241C030 | Ayala Fernandez, Jorge Brayan           |
-| U20231H055 | León Morales, Johan Yonel               |
-| U20241D990 | Lozano Leon, Richard Enrique            |
-| U20241E242 | Mauricio Silva, Ghiou Justinn           |
-| U20241E126 | Montes Zamora, Edgar Alexander Mauricio |
+<p class="cover-main"><strong>1ACC0238</strong></p>
+<p class="cover-main"><strong>Aplicaciones para Dispositivos Móviles</strong></p>
 
-<h3>Período 2026-02</h3>
-<h3>Octubre, 2026</h3>
+<p class="cover-label"><strong>NRC</strong></p>
+<p class="cover-main"><strong>7630</strong></p>
 
-<br>
+<p class="cover-label"><strong>Docente</strong></p>
+<p class="cover-main"><strong>Mayta Guillermo, Jorge Luis</strong></p>
+
+<p class="cover-title"><strong>Informe del Trabajo Final</strong></p>
+
+<p class="cover-label"><strong>Equipo</strong></p>
+<p class="cover-main"><strong>NOVATICK</strong></p>
+
+<p class="cover-label"><strong>Proyecto</strong></p>
+<p class="cover-main"><strong>ANITEC</strong></p>
+
+<p class="cover-label"><strong>Integrantes</strong></p>
+
+<table class="cover-members">
+  <thead>
+    <tr>
+      <th>Código</th>
+      <th>Apellidos y Nombres</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>U20241C030</td>
+      <td>Ayala Fernandez, Jorge Brayan</td>
+    </tr>
+    <tr>
+      <td>U20231H055</td>
+      <td>León Morales, Johan Yonel</td>
+    </tr>
+    <tr>
+      <td>U20241D990</td>
+      <td>Lozano Leon, Richard Enrique</td>
+    </tr>
+    <tr>
+      <td>U20241E242</td>
+      <td>Mauricio Silva, Ghiou Justinn</td>
+    </tr>
+    <tr>
+      <td>U20241E126</td>
+      <td>Montes Zamora, Edgar Alexander Mauricio</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="cover-period"><strong>Período 2026-02</strong></p>
+<p class="cover-period"><strong>Octubre, 2026</strong></p>
 
 </div>
 
