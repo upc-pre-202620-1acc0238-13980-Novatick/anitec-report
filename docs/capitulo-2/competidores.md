@@ -2,7 +2,7 @@
 
 ## 2.1.1. Análisis competitivo
 
-El análisis competitivo permite conocer cómo otras aplicaciones móviles atienden la gestión y el seguimiento sanitario del ganado. Esta comparación ayudará a identificar oportunidades y riesgos, además de reconocer las características que ANITEC debe priorizar para ofrecer una propuesta diferenciada a ganaderos y veterinarios.
+El análisis competitivo compara la propuesta de ANITEC con Livestock Manager, Herdwatch y AgriWebb en gestión ganadera y seguimiento sanitario. Se consideran el público objetivo, las funciones, los canales de distribución, los precios y el análisis SWOT. La comparación permite identificar oportunidades y riesgos para definir qué características debe priorizar ANITEC para ganaderos y veterinarios.
 
 <html>
 <body>
@@ -15,7 +15,7 @@ El análisis competitivo permite conocer cómo otras aplicaciones móviles atien
         <td colspan="4" class="sub"><h3>¿Quiénes son nuestros principales competidores?</h3></td>
     </tr>
     <tr>
-        <td colspan="4">El análisis permite conocer cómo las aplicaciones competidoras organizan la información ganadera, qué funciones ofrecen, a qué usuarios se dirigen y cuáles son sus modelos de precios. De esta manera, se pueden reconocer las características que ANITEC debe priorizar para diferenciarse.</td>
+        <td colspan="4">Se comparan ANITEC, Livestock Manager, Herdwatch y AgriWebb para identificar cómo organizan la información ganadera, qué funciones ofrecen, a qué usuarios atienden y cuáles son sus modelos de precios. El objetivo es reconocer oportunidades de diferenciación para la propuesta de ANITEC.</td>
     </tr>
     <tr>
         <td rowspan="3" class="sub">PERFIL</td>
@@ -38,14 +38,14 @@ El análisis competitivo permite conocer cómo otras aplicaciones móviles atien
         </td>
     </tr>
     <tr>
-        <td>Aplicación móvil dirigida a pequeños y medianos ganaderos y veterinarios. Centraliza la información de los animales y facilita la coordinación de visitas, atenciones y seguimientos sanitarios mediante perfiles diferenciados.</td>
+        <td>Propuesta de aplicación móvil para pequeños y medianos ganaderos y veterinarios. Busca centralizar la información de los animales y coordinar visitas, atenciones y seguimiento sanitario mediante perfiles diferenciados.</td>
         <td>Aplicación móvil y plataforma web para administrar distintas especies de animales. Permite registrar información de salud, alimentación, reproducción, producción y finanzas.</td>
         <td>Aplicación móvil y web para registrar animales, tratamientos, reproducción y rendimiento. Puede utilizarse sin conexión y sincronizar la información posteriormente.</td>
         <td>Aplicación móvil y web que reúne información de animales, tratamientos, inventario, mapas, pastoreo, tareas y cumplimiento. Su aplicación móvil funciona sin conexión.</td>
     </tr>
     <tr>
         <td class="sub">Ventaja competitiva: ¿qué valor ofrece a sus clientes?</td>
-        <td>Vinculación autorizada entre ganaderos y veterinarios. Ambos pueden consultar los antecedentes sanitarios del animal y mantener la continuidad de sus atenciones, tratamientos e indicaciones.</td>
+        <td>Propone una vinculación autorizada entre ganaderos y veterinarios para compartir antecedentes sanitarios y dar continuidad a las atenciones, tratamientos e indicaciones de cada animal.</td>
         <td>Permite gestionar varias especies desde dispositivos móviles y computadoras. También cuenta con un plan gratuito y reúne registros sanitarios, productivos y financieros.</td>
         <td>Combina el registro pecuario con el funcionamiento sin conexión. Además, se integra con servicios oficiales para facilitar los registros de cumplimiento.</td>
         <td>Integra registros, mapas, pastoreo, tareas y análisis en una sola plataforma. También permite administrar equipos mediante usuarios y permisos.</td>
@@ -75,7 +75,7 @@ El análisis competitivo permite conocer cómo otras aplicaciones móviles atien
     </tr>
     <tr>
         <td class="sub">Precios y costos</td>
-        <td>Se contempla un plan gratuito y beneficios premium. Los precios, límites y funciones de cada plan todavía no han sido definidos.</td>
+        <td>Se propone un plan gratuito y beneficios premium. Los precios, límites y funciones de cada plan están pendientes de definición y validación.</td>
         <td>Starter: USD 0. Growth: USD 3.99 al mes. Scale: USD 9.99 al mes. Growth y Scale se facturan anualmente. Enterprise: precio mediante cotización.</td>
         <td>Digital Calving Book: USD 0 al año. PRO: USD 49 por los primeros 6 meses y luego USD 20 mensuales.</td>
         <td>Planes Essentials, Compliance y Performance. El precio se calcula según la región y la cantidad de bovinos u ovinos administrados.</td>
@@ -97,10 +97,10 @@ El análisis competitivo permite conocer cómo otras aplicaciones móviles atien
     </tr>
     <tr>
         <td class="sub">Debilidades</td>
-        <td>ANITEC todavía se encuentra en desarrollo. Sus precios, límites de planes y estrategias de marketing no están definidos, y aún debe validar su propuesta con los usuarios objetivo.</td>
-        <td>Abarca diferentes especies y procesos, pero no presenta un perfil veterinario diferenciado ni una vinculación similar a la propuesta por ANITEC.</td>
+        <td>ANITEC está en desarrollo y su propuesta aún requiere validación con ganaderos y veterinarios. Los precios, límites de los planes y estrategias de marketing están pendientes de definición.</td>
+        <td>La descripción revisada no identifica un perfil veterinario diferenciado ni una vinculación equivalente a la propuesta de ANITEC. Esta comparación no permite afirmar que dichas funciones estén ausentes.</td>
         <td>Sus principales integraciones de cumplimiento están orientadas a determinados países. Además, algunas tarifas dependen del tamaño y tipo de explotación.</td>
-        <td>Su amplia cantidad de funciones puede resultar compleja para productores que solo necesitan organizar el seguimiento sanitario.</td>
+        <td>La variedad de funciones podría dificultar el uso para productores centrados únicamente en el seguimiento sanitario. Es una valoración del equipo que requiere validación con usuarios.</td>
     </tr>
     <tr>
         <td class="sub">Oportunidades</td>
@@ -112,9 +112,9 @@ El análisis competitivo permite conocer cómo otras aplicaciones móviles atien
     <tr>
         <td class="sub">Amenazas</td>
         <td>Compite con aplicaciones consolidadas que cuentan con más funciones, trabajo sin conexión, presencia en tiendas y una base de usuarios existente.</td>
-        <td>Las aplicaciones especializadas en una sola especie o actividad pueden ofrecer una experiencia más específica para algunos productores.</td>
+        <td>Como amenaza potencial, las aplicaciones especializadas en una especie o actividad podrían responder mejor a las necesidades particulares de algunos productores.</td>
         <td>Las diferencias regulatorias entre países pueden limitar la utilidad de sus integraciones fuera de los mercados para los que fueron desarrolladas.</td>
-        <td>Las aplicaciones especializadas pueden resultar más sencillas para los usuarios que no necesitan una plataforma integral.</td>
+        <td>Como amenaza potencial, los usuarios que no requieren una plataforma integral podrían preferir aplicaciones especializadas con flujos más sencillos.</td>
     </tr>
 </table>
 </body>
