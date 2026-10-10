@@ -363,12 +363,6 @@ API REST - Java
 
 ![Livestock Management - Backend](../../assets/images/UML%20Diagrams/Images/Livestock%20Management/Livestock%20Management%20-%20Backend.png)
 
-#### 2.6.1.6.2. Bounded Context Database Diagram
-
-Base de datos central - PostgreSQL
-
-Base de datos local - SQLite
-
 ## 2.6.2. Bounded Context: Veterinary Care
 
 Atención veterinaria organiza visitas y controles y conserva las atenciones, tratamientos, vacunaciones e indicaciones de cada animal. Comprende US07-US13, US19-US21 y la consulta sin conexión de US29. Consulta los animales en Livestock Management y la autorización en Veterinary Linking. Solicita los avisos mediante Firebase Cloud Messaging.
@@ -713,12 +707,6 @@ API REST - Java
 
 ![Veterinary Care - Backend](../../assets/images/UML%20Diagrams/Images/Veterinary%20Care/Veterinary%20Care%20-%20Backend.png)
 
-#### 2.6.2.6.2. Bounded Context Database Diagram
-
-Base de datos central - PostgreSQL
-
-Base de datos local - SQLite
-
 ## 2.6.3. Bounded Context: Veterinary Linking
 
 Vinculación veterinaria gestiona las invitaciones entre ganaderos y veterinarios, su aceptación o rechazo y la revocación del acceso. Comprende US14-US18 y aplica los límites comunicados por Suscripciones en US23-US24. Atención veterinaria consulta este contexto para comprobar si existe una vinculación activa.
@@ -989,8 +977,6 @@ Los contextos que conservan historiales o indicaciones descargadas comprueban nu
 
 ### 2.6.3.5. Bounded Context Software Architecture Component Level Diagrams
 
-### 2.6.3.5. Bounded Context Software Architecture Component Level Diagrams
-
 #### Aplicación móvil - Kotlin Multiplatform
 
 El frontend de Veterinary Linking Context se divide en Presentation, Application, Infrastructure y Domain. Presentation muestra los formularios de invitación, invitaciones pendientes y vinculaciones activas; Application coordina el envío, aceptación, rechazo y revocación de vinculaciones; Domain representa las invitaciones, vinculaciones y capacidad; e Infrastructure implementa la comunicación con la REST API y los servicios técnicos requeridos. Este contexto no utiliza SQLite, debido a que sus datos se consultan directamente al servidor y se mantienen durante la sesión.
@@ -1014,12 +1000,6 @@ API REST - Java
 Aplicación móvil - Kotlin Multiplatform
 
 ![Veterinary Linking - Frontend](../../assets/images/UML%20Diagrams/Images/Veterinary%20Linking/Veterinary%20Linking%20-%20Frontend.png)
-
-#### 2.6.3.6.2. Bounded Context Database Diagram
-
-Base de datos central - PostgreSQL
-
-Este contexto no requiere persistencia local en SQLite para el alcance definido.
 
 ## 2.6.4. Bounded Context: Subscriptions
 
@@ -1295,8 +1275,6 @@ La integración utiliza el entorno de prueba durante el desarrollo académico. L
 
 ### 2.6.4.5. Bounded Context Software Architecture Component Level Diagrams
 
-### 2.6.4.5. Bounded Context Software Architecture Component Level Diagrams
-
 #### Aplicación móvil - Kotlin Multiplatform
 
 El frontend de Subscriptions Context se estructura mediante Presentation, Application, Infrastructure y Domain. Presentation muestra los planes disponibles, la suscripción actual y su vigencia; Application coordina las consultas, contratación premium y cancelación de renovación; Domain contiene los modelos de planes, precios y suscripciones; e Infrastructure implementa la comunicación con la REST API y la apertura del proceso de pago. Este contexto no requiere SQLite y utiliza Stripe en modo de prueba para el proceso de checkout.
@@ -1320,12 +1298,6 @@ API REST - Java
 Aplicación móvil - Kotlin Multiplatform
 
 ![Subscriptions - Frontend](../../assets/images/UML%20Diagrams/Images/Subscriptions/Subscriptions%20-%20Frontend.png)
-
-#### 2.6.4.6.2. Bounded Context Database Diagram
-
-Base de datos central - PostgreSQL
-
-Este contexto no requiere persistencia local en SQLite para el alcance definido.
 
 ## 2.6.5. Bounded Context: Identity and Access
 
@@ -1614,7 +1586,7 @@ El backend de Identity and Access Context se descompone en Interfaces, Applicati
 
 ![Backend - Identity and Access](<../../assets/images/componets-level-diagrams/Backend - Identity and Access.png>)
 
-##### 2.6.5.6. Bounded Context Software Architecture Code Level Diagrams
+### 2.6.5.6. Bounded Context Software Architecture Code Level Diagrams
 
 #### 2.6.5.6.1. Bounded Context Domain Layer Class Diagram
 
@@ -1624,10 +1596,44 @@ API REST - Java
 Aplicación móvil - Kotlin Multiplatform
 ![Identity and Access - Frontend](../../assets/images/UML%20Diagrams/Images/Identity%20and%20Access/Identity%20and%20Access%20-%20Frontend.png)
 
-#### 2.6.5.6.2. Bounded Context Database Diagram
+## 2.6.6. Modelo general de persistencia
 
-Base de datos central - PostgreSQL
+La persistencia se documenta en un apartado común para los cinco bounded contexts. El diagrama central reúne sus tablas y relaciones, mientras que las secciones anteriores conservan las responsabilidades de las clases, los componentes y los repositorios de cada contexto.
 
-Almacenamiento seguro del dispositivo
+### 2.6.6.1. Diagrama general de la base de datos central
 
-La aplicación conserva la credencial y los datos mínimos de sesión en almacenamiento seguro. No se propone una base SQLite para este contexto.
+El siguiente diagrama presenta el modelo relacional propuesto para la base central de ANITEC, cuyo motor definido es PostgreSQL, alojado en Render. Representa las cuentas, los animales, los registros veterinarios, las vinculaciones y las suscripciones.
+
+![Modelo general de la base de datos central de ANITEC](../../assets/images/database/anitec-central-database-diagram.png)
+
+| Bounded Context      | Tablas representadas                                     | Responsabilidad                                                                                                    |
+| -------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Livestock Management | `animal`, `inventoryCapacity`                            | Conservar los datos de los animales y la capacidad del inventario de cada ganadero.                                |
+| Veterinary Care      | `veterinaryAppointment`                                  | Representar registros veterinarios asociados a los animales e información de tratamientos, vacunas e indicaciones. |
+| Veterinary Linking   | `linkingInvitation`, `veterinaryLink`, `linkingCapacity` | Registrar invitaciones, vinculaciones y capacidad de ganaderos vinculados por veterinario.                         |
+| Subscriptions        | `plan`, `subscription`                                   | Conservar los planes y el estado, los límites y la renovación de las suscripciones.                                |
+| Identity and Access  | `account`, `userSession`                                 | Almacenar cuentas, datos de verificación y sesiones de los usuarios.                                               |
+
+La presentación conjunta de las tablas no modifica los límites de responsabilidad de los bounded contexts. Cada contexto mantiene sus repositorios y reglas de negocio. Las operaciones entre contextos utilizan los contratos definidos en las capas anteriores.
+
+El diagrama constituye una vista general del diseño y no una exportación verificada del esquema desplegado. Su detalle físico debe contrastarse con las entidades y migraciones del backend. Las clases del dominio no requieren una correspondencia de una tabla por clase.
+
+[Archivo editable del diagrama](../architecture/anitec-central-database.erd)
+
+### 2.6.6.2. Almacenamiento local y de sesión
+
+La aplicación móvil utiliza SQLite para conservar copias autorizadas de la información necesaria para la consulta sin conexión. Este almacenamiento no constituye una copia completa de PostgreSQL y se mantiene separado por cuenta.
+
+| Bounded Context      | Almacenamiento en el dispositivo                                                                                          |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Livestock Management | SQLite para las copias autorizadas del inventario, las fichas y las observaciones.                                        |
+| Veterinary Care      | SQLite para las copias autorizadas de la información veterinaria definida en sus contratos de consulta local.             |
+| Veterinary Linking   | No requiere persistencia local en SQLite para el alcance definido.                                                        |
+| Subscriptions        | No requiere persistencia local en SQLite para el alcance definido.                                                        |
+| Identity and Access  | Almacenamiento seguro para la credencial y los datos mínimos de sesión. No se propone una base SQLite para este contexto. |
+
+El acceso local permite consultar la información previamente descargada. Las modificaciones requieren conexión y validación del servidor. Al cerrar sesión se eliminan las copias locales de la cuenta, según los contratos definidos en Identity and Access.
+
+El diagrama central no representa las tablas de SQLite ni el almacenamiento seguro del dispositivo.
+
+</div>
