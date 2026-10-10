@@ -91,6 +91,38 @@ El entrevistado también explica que llevan anotaciones sobre la alimentación d
 
 [grabacion-yonel-leon]: https://upcedupe-my.sharepoint.com/:v:/g/personal/u20231h055_upc_edu_pe/IQAKIxhAf5_LQLDUlG-YJzDdAbYjVoga6cs0K4chDpz9Ql8?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=TObKPc
 
+
+
+
+
+
+
+
+#### Entrevista 02
+
+![Evidencia de la entrevista a Jose Cirineo](../../assets/images/entrevistas/entrevista-jose-cirineo.jpg)
+
+_Evidencia de entrevista: Jose Cirineo._
+
+- **Nombre:** Jose Cirineo.
+- **Edad:** 37 años.
+- **Distrito de residencia:** Localidad de Quiparacra - Pasco.
+- **Fecha de la entrevista:** 6 de octubre de 2026.
+- **Entrevistador:** Mauricio Montes.
+- **Enlace de la entrevista:** [Ver grabación aquí][grabacion-yonel-leon].
+- **Duración:** 08:19.
+- **Timing:** 00:00 – 08:19.
+
+**Resumen de la entrevista:**
+
+La entrevista a José Cirineo (37 años), dedicado a la crianza familiar de un hato aproximado de entre 80 y 100 vacunos en la ciudad de Oxapampa (Pasco), evidencia que la organización y seguimiento de sus animales se realiza mediante la asignación de un código desde el día de su nacimiento y el uso de nombres individuales para su verificación constante a lo largo del tiempo. El entrevistado señala que las principales dificultades en el cuidado del ganado se deben a las condiciones climáticas, al cambio de estación y, en menor medida, a enfermedades, factores que en ocasiones pueden ocasionar la pérdida o fallecimiento de los animales.
+
+En cuanto a la gestión de la salud, José indica que la detección inicial de enfermedades o problemas se realiza de manera presencial en el pastal o granja, debido a que no disponen de un sistema o alertas automáticas que les avisen a distancia cuando un animal requiere atención. Al identificar un caso, evalúan la situación y contactan por teléfono celular a su veterinario de confianza para recibir las indicaciones y medicamentos adecuados. Posterior a la atención, la familia mantiene una vigilancia diaria e informa periódicamente al especialista sobre la evolución del tratamiento para confirmar si el vacuno mejora o empeora.
+
+Asimismo, el teléfono celular resulta indispensable en su labor cotidiana para coordinar con el veterinario, conectarse con proveedores y realizar las operaciones de compra y venta de ganado. Sin embargo, la comunicación en el campo se ve obstaculizada por la falta o irregularidad de la señal celular e internet en diversas zonas rurales. Finalmente, expresa su deseo de acceder a mayor información y a un manejo profesional más avanzado que le permita progresar y generar mayores beneficios para su actividad ganadera. Sus respuestas ponen de manifiesto necesidades asociadas al monitoreo y registro del ganado, la gestión de alertas sanitarias y la disponibilidad de herramientas digitales adaptadas a zonas con baja conectividad.
+
+[grabacion-jose-cirineo]: https://upcedupe-my.sharepoint.com/personal/u20241e126_upc_edu_pe/_layouts/15/stream.aspx?id=%2Fpersonal%2Fu20241e126%5Fupc%5Fedu%5Fpe%2FDocuments%2FAplicaciones%20Moviles%2FEntrvista%20Jose%20Cirineo%20Ayra%2Em4v&ga=1
+
 **Segmento 2: Veterinarios**
 
 #### Entrevista 01

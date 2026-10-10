@@ -9,6 +9,11 @@
 ![Segmento 1 - UserPersonas](../../assets/images/NeedFinding/UserPersonas/userPersonas_1.png)
 
 
+**Segmento 2: Veterinarios**
+
+![Segmento 2 - UserPersonas](../../assets/images/NeedFinding/UserPersonas/userPersonas_2.png)
+
+
 ### 2.3.2. User Task Matrix
 
 **Segmento 1: Ganaderos**
@@ -67,17 +72,93 @@
 
 
 
+**Segmento 2: Veterinarios**
+
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Task</th>
+      <th colspan="2">Milagros Jocelyn Rojas Navarro</th>
+    </tr>
+    <tr>
+      <th>Frequency</th>
+      <th>Importance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Recibir solicitudes de atención de los ganaderos</td>
+      <td>Alta</td>
+      <td>Alta</td>
+    </tr>
+    <tr>
+      <td>Organizar y priorizar las visitas veterinarias</td>
+      <td>Alta</td>
+      <td>Alta</td>
+    </tr>
+    <tr>
+      <td>Evaluar el estado de salud de los animales</td>
+      <td>Alta</td>
+      <td>Alta</td>
+    </tr>
+    <tr>
+      <td>Consultar los antecedentes sanitarios de cada animal</td>
+      <td>Media</td>
+      <td>Alta</td>
+    </tr>
+    <tr>
+      <td>Registrar diagnósticos, tratamientos e indicaciones</td>
+      <td>Alta</td>
+      <td>Alta</td>
+    </tr>
+    <tr>
+      <td>Coordinar controles y visitas posteriores</td>
+      <td>Media</td>
+      <td>Alta</td>
+    </tr>
+    <tr>
+      <td>Realizar seguimiento de los animales atendidos</td>
+      <td>Media</td>
+      <td>Alta</td>
+    </tr>
+    <tr>
+      <td>Actualizar y consultar los registros de atención</td>
+      <td>Media</td>
+      <td>Alta</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
 ### 2.3.3. User Journey Mapping
 
 **Segmento 1: Ganaderos**
 
 ![Segmento 1 - JourneyMapping](../../assets/images/NeedFinding/UserJourneyMapping/userJourneyMapping_1.jpg)
 
+
+**Segmento 2: Ganaderos**
+
+![Segmento 2 - JourneyMapping](../../assets/images/NeedFinding/UserJourneyMapping/userJourneyMapping_2.png)
+
+
+
+
 ### 2.3.4. Empathy Mapping
 
 **Segmento 1: Ganaderos**
 
 ![Segmento 1 - EmpathyMapping](../../assets/images/NeedFinding/EmpathyMapping/empathyMapping_1.jpg)
+
+
+**Segmento 2: Ganaderos**
+
+![Segmento 2 - EmpathyMapping](../../assets/images/NeedFinding/EmpathyMapping/empathyMapping_2.png)
+
+
+
+
 
 ### 2.3.5. Big Picture EventStorming
 
