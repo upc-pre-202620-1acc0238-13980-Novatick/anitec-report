@@ -211,31 +211,56 @@ Enviar un código no equivale a verificar el correo: debe comprobarse su validez
 
 ## 2.5.2. Context Mapping
 
-El Context Map de ANITEC representa las dependencias entre los cinco bounded contexts y sus integraciones externas. La marca U identifica al proveedor de información o capacidades y D al contexto consumidor. Estas relaciones expresan dependencias del modelo, no el orden temporal de las operaciones.
+El Context Mapping de ANITEC representa las dependencias entre sus cinco bounded contexts y los servicios externos. Se presentan dos mapas para distinguir las relaciones internas de las integraciones con terceros, tomando como referencia la notación de [DDD Crew - Context Mapping](https://github.com/ddd-crew/context-mapping).
 
-![Context Map de ANITEC](../../assets/images/context-mapping/01-anitec-context-map.jpg)
+Los mapas describen el diseño propuesto. Sus conexiones representan dependencias entre contextos, no una secuencia de operaciones ni un despliegue obligatorio en microservicios.
 
-### Relaciones entre bounded contexts
+### Relaciones y patrones utilizados
 
-| Proveedor (U)           | Consumidor (D)                                                                    | Relación                                                                                                                |
-| ----------------------- | --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Identidad y acceso      | Gestión del ganado, Atención veterinaria, Vinculación veterinaria y Suscripciones | Proporciona información para validar la identidad y el perfil. Cada consumidor mantiene sus comprobaciones de permisos. |
-| Gestión del ganado      | Atención veterinaria                                                              | Proporciona datos del animal, su propietario y observaciones para apoyar las atenciones.                                |
-| Vinculación veterinaria | Atención veterinaria                                                              | Proporciona el estado de la vinculación para comprobar el acceso del veterinario.                                       |
-| Suscripciones           | Gestión del ganado                                                                | Comunica cambios del plan que determinan el límite de animales activos.                                                 |
-| Suscripciones           | Vinculación veterinaria                                                           | Comunica cambios del plan que determinan el límite de vinculaciones activas del veterinario.                            |
+| Relación o patrón           | Descripción                                                                                                               | Aplicación en ANITEC                                                                                        |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Upstream/Downstream (U/D)   | El proveedor ofrece capacidades de las que depende el consumidor. Los cambios del proveedor pueden afectar al consumidor. | Relaciones de identidad, datos del animal, autorización, límites del plan y servicios externos.             |
+| Customer/Supplier (CUS/SUP) | El proveedor considera las necesidades del consumidor al planificar y acordar cambios en sus contratos.                   | Cuatro relaciones internas para aplicar límites del plan y proporcionar información a Atención veterinaria. |
+| Anti-Corruption Layer (ACL) | Capa del consumidor que traduce el modelo externo al modelo propio.                                                       | Integración de Suscripciones con Stripe.                                                                    |
 
-En las cuatro relaciones entre Suscripciones, Gestión del ganado, Vinculación veterinaria y Atención veterinaria se propone el patrón Customer–Supplier. Los responsables del contexto proveedor consideran las necesidades del consumidor al coordinar los contratos y sus cambios. Las relaciones de Identidad y acceso se representan como dependencias U/D, sin asignar un patrón adicional.
+### Mapa de relaciones internas
 
-La conexión entre Suscripciones y Vinculación veterinaria aparece discontinua porque está pendiente de completar su representación en el canvas y los flujos correspondientes.
+![Context Map de ANITEC - Relaciones internas](../../assets/images/context-mapping/01-anitec-internal-context-map.png)
 
-### Integraciones externas
+Identidad y acceso proporciona información de identidad y perfil a los otros cuatro contextos. Cada consumidor conserva sus reglas de autorización, como comprobar la propiedad de un animal o la vinculación activa del veterinario.
 
-Stripe proporciona el procesamiento de pagos y la información de vigencia utilizada por Suscripciones. Se propone una Anti-Corruption Layer (ACL) del lado de ANITEC para traducir los conceptos y resultados de Stripe al modelo propio, reduciendo su dependencia del formato externo.
+| Proveedor (U)           | Consumidor (D)                                                                    | Información o capacidad                               | Relación propuesta  |
+| ----------------------- | --------------------------------------------------------------------------------- | ----------------------------------------------------- | ------------------- |
+| Identidad y acceso      | Gestión del ganado, Atención veterinaria, Vinculación veterinaria y Suscripciones | Identidad y perfil del usuario.                       | Upstream/Downstream |
+| Suscripciones           | Gestión del ganado                                                                | Plan y límite de animales activos.                    | Customer/Supplier   |
+| Suscripciones           | Vinculación veterinaria                                                           | Plan y límite de ganaderos vinculados al veterinario. | Customer/Supplier   |
+| Gestión del ganado      | Atención veterinaria                                                              | Datos del animal, propietario y observaciones.        | Customer/Supplier   |
+| Vinculación veterinaria | Atención veterinaria                                                              | Estado de vinculación para comprobar la autorización. | Customer/Supplier   |
 
-Resend permite enviar códigos de verificación e invitaciones desde Identidad y acceso y Vinculación veterinaria, respectivamente. Sus dos apariciones en el diagrama representan el mismo servicio. Firebase Cloud Messaging permite enviar las notificaciones de indicaciones desde Atención veterinaria.
+Se propone Customer/Supplier en las cuatro relaciones indicadas porque los responsables del proveedor deben considerar las necesidades del consumidor al definir y modificar sus contratos. Por ejemplo, Gestión del ganado debe acordar qué datos necesita Atención veterinaria para registrar una atención.
 
-Estas integraciones se muestran como dependencias U/D. El uso de sus servicios no implica una relación Customer–Supplier en el sentido de coordinación entre equipos. Los límites del mapa tampoco requieren que cada contexto se despliegue como un microservicio independiente.
+Las etiquetas U / SUP y D / CUS identifican los roles de proveedor y consumidor. Esta relación implica coordinación sobre los contratos y sus cambios, además del intercambio de información.
+
+La relación entre Suscripciones y Vinculación veterinaria forma parte del diseño previsto para aplicar el límite de ganaderos vinculados según el plan del veterinario. Su representación en el mapa no implica que su implementación esté completada.
+
+### Mapa de integraciones externas
+
+![Context Map de ANITEC - Integraciones externas](../../assets/images/context-mapping/02-anitec-external-context-map.png)
+
+Los servicios externos se representan como upstream porque controlan los contratos de integración a los que ANITEC debe adaptarse. Los contextos consumidores se representan como downstream.
+
+| Servicio externo (U)     | Contexto consumidor (D) | Finalidad                                                           |
+| ------------------------ | ----------------------- | ------------------------------------------------------------------- |
+| Stripe                   | Suscripciones           | Procesamiento de pagos e información del estado de la suscripción.  |
+| Resend                   | Identidad y acceso      | Envío de códigos de verificación por correo.                        |
+| Resend                   | Vinculación veterinaria | Envío de invitaciones por correo.                                   |
+| Firebase Cloud Messaging | Atención veterinaria    | Envío de avisos sobre indicaciones de cuidado y sus modificaciones. |
+
+En Suscripciones se propone una ACL para traducir las respuestas y los estados de Stripe a conceptos propios de ANITEC. Así se evita incorporar directamente el modelo del proveedor al dominio. Suscripciones conserva las reglas de activación y vigencia de los beneficios premium.
+
+Resend aparece una sola vez porque Identidad y acceso y Vinculación veterinaria utilizan el mismo servicio. La aceptación de una solicitud de correo o notificación no garantiza que el destinatario la haya recibido o leído.
+
+Estas integraciones se representan mediante relaciones U/D, sin asignar Customer/Supplier, porque contratar un servicio no implica participar en la planificación de su proveedor. El estado de implementación y las evidencias de funcionamiento se documentan en el capítulo IV.
 
 ## 2.5.3. Software Architecture
 

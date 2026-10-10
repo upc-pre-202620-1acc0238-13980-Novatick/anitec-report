@@ -13,3 +13,5 @@
 14. The PostgreSQL Global Development Group. (s. f.). _Documentation_. Recuperado el 7 de octubre de 2026, de https://www.postgresql.org/docs/
 
 15. springdoc-openapi. (s. f.). _springdoc-openapi_. Recuperado el 7 de octubre de 2026, de https://springdoc.org/
+
+16. DDD Crew. (s. f.). Context mapping [Repositorio de GitHub]. https://github.com/ddd-crew/context-mapping
