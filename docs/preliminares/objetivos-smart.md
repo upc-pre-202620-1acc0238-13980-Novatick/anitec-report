@@ -1,27 +1,13 @@
 <div align="justify">
 
-## Objetivos SMART
+# Objetivos SMART
 
-### Objetivo general
+Los siguientes objetivos orientan el desarrollo profesional de cada integrante durante el proyecto ANITEC. Su cumplimiento se evaluará al finalizar el curso mediante los entregables y las contribuciones registradas en los repositorios del equipo.
 
-Desarrollar, durante el ciclo académico, una aplicación móvil denominada ANITEC que permita a pequeños y medianos ganaderos gestionar la información de sus animales y realizar el seguimiento de atenciones veterinarias, integrando funcionalidades de registro del ganado, atención veterinaria, agenda de actividades y gestión de suscripciones, con el fin de centralizar la información necesaria para el cuidado de los animales.
-
-### Objetivo SMART 1 - Gestión del ganado
-
-Implementar antes de la entrega final del proyecto un módulo de gestión del ganado que permita registrar, consultar, actualizar y visualizar la información de cada animal, incluyendo sus datos principales, observaciones e historial relacionado con sus atenciones. El funcionamiento del módulo será verificado mediante pruebas de los flujos principales de registro y consulta de animales.
-
-### Objetivo SMART 2 - Atención y seguimiento veterinario
-
-Implementar antes de la entrega final un módulo de atención veterinaria que permita registrar visitas, diagnósticos, tratamientos e indicaciones asociadas a un animal, validando previamente que exista una vinculación activa entre el ganadero y el veterinario. Como resultado, cada atención registrada deberá quedar relacionada con el animal y disponible para su posterior consulta.
-
-### Objetivo SMART 3 - Agenda y recordatorios
-
-Implementar durante el desarrollo del proyecto un sistema de agenda y recordatorios que permita programar al menos tres tipos de actividades relacionadas con el cuidado del ganado: vacunas, controles veterinarios y tratamientos. El sistema deberá permitir consultar las actividades programadas y generar una notificación cuando corresponda realizar una de ellas.
-
-### Objetivo SMART 4 - Suscripciones y límite de animales
-
-Implementar antes de la entrega final un esquema de suscripciones que permita diferenciar entre un plan gratuito y un plan premium, aplicando un límite de animales de acuerdo con el plan activo del ganadero. La funcionalidad será validada mediante escenarios de activación de una suscripción, actualización del límite permitido y vencimiento del plan sin eliminar los animales registrados previamente.
-
-### Objetivo SMART 5 - Funcionamiento con conectividad limitada
-
-Implementar durante el ciclo académico almacenamiento local mediante SQLite para permitir que el usuario consulte información previamente descargada de sus animales cuando no disponga de conexión a internet. Una vez recuperada la conectividad, la aplicación deberá poder volver a comunicarse con los servicios principales de ANITEC para continuar con las operaciones que requieran acceso al backend.
+| Integrante                              | Objetivo SMART                                                                                                                                                                                                                                                                                                                                   | Evidencia de cumplimiento                                                                     |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
+| León Morales, Johan Yonel               | Fortalecer mis habilidades de diseño UX/UI y documentación de software mediante la elaboración de los flujos principales de ganadero y veterinario, un prototipo navegable y su documentación. Antes de la entrega final, realizaré al menos dos revisiones para incorporar observaciones y mantener la coherencia con las historias de usuario. | Diseños y prototipo en Figma, documentación del capítulo III y cambios registrados en GitHub. |
+| Ayala Fernandez, Jorge Brayan           | Fortalecer mis habilidades de desarrollo backend con Java y Spring Boot mediante la implementación y documentación de las operaciones de identidad y acceso y gestión del ganado. Antes de la entrega final, comprobaré al menos cinco escenarios de prueba, incluyendo operaciones exitosas y rechazos por falta de autorización.               | Código del backend, documentación en Swagger y resultados de las pruebas.                     |
+| Lozano Leon, Richard Enrique            | Mejorar mis habilidades de desarrollo web mediante la implementación y publicación de la landing page de ANITEC. Antes de la entrega final, verificaré su presentación en escritorio, tableta y móvil, y comprobaré al menos cinco interacciones de navegación para corregir los problemas encontrados.                                          | Repositorio de la landing page, URL pública y registro de las comprobaciones realizadas.      |
+| Mauricio Silva, Ghiou Justinn           | Fortalecer mis habilidades de modelado de software mediante la revisión y actualización de al menos dos diagramas de componentes de ANITEC. Antes de la entrega final, contrastaré sus responsabilidades y dependencias con el código implementado y documentaré los ajustes necesarios.                                                         | Diagramas actualizados, archivos fuente y cambios registrados en GitHub.                      |
+| Montes Zamora, Edgar Alexander Mauricio | Desarrollar mis habilidades de evaluación de usabilidad mediante la revisión de al menos tres flujos principales de ANITEC antes de la entrega final. Registraré los problemas identificados, su impacto en el usuario y una propuesta de mejora para cada hallazgo.                                                                             | Registro de evaluación, capturas de los flujos revisados y propuestas de mejora documentadas. |
