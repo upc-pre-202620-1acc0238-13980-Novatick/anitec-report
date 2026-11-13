@@ -12,7 +12,7 @@ El objetivo es que ambos perfiles compartan la información autorizada del ganad
 | --- | --- |
 | Sprint # | Sprint 2. |
 | Date | 2026-11-06. |
-| Time | Horario nocturno; hora exacta no registrada. |
+| Time | 08:30 PM. |
 | Location | Reunión virtual por Discord. |
 | Prepared By | Richard Enrique Lozano León, consolidación documental. |
 | Attendees | Asistencia a la reunión pendiente de confirmar. |
