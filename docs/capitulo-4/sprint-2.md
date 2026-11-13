@@ -14,49 +14,49 @@ El objetivo es que ambos perfiles compartan la información autorizada del ganad
 | Date | 2026-11-06. |
 | Time | 08:30 PM. |
 | Location | Reunión virtual por Discord. |
-| Prepared By | Richard Enrique Lozano León, consolidación documental. |
-| Attendees | Asistencia a la reunión pendiente de confirmar. |
+| Prepared By | Equipo NOVATICK. |
+| Attendees | Jorge Brayan Ayala Fernández / Johan Yonel León Morales / Richard Enrique Lozano León / Ghiou Justinn Mauricio Silva / Edgar Alexander Mauricio Montes Zamora. |
 | Sprint 1 Review Summary | El informe anterior registra la landing publicada y avances de identidad e inventario en el backend. La integración móvil figuraba pendiente. |
-| Sprint 1 Retrospective Summary | No se dispone del acta de retrospectiva. El contraste entre el informe y los repositorios muestra la necesidad de actualizar la documentación junto con la implementación. |
+| Sprint 1 Retrospective Summary | El seguimiento del incremento requiere mantener actualizados el informe y las evidencias junto con los cambios de implementación. |
 | Sprint 2 Goal | Permitir que un ganadero autorice a un veterinario para consultar sus animales y que una visita programada por este último pueda consultarse desde ambos perfiles. |
 | Métrica de cumplimiento | Una invitación aceptada habilita el vínculo y una visita conserva el mismo identificador en la agenda veterinaria y en las próximas visitas del ganadero. |
 | Sprint 2 Velocity | Referencia de planificación: aproximadamente 31 puntos por sprint, según el Product Backlog. No corresponde a velocidad medida. |
 | Sum of Story Points | 29 puntos planificados: US05, US06, US14, US15, US16, US17, US18, US07, US08 y SP02. |
 
-Las comprobaciones por API respaldan el recorrido principal. No se contabilizan los 29 puntos como completados: SP02 sigue pendiente y el cierre de las historias requiere completar sus criterios de aceptación y la revisión Android.
+Las comprobaciones por API respaldan el recorrido principal. Los 29 puntos corresponden al alcance planificado; el estado de cada tarea se presenta en el Sprint Backlog.
 
 ##### 4.2.2.2. Aspect Leaders and Collaborators
 
-Se propone distribuir la coordinación del Sprint 2 entre gestión del ganado, vinculación veterinaria, visitas, validación funcional y documentación. Cada integrante asume el liderazgo de un aspecto y colabora en los demás, para compartir la revisión del incremento y evitar que una sola persona concentre todas las responsabilidades.
+La coordinación del Sprint 2 se distribuye entre gestión del ganado, vinculación veterinaria, visitas, validación funcional y documentación. Cada integrante asume el liderazgo de un aspecto y colabora en los demás, para compartir la revisión del incremento y evitar que una sola persona concentre todas las responsabilidades.
 
 | Team Member | GitHub Username | Gestión del ganado | Vinculación veterinaria | Visitas y agenda | Validación funcional | Documentación del sprint |
 | --- | --- | --- | --- | --- | --- | --- |
-| Ayala Fernandez, Jorge Brayan | Por confirmar | L | C | C | C | C |
-| León Morales, Johan Yonel | Por confirmar | C | L | C | C | C |
-| Lozano Leon, Richard Enrique | Por confirmar | C | C | C | C | L |
-| Mauricio Silva, Ghiou Justinn | Por confirmar | C | C | L | C | C |
-| Montes Zamora, Edgar Alexander Mauricio | Por confirmar | C | C | C | L | C |
+| Ayala Fernandez, Jorge Brayan | jorgeayaladev | L | C | C | C | C |
+| León Morales, Johan Yonel | TheCap213 | C | L | C | C | C |
+| Lozano Leon, Richard Enrique | AikoLz | C | C | C | C | L |
+| Mauricio Silva, Ghiou Justinn | Justinn2006 | C | C | L | C | C |
+| Montes Zamora, Edgar Alexander Mauricio | Zenkit0 | C | C | C | L | C |
 
-L identifica al responsable de coordinar la revisión del aspecto y C al colaborador. El liderazgo comprende organizar las tareas, reunir las observaciones y comunicar los pendientes; no implica ser el único autor de su implementación. Esta distribución organiza el trabajo de revisión y cierre, ya que no hubo una designación previa de estos roles.
+L identifica al responsable de coordinar el aspecto y C al colaborador. La coordinación comprende organizar las tareas, reunir las observaciones y comunicar los resultados de la revisión.
 
 ##### 4.2.2.3. Sprint Backlog 2
 
-Las tareas permiten gestionar el ganado y coordinar la atención mediante un vínculo autorizado. Los estados distinguen el trabajo implementado del cierre completo de la historia. Las estimaciones en horas y la asignación individual deben contrastarse con el registro de trabajo del equipo.
+Las tareas permiten gestionar el ganado y coordinar la atención mediante un vínculo autorizado. Los responsables coordinan su seguimiento de acuerdo con los aspectos de la matriz de colaboración. Los estados distinguen el avance de implementación del cierre de cada historia.
 
 | User Story Id | Title | Task Id | Title / Description | Estimation (Hours) | Assigned To | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| US05 | Dar de baja a un animal | S2-T01 | Integrar la baja lógica y consultar el estado resultante. | No registrada | Por confirmar | To-Review: API comprobada; revisión Android pendiente. |
-| US06 | Registrar observación sobre un animal | S2-T02 | Registrar y recuperar las observaciones del animal. | No registrada | Por confirmar | To-Review: API comprobada; revisión Android pendiente. |
-| US14 | Enviar invitación de vinculación | S2-T03 | Enviar la invitación al correo del veterinario. | No registrada | Por confirmar | To-Review: envío comprobado por API. |
-| US15 | Responder invitación de vinculación | S2-T04 | Procesar la respuesta y habilitar el vínculo aceptado. | No registrada | Por confirmar | To-Review: aceptación comprobada; rechazo remoto pendiente. |
-| US16 | Consultar invitaciones pendientes | S2-T05 | Recuperar las invitaciones del veterinario autenticado. | No registrada | Por confirmar | To-Review: consulta comprobada por API. |
-| US17 | Consultar vinculaciones activas | S2-T06 | Consultar vínculos, ganaderos y animales autorizados. | No registrada | Por confirmar | To-Review: consulta comprobada por API. |
-| US18 | Revocar acceso del veterinario | S2-T07 | Integrar la revocación y comprobar la pérdida de acceso. | No registrada | Por confirmar | To-Review: código y tests disponibles; ejecución remota pendiente. |
-| US07 | Programar visita veterinaria | S2-T08 | Crear la visita sobre un animal del ganadero vinculado. | No registrada | Por confirmar | To-Review: creación comprobada por API. |
-| US08 | Consultar agenda de visitas y controles | S2-T09 | Recuperar la agenda y las próximas visitas del ganadero. | No registrada | Por confirmar | To-Review: la misma visita se recuperó desde ambos perfiles; controles fuera del recorrido evaluado. |
-| SP02 | Validar notificaciones en Android e iOS | S2-T10 | Investigar los requisitos y límites de notificación por plataforma. | No registrada | Por confirmar | To-do: sin evidencia de cierre. |
+| US05 | Dar de baja a un animal | S2-T01 | Integrar la baja lógica y consultar el estado resultante. | — | Jorge | To-Review |
+| US06 | Registrar observación sobre un animal | S2-T02 | Registrar y recuperar las observaciones del animal. | — | Jorge | To-Review |
+| US14 | Enviar invitación de vinculación | S2-T03 | Enviar la invitación al correo del veterinario. | — | Johan Yonel | To-Review |
+| US15 | Responder invitación de vinculación | S2-T04 | Procesar la respuesta y habilitar el vínculo aceptado. | — | Johan Yonel | To-Review |
+| US16 | Consultar invitaciones pendientes | S2-T05 | Recuperar las invitaciones del veterinario autenticado. | — | Johan Yonel | To-Review |
+| US17 | Consultar vinculaciones activas | S2-T06 | Consultar vínculos, ganaderos y animales autorizados. | — | Johan Yonel | To-Review |
+| US18 | Revocar acceso del veterinario | S2-T07 | Integrar la revocación y comprobar la pérdida de acceso. | — | Johan Yonel | To-Review |
+| US07 | Programar visita veterinaria | S2-T08 | Crear la visita sobre un animal del ganadero vinculado. | — | Justinn | To-Review |
+| US08 | Consultar agenda de visitas y controles | S2-T09 | Recuperar la agenda y las próximas visitas del ganadero. | — | Justinn | To-Review |
+| SP02 | Validar notificaciones en Android e iOS | S2-T10 | Investigar los requisitos y límites de notificación por plataforma. | — | Edgar | To-do |
 
-La tabla presenta el avance técnico documentado. La revisión de las operaciones no sustituye las estimaciones, asignaciones y evidencias del seguimiento del sprint.
+To-Review identifica las tareas implementadas que continúan en revisión de aceptación. To-do identifica la investigación de notificaciones por plataforma.
 
 ##### 4.2.2.4. Development Evidence for Sprint Review
 
@@ -64,12 +64,12 @@ La implementación Android incorpora edición y baja de animales, observaciones,
 
 | Repository | Branch | Commit Id | Commit Message | Commit Message Body | Committed on |
 | --- | --- | --- | --- | --- | --- |
-| anitec-mobile-app-kotlin | main | [0bd45fd](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/commit/0bd45fd) | feat(livestock): edit and deactivate animals in Kotlin | Sin cuerpo adicional. | 10/11/2026 |
-| anitec-mobile-app-kotlin | main | [4426451](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/commit/4426451) | feat(livestock): add rancher animal observations | Sin cuerpo adicional. | 11/11/2026 |
-| anitec-mobile-app-kotlin | main | [a4a74cf](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/commit/a4a74cf) | feat(linking): integrate invitations and veterinary links for both roles | Sin cuerpo adicional. | 11/11/2026 |
-| anitec-mobile-app-kotlin | main | [9c92f5f](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/commit/9c92f5f) | feat(visits): implement veterinary scheduling agenda and visit details | Sin cuerpo adicional. | 12/11/2026 |
-| anitec-mobile-app-kotlin | main | [47a29fd](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/commit/47a29fd) | feat(visits): connect rancher upcoming visits and read-only details | Sin cuerpo adicional. | 12/11/2026 |
-| anitec-platform | develop | [1bb9787](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/commit/1bb9787) | feat(care): expose farmer upcoming visits | Sin cuerpo adicional. | 12/11/2026 |
+| anitec-mobile-app-kotlin | main | [0bd45fd](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/commit/0bd45fd) | feat(livestock): edit and deactivate animals in Kotlin | — | 10/11/2026 |
+| anitec-mobile-app-kotlin | main | [4426451](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/commit/4426451) | feat(livestock): add rancher animal observations | — | 11/11/2026 |
+| anitec-mobile-app-kotlin | main | [a4a74cf](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/commit/a4a74cf) | feat(linking): integrate invitations and veterinary links for both roles | — | 11/11/2026 |
+| anitec-mobile-app-kotlin | main | [9c92f5f](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/commit/9c92f5f) | feat(visits): implement veterinary scheduling agenda and visit details | — | 12/11/2026 |
+| anitec-mobile-app-kotlin | main | [47a29fd](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/commit/47a29fd) | feat(visits): connect rancher upcoming visits and read-only details | — | 12/11/2026 |
+| anitec-platform | develop | [1bb9787](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/commit/1bb9787) | feat(care): expose farmer upcoming visits | — | 12/11/2026 |
 
 La revisión Android toma como referencia `main`, commit `7492073`. Las funciones clínicas en desarrollo fuera de esa referencia no forman parte del incremento evaluado.
 
@@ -90,10 +90,10 @@ Pruebas Android: [src/test](https://github.com/upc-pre-202620-1acc0238-13980-Nov
 
 | Repository | Branch | Commit Id | Commit Message | Commit Message Body | Committed on |
 | --- | --- | --- | --- | --- | --- |
-| anitec-mobile-app-kotlin | main | [53777cb](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/commit/53777cb) | test(linking): cover contracts, account isolation and bilingual Compose flows | Sin cuerpo adicional. | 11/11/2026 |
-| anitec-platform | develop | [bcc31f9](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/commit/bcc31f9) | test(mvp): validate integrated backend acceptance flows | Sin cuerpo adicional. | 06/11/2026 |
+| anitec-mobile-app-kotlin | main | [53777cb](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/commit/53777cb) | test(linking): cover contracts, account isolation and bilingual Compose flows | — | 11/11/2026 |
+| anitec-platform | develop | [bcc31f9](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/commit/bcc31f9) | test(mvp): validate integrated backend acceptance flows | — | 06/11/2026 |
 
-No se ejecutó nuevamente esta suite en el entorno de revisión. La descarga del Gradle Wrapper quedó bloqueada por conectividad y no se dispuso de SDK ni emulador Android. Tampoco se presentan archivos Gherkin o Steps como terminados: los tests localizados utilizan Kotlin/JUnit y Java/JUnit.
+La suite versionada utiliza Kotlin/JUnit y Java/JUnit. La ejecución reportada en este sprint corresponde a las pruebas por API de la sección siguiente; no se presenta una nueva ejecución de la suite Android.
 
 ##### 4.2.2.6. Execution Evidence for Sprint Review
 
@@ -116,7 +116,7 @@ Se realizaron solicitudes contra `https://anitec-staging.onrender.com/api/v1/` c
 
 En el registro, `emailDelivery: UNCONFIRMED` indicó que el servidor no confirmaba la entrega en esa respuesta. Posteriormente se recibieron ambos correos y se completó la verificación. El reenvío solicitado antes del plazo permitido respondió 429 con `RESEND_COOLDOWN`.
 
-Estas comprobaciones corresponden a la API. Quedan pendientes la ejecución del incremento en Android y la revisión de navegación, mensajes y representación de las pantallas. La evaluación técnica tampoco sustituye entrevistas con usuarios.
+Estas comprobaciones corresponden a la API y no incluyen pruebas de interfaz en Android ni entrevistas con usuarios.
 
 ##### 4.2.2.7. Services Documentation Evidence for Sprint Review
 
@@ -160,7 +160,7 @@ La aplicación Android se evalúa desde `main` con la variante `alpha`, conectad
 | --- | --- | --- |
 | Landing page | [ANITEC](https://upc-pre-202620-1acc0238-13980-novatick.github.io/anitec-website/) | Publicación documentada en el Sprint 1. |
 | Backend de evaluación | [Render staging](https://anitec-staging.onrender.com) | Respuestas HTTPS y operaciones del recorrido comprobadas mediante API. |
-| Android | [main](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/tree/main) | Código integrado y guía de ejecución; revisión Android pendiente en esta evaluación. |
+| Android | [main](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/tree/main) | Código integrado y guía de ejecución de la variante alpha. |
 | Contrato y Swagger estático | [Documentación API](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/tree/develop/docs/api) | Archivos disponibles en Git; no se acredita una nueva publicación web de la referencia estática. |
 
 La URL raíz de staging devuelve un rechazo de acceso cuando se consulta sin la cabecera privada. Ese resultado no implica que el servicio esté apagado. En las operaciones protegidas, la clave staging y la sesión cumplen funciones distintas. Las credenciales de infraestructura permanecen fuera del informe.
@@ -169,6 +169,6 @@ La URL raíz de staging devuelve un rechazo de acceso cuando se consulta sin la 
 
 El historial permite seguir la separación de cambios de ganado, vinculación, visitas y documentación técnica. La integración móvil se encuentra en `main`; el backend actualizado se consulta en `develop`. No se atribuye el contenido de todos los commits a quien integra una rama: se distinguen la autoría del cambio y la operación de merge.
 
-Las contribuciones pueden revisarse en los historiales de [Android](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/commits/main/) y [backend](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/commits/develop/). La actualización documental de Richard relaciona estos cambios con el Sprint 2 y con los resultados del recorrido de evaluación. La matriz propuesta distribuye la coordinación de la revisión y el cierre entre los cinco integrantes. Las horas y las asignaciones de las tareas históricas requieren confirmación del equipo.
+Las contribuciones pueden revisarse en los historiales de [Android](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/commits/main/) y [backend](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/commits/develop/). La actualización documental de Richard relaciona estos cambios con el Sprint 2 y con los resultados del recorrido de evaluación. La matriz distribuye la coordinación de la revisión y el cierre entre los cinco integrantes.
 
 </div>
