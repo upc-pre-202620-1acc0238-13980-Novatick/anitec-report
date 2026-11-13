@@ -68,6 +68,7 @@
 | 0.2     | 11/09/2026 | Equipo NOVATICK | Incorporación de Startup Profile, Solution Profile, Lean UX, segmentos objetivo y diseño de entrevistas.                                                             |
 | 0.3     | 18/09/2026 | Equipo NOVATICK | Incorporación del análisis competitivo, Domain-Driven Design y documentación inicial de la arquitectura de software.                                                 |
 | 0.4     | 07/10/2026 | Equipo NOVATICK | Incorporación del diseño UI/UX, documentación del Sprint 1, evidencias de la landing page y pruebas locales del backend. Actualización del Student Outcome para TB1. |
+| 0.5     | 13/11/2026 | Equipo NOVATICK | Documentación del Sprint 2 para AV2, actualización de configuración, aporte individual al Student Outcome, conclusiones y anexos. |
 
 Organización en GitHub: [NOVATICK](https://github.com/upc-pre-202620-1acc0238-13980-Novatick)
 
