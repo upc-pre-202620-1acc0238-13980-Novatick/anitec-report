@@ -150,7 +150,77 @@ Ejemplo de programación con datos ficticios:
 
 La respuesta 201 contiene un sobre con `success`, `message`, `timestamp` y `data`. En `data` se recuperan el identificador de la visita, el animal, el ganadero, el tipo, la fecha programada, el estado y el motivo. Las consultas de agenda utilizan fecha y hora UTC; enviar únicamente una fecha no satisface ese contrato.
 
-El commit [3b41173](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/commit/3b41173), del 06/11/2026, incorpora la documentación MVP y Swagger de solo consulta. El commit [1bb9787](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/commit/1bb9787) incorpora las próximas visitas del ganadero al contrato. Los archivos estáticos de Swagger permiten consultar modelos y operaciones; no ejecutan solicitudes al servicio de evaluación.
+El commit [3b41173](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/commit/3b41173), del 06/11/2026, incorpora la documentación MVP y su referencia Swagger. El commit [1bb9787](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/commit/1bb9787) incorpora las próximas visitas del ganadero al contrato. La referencia de servicios presenta los modelos, parámetros y ejemplos de las operaciones.
+
+###### Ejemplos de solicitudes y respuestas
+
+Las siguientes capturas presentan los parámetros, cuerpos de solicitud y ejemplos de respuesta documentados para las operaciones del sprint.
+
+**DS01. Baja de un animal**
+
+Parámetro animalId y ejemplo de respuesta 200 para la baja lógica del animal.
+
+![DS01. Baja de un animal: solicitud y respuesta de ejemplo](../../assets/images/capitulo-4/sprint-2/services/01-baja-animal.jpg)
+
+**DS02. Registro de observaciones**
+
+Cuerpo de la solicitud y ejemplo de respuesta 201 de una observación.
+
+![DS02. Registro de observaciones: solicitud y respuesta de ejemplo](../../assets/images/capitulo-4/sprint-2/services/02-registrar-observacion.jpg)
+
+**DS03. Consulta de observaciones**
+
+Identificador del animal y ejemplo de respuesta 200 con la lista de observaciones.
+
+![DS03. Consulta de observaciones: solicitud y respuesta de ejemplo](../../assets/images/capitulo-4/sprint-2/services/03-consultar-observaciones.jpg)
+
+**DS04. Envío de invitación**
+
+Correo del veterinario en la solicitud y ejemplo de respuesta 201 de la invitación.
+
+![DS04. Envío de invitación: solicitud y respuesta de ejemplo](../../assets/images/capitulo-4/sprint-2/services/04-enviar-invitacion.jpg)
+
+**DS05. Respuesta a una invitación**
+
+Identificador y acción de respuesta a la invitación, junto con el ejemplo de respuesta 200.
+
+![DS05. Respuesta a una invitación: solicitud y respuesta de ejemplo](../../assets/images/capitulo-4/sprint-2/services/05-responder-invitacion.jpg)
+
+**DS06. Consulta de invitaciones pendientes**
+
+Ejemplo de respuesta 200 con las invitaciones del veterinario.
+
+![DS06. Consulta de invitaciones pendientes: solicitud y respuesta de ejemplo](../../assets/images/capitulo-4/sprint-2/services/06-invitaciones-pendientes.jpg)
+
+**DS07. Consulta de vinculaciones activas**
+
+Ejemplo de respuesta 200 con el recuento y los datos de las vinculaciones.
+
+![DS07. Consulta de vinculaciones activas: solicitud y respuesta de ejemplo](../../assets/images/capitulo-4/sprint-2/services/07-vinculaciones-activas.jpg)
+
+**DS08. Consulta de ganaderos vinculados**
+
+Ejemplo de respuesta 200 con los ganaderos vinculados y sus fincas.
+
+![DS08. Consulta de ganaderos vinculados: solicitud y respuesta de ejemplo](../../assets/images/capitulo-4/sprint-2/services/08-ganaderos-vinculados.jpg)
+
+**DS09. Revocación de una vinculación**
+
+Identificador del vínculo y ejemplo de respuesta 200 de la revocación.
+
+![DS09. Revocación de una vinculación: solicitud y respuesta de ejemplo](../../assets/images/capitulo-4/sprint-2/services/09-revocar-vinculacion.jpg)
+
+**DS10. Programación de una visita**
+
+Cuerpo de la solicitud y ejemplo de respuesta 201 con los datos de la visita.
+
+![DS10. Programación de una visita: solicitud y respuesta de ejemplo](../../assets/images/capitulo-4/sprint-2/services/10-programar-visita.jpg)
+
+**DS11. Consulta de la agenda veterinaria**
+
+Parámetros del intervalo y ejemplo de respuesta 200 de la agenda.
+
+![DS11. Consulta de la agenda veterinaria: solicitud y respuesta de ejemplo](../../assets/images/capitulo-4/sprint-2/services/11-agenda-visitas.jpg)
 
 ##### 4.2.2.8. Software Deployment Evidence for Sprint Review
 
@@ -161,7 +231,7 @@ La aplicación Android se evalúa desde `main` con la variante `alpha`, conectad
 | Landing page | [ANITEC](https://upc-pre-202620-1acc0238-13980-novatick.github.io/anitec-website/) | Publicación documentada en el Sprint 1. |
 | Backend de evaluación | [Render staging](https://anitec-staging.onrender.com) | Respuestas HTTPS y operaciones del recorrido comprobadas mediante API. |
 | Android | [main](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/tree/main) | Código integrado y guía de ejecución de la variante alpha. |
-| Contrato y Swagger estático | [Documentación API](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/tree/develop/docs/api) | Archivos disponibles en Git; no se acredita una nueva publicación web de la referencia estática. |
+| Contrato y referencia de servicios | [Documentación API](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/tree/develop/docs/api) | Contrato, modelos y ejemplos documentados. |
 
 La URL raíz de staging devuelve un rechazo de acceso cuando se consulta sin la cabecera privada. Ese resultado no implica que el servicio esté apagado. En las operaciones protegidas, la clave staging y la sesión cumplen funciones distintas. Las credenciales de infraestructura permanecen fuera del informe.
 

@@ -18,7 +18,7 @@ Organización: [NOVATICK en GitHub](https://github.com/upc-pre-202620-1acc0238-1
 | Landing page                    | [Abrir ANITEC](https://upc-pre-202620-1acc0238-13980-novatick.github.io/anitec-website/) |
 | Backend de evaluación | [ANITEC staging](https://anitec-staging.onrender.com). Requiere acceso privado y autenticación para las operaciones de cuenta. |
 | Contrato de servicios | [OpenAPI](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/blob/develop/docs/api/openapi.yaml). |
-| Referencia Swagger de consulta | [Archivos del sitio estático](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/tree/develop/docs/api/site). La preparación del sitio no acredita una publicación pública adicional. |
+| Referencia de servicios | [Documentación de servicios](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/tree/develop/docs/api/site). Modelos, parámetros y respuestas de las operaciones. |
 | Integración móvil | [Guía REST](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/blob/develop/docs/api/mobile-integration.md) y [ejecución Android](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/blob/main/README.md). |
 
 ## Anexo 3. Diseño de interfaces y prototipo

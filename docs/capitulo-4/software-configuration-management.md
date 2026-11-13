@@ -49,7 +49,7 @@ Se propone utilizar las siguientes herramientas durante la implementación.
 | JUnit           | Automatizar pruebas de los comportamientos del backend desarrollado en Java.              | [Sitio oficial](https://junit.org/)                                                    |
 | GitHub Pages    | Publicar la landing page estática.                                                        | [Documentación](https://docs.github.com/en/pages)                                      |
 | Render          | Alojar el backend desarrollado con Java y Spring Boot.                                    | [Documentación](https://render.com/docs)                                               |
-| Swagger UI      | Consultar el contrato de servicios; la referencia estática del backend no permite ejecutar solicitudes.   | [Documentación](https://swagger.io/tools/swagger-ui/)                                  |
+| Swagger UI      | Consultar el contrato de servicios, sus modelos, parámetros y ejemplos de respuesta.   | [Documentación](https://swagger.io/tools/swagger-ui/)                                  |
 | GitHub Actions  | Ejecutar tareas automatizadas del repositorio, incluida la generación del informe en PDF. | [Documentación](https://docs.github.com/en/actions)                                    |
 
 ##### Configuración compartida
@@ -220,7 +220,7 @@ La landing page se publica en GitHub Pages. La aplicación Android utiliza HTTPS
 | Aplicación móvil | Kotlin y Jetpack Compose | Android API 24 o superior. |
 | Sesión local | Android Keystore y archivo cifrado | Almacenamiento privado de autenticación. |
 | Consulta sin conexión | SQLite, planificado | Fuera del incremento Android evaluado. |
-| Documentación | OpenAPI y Swagger UI estático | Contrato y referencia de consulta en el repositorio del backend. |
+| Documentación | OpenAPI y Swagger UI | Contrato y referencia de consulta en el repositorio del backend. |
 
 ##### Configuración del despliegue
 
@@ -242,4 +242,4 @@ Las operaciones de negocio requieren una sesión y los permisos del perfil. El g
 
 Estas comprobaciones se realizaron mediante solicitudes a la API. No equivalen a una nueva compilación Android ni a una revisión visual del emulador. Las instrucciones y pruebas automatizadas disponibles se detallan en el Sprint 2 y en el README del repositorio móvil.
 
-Los enlaces del código, del servicio de evaluación y del contrato OpenAPI se reúnen en los anexos. La consulta estática de Swagger no ejecuta operaciones sobre staging.
+Los enlaces del código, del servicio de evaluación y del contrato OpenAPI se reúnen en los anexos. Las capturas de solicitudes y respuestas de ejemplo se presentan en la documentación de servicios del Sprint 2.
