@@ -12,6 +12,10 @@
 
 - El backend incorpora operaciones de cuentas, sesiones y gestión del ganado mediante Java, Spring Boot y PostgreSQL. Las evidencias locales muestran resultados satisfactorios en el inicio de sesión, la consulta y actualización de animales y el rechazo de solicitudes sin autenticación.
 
-- El siguiente paso consiste en comprobar el despliegue público, integrar las pantallas móviles con el backend y resolver las diferencias entre el diseño documentado y el código. También queda pendiente completar las integraciones externas de pagos y notificaciones.
+- En el avance AV2, la aplicación Android incorpora acceso, gestión del ganado, vinculación y visitas mediante los servicios de ANITEC. Las pruebas contra staging comprobaron el registro y la verificación de ambos perfiles, las operaciones de animales, la aceptación de invitaciones y la consulta de una misma visita desde las cuentas de veterinario y ganadero.
+
+- La información del animal se conservó al volver a iniciar sesión, y la baja lógica cambió su estado a inactivo. Estas comprobaciones respaldan las operaciones evaluadas de la API; la compilación y la navegación visual de la aplicación requieren su propia verificación en Android.
+
+- El siguiente incremento debe completar las funciones clínicas y las capacidades previstas de suscripción y consulta sin conexión en la aplicación. También quedan pendientes la investigación de notificaciones en Android e iOS, la revisión integral de la interfaz y las entrevistas de validación con usuarios. La existencia de código o de pruebas automatizadas no reemplaza la evidencia de ejecución de cada recorrido.
 
 </div>

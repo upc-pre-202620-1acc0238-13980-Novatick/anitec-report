@@ -68,6 +68,7 @@
 | 0.2     | 11/09/2026 | Equipo NOVATICK | Incorporación de Startup Profile, Solution Profile, Lean UX, segmentos objetivo y diseño de entrevistas.                                                             |
 | 0.3     | 18/09/2026 | Equipo NOVATICK | Incorporación del análisis competitivo, Domain-Driven Design y documentación inicial de la arquitectura de software.                                                 |
 | 0.4     | 07/10/2026 | Equipo NOVATICK | Incorporación del diseño UI/UX, documentación del Sprint 1, evidencias de la landing page y pruebas locales del backend. Actualización del Student Outcome para TB1. |
+| 0.5     | 13/11/2026 | Equipo NOVATICK | Documentación del Sprint 2 para AV2, actualización de configuración, aporte individual al Student Outcome, conclusiones y anexos. |
 
 Organización en GitHub: [NOVATICK](https://github.com/upc-pre-202620-1acc0238-13980-Novatick)
 
@@ -165,6 +166,16 @@ Para el control de versiones se utilizan Git y GitHub. El equipo mantiene una ra
       - [4.2.1.7. Services Documentation Evidence for Sprint Review](docs/capitulo-4/sprint-1.md#4217-services-documentation-evidence-for-sprint-review)
       - [4.2.1.8. Software Deployment Evidence for Sprint Review](docs/capitulo-4/sprint-1.md#4218-software-deployment-evidence-for-sprint-review)
       - [4.2.1.9. Team Collaboration Insights during Sprint](docs/capitulo-4/sprint-1.md#4219-team-collaboration-insights-during-sprint)
+    - [4.2.2. Sprint 2](docs/capitulo-4/sprint-2.md#422-sprint-2)
+      - [4.2.2.1. Sprint Planning 2](docs/capitulo-4/sprint-2.md#4221-sprint-planning-2)
+      - [4.2.2.2. Aspect Leaders and Collaborators](docs/capitulo-4/sprint-2.md#4222-aspect-leaders-and-collaborators)
+      - [4.2.2.3. Sprint Backlog 2](docs/capitulo-4/sprint-2.md#4223-sprint-backlog-2)
+      - [4.2.2.4. Development Evidence for Sprint Review](docs/capitulo-4/sprint-2.md#4224-development-evidence-for-sprint-review)
+      - [4.2.2.5. Testing Suite Evidence for Sprint Review](docs/capitulo-4/sprint-2.md#4225-testing-suite-evidence-for-sprint-review)
+      - [4.2.2.6. Execution Evidence for Sprint Review](docs/capitulo-4/sprint-2.md#4226-execution-evidence-for-sprint-review)
+      - [4.2.2.7. Services Documentation Evidence for Sprint Review](docs/capitulo-4/sprint-2.md#4227-services-documentation-evidence-for-sprint-review)
+      - [4.2.2.8. Software Deployment Evidence for Sprint Review](docs/capitulo-4/sprint-2.md#4228-software-deployment-evidence-for-sprint-review)
+      - [4.2.2.9. Team Collaboration Insights during Sprint](docs/capitulo-4/sprint-2.md#4229-team-collaboration-insights-during-sprint)
   - [4.3. Validation Interviews](docs/capitulo-4/validation-interviews.md)
     - [4.3.1. Diseño de Entrevistas](docs/capitulo-4/validation-interviews.md#431-diseño-de-entrevistas)
     - [4.3.2. Registro de Entrevistas](docs/capitulo-4/validation-interviews.md#432-registro-de-entrevistas)

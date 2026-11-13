@@ -20,6 +20,7 @@ docs/capitulo-3/mobile-application-design.md
 docs/capitulo-4/introduction.md
 docs/capitulo-4/software-configuration-management.md
 docs/capitulo-4/sprint-1.md
+docs/capitulo-4/sprint-2.md
 docs/capitulo-4/validation-interviews.md
 docs/cierre/conclusiones.md
 docs/cierre/bibliografia.md
