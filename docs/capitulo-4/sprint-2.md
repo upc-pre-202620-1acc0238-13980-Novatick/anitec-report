@@ -11,9 +11,9 @@ El objetivo es que ambos perfiles compartan la información autorizada del ganad
 | Elemento | Registro |
 | --- | --- |
 | Sprint # | Sprint 2. |
-| Date | Fecha de la reunión pendiente de confirmar. Corte documental: 13/11/2026. |
-| Time | Hora de la reunión pendiente de confirmar. |
-| Location | Medio de reunión pendiente de confirmar. |
+| Date | 2026-11-06. |
+| Time | Horario nocturno; hora exacta no registrada. |
+| Location | Reunión virtual por Discord. |
 | Prepared By | Richard Enrique Lozano León, consolidación documental. |
 | Attendees | Asistencia a la reunión pendiente de confirmar. |
 | Sprint 1 Review Summary | El informe anterior registra la landing publicada y avances de identidad e inventario en el backend. La integración móvil figuraba pendiente. |
