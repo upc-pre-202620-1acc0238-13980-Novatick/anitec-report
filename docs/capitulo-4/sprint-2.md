@@ -321,8 +321,8 @@ El historial permite seguir la separación de cambios de ganado, vinculación, v
 
 Las contribuciones pueden revisarse en los historiales de [Android](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/commits/main/) y [backend](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/commits/develop/). La actualización documental del Equipo NOVATICK relaciona estos cambios con el Sprint 2 y con los resultados del recorrido de evaluación. La matriz distribuye la coordinación de la revisión y el cierre entre los cinco integrantes.
 
-###### Video About-the-Team — Sprint 2
+###### Video About-the-Team
 
-[Ver el video About-the-Team del Sprint 2](https://upcedupe-my.sharepoint.com/:v:/g/personal/u20241d990_upc_edu_pe/IQCIJtzli2BQRKeKsM1A_p_RAQqAsUxotwnFTxwQAjjqdEw?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=fCwkFB)
+[Video About-the-Team](https://upcedupe-my.sharepoint.com/:v:/g/personal/u20241d990_upc_edu_pe/IQCIJtzli2BQRKeKsM1A_p_RAQqAsUxotwnFTxwQAjjqdEw?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=fCwkFB)
 
 </div>
