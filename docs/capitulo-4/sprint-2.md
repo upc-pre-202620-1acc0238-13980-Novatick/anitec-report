@@ -259,7 +259,7 @@ La aplicación Android se evalúa desde `main` con la variante `alpha`, conectad
 | Android                            | [main](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-mobile-app-kotlin/tree/main)                 | Código integrado y guía de ejecución de la variante alpha.             |
 | Contrato y referencia de servicios | [Documentación API](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/tree/develop/docs/api) | Contrato, modelos y ejemplos documentados.                             |
 
-La URL raíz de staging devuelve un rechazo de acceso cuando se consulta sin la cabecera privada. Ese resultado no implica que el servicio esté apagado. En las operaciones protegidas, la clave staging y la sesión cumplen funciones distintas. Las credenciales de infraestructura permanecen fuera del informe.
+La URL raíz de staging devuelve un rechazo de acceso cuando se consulta sin la cabecera privada. Ese resultado no implica que el servicio esté apagado. En las operaciones protegidas, la clave staging y la sesión cumplen funciones distintas. La clave de acceso al entorno staging se adjunta en el entregable de evaluación.
 
 ###### Despliegue del backend ANITEC en Render
 
