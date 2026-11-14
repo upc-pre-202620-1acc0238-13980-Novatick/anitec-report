@@ -122,23 +122,30 @@ Estas comprobaciones corresponden a la API y no incluyen pruebas de interfaz en 
 ### Android Execution Evidence
 #### Perfil Ganadero:
 
-![GAN-01 Registro de animal: Registro de un nuevo animal, con finca, código, especie, sexo, nombre, raza y fecha de nacimiento.](../../assets/images/capitulo-4/sprint-2/execution_evidence/animalRegister.png)
+![GAN-01 Registro de animal: Registro de un nuevo animal, con finca, código, especie, sexo, nombre, raza y fecha de nacimiento.](../../assets/images/capitulo-4/sprint-2/execution_evidence/Rancher/animalRegister.png)
 
-![GAN-02 Invitación al veterinario: Envío exitoso de invitación al veterinario.](../../assets/images/capitulo-4/sprint-2/execution_evidence/invitation.png)
-
-
-![GAN-03 Veterinario vinculado: Veterinario vinculado a la cuenta del ganadero.](../../assets/images/capitulo-4/sprint-2/execution_evidence/vinculation.png)
+![GAN-02 Invitación al veterinario: Envío exitoso de invitación al veterinario.](../../assets/images/capitulo-4/sprint-2/execution_evidence/Rancher/invitation.png)
 
 
-![GAN-04 Consulta de próximas visitas: Pantalla principal del ganadero, mostrando un animal activo y una próxima visita programada.](../../assets/images/capitulo-4/sprint-2/execution_evidence/scheduled_appointment.png)
+![GAN-03 Veterinario vinculado: Veterinario vinculado a la cuenta del ganadero.](../../assets/images/capitulo-4/sprint-2/execution_evidence/Rancher/vinculation.png)
 
 
+![GAN-04 Consulta de próximas visitas: Pantalla principal del ganadero, mostrando un animal activo y una próxima visita programada.](../../assets/images/capitulo-4/sprint-2/execution_evidence/Rancher/scheduled_appointment.png)
 
 
+#### Perfil Ganadero:
 
+![VET-01 Recepción de invitación: Recepción de la invitación enviada por el ganadero y opciones para aceptarla o rechazarla.](../../assets/images/capitulo-4/sprint-2/execution_evidence/Veterinarian/receiptOfInvitation.png)
 
+![VET-02 Consulta de ganaderos vinculados: Consulta de ganaderos vinculados.](../../assets/images/capitulo-4/sprint-2/execution_evidence/Veterinarian/consultLinkeds.png)
 
+![VET-03 Consulta de animales autorizados: Consulta de los animales autorizados del ganadero.](../../assets/images/capitulo-4/sprint-2/execution_evidence/Veterinarian/authorizedAnimals.png)
 
+![VET-04 Panel principal: Panel principal del veterinario con un ganadero vinculado y una visita programada.](../../assets/images/capitulo-4/sprint-2/execution_evidence/Veterinarian/principalPanel.png)
+
+![VET-05 Programación de visita: Formulario para programar una visita, seleccionando ganadero, animal, motivo, fecha y hora.](../../assets/images/capitulo-4/sprint-2/execution_evidence/Veterinarian/formularyToProgram.png)
+
+![VET-06 Detalle de visita: Detalle de la visita programada, con información del animal, ganadero y veterinario.](../../assets/images/capitulo-4/sprint-2/execution_evidence/Veterinarian/detailsAndInfo.png)
 
 
 ##### 4.2.2.7. Services Documentation Evidence for Sprint Review
