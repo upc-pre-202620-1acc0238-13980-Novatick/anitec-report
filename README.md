@@ -62,13 +62,14 @@
 
 ## Registro de Versiones del Informe
 
-| Versión | Fecha      | Autor(es)       | Descripción de la modificación                                                                                                                                       |
-| ------- | ---------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0.1     | 04/09/2026 | Equipo NOVATICK | Creación de la estructura inicial del informe y definición de la propuesta ANITEC.                                                                                   |
-| 0.2     | 11/09/2026 | Equipo NOVATICK | Incorporación de Startup Profile, Solution Profile, Lean UX, segmentos objetivo y diseño de entrevistas.                                                             |
-| 0.3     | 18/09/2026 | Equipo NOVATICK | Incorporación del análisis competitivo, Domain-Driven Design y documentación inicial de la arquitectura de software.                                                 |
-| 0.4     | 07/10/2026 | Equipo NOVATICK | Incorporación del diseño UI/UX, documentación del Sprint 1, evidencias de la landing page y pruebas locales del backend. Actualización del Student Outcome para TB1. |
-| 0.5     | 13/11/2026 | Equipo NOVATICK | Documentación del Sprint 2 para AV2, actualización de configuración, aporte individual al Student Outcome, conclusiones y anexos. |
+| Versión | Fecha      | Autor(es)       | Descripción de la modificación                                                                                                                                                |
+| ------- | ---------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0.1     | 04/09/2026 | Equipo NOVATICK | Creación de la estructura inicial del informe y definición de la propuesta ANITEC.                                                                                            |
+| 0.2     | 11/09/2026 | Equipo NOVATICK | Incorporación de Startup Profile, Solution Profile, Lean UX, segmentos objetivo y diseño de entrevistas.                                                                      |
+| 0.3     | 18/09/2026 | Equipo NOVATICK | Incorporación del análisis competitivo, Domain-Driven Design y documentación inicial de la arquitectura de software.                                                          |
+| 0.4     | 07/10/2026 | Equipo NOVATICK | Incorporación del diseño UI/UX, documentación del Sprint 1, evidencias de la landing page y pruebas locales del backend. Actualización del Student Outcome para TB1.          |
+| 0.5     | 13/11/2026 | Equipo NOVATICK | Documentación del Sprint 2 para AV2, actualización de configuración, aporte individual al Student Outcome, conclusiones y anexos.                                             |
+| 0.6     | 13/11/2026 | Equipo NOVATICK | Incorporación de evidencias del despliegue de ANITEC en Render, actualización del Sprint 2, Project Report Collaboration Insights, Student Outcome 7 y documentación Android. |
 
 Organización en GitHub: [NOVATICK](https://github.com/upc-pre-202620-1acc0238-13980-Novatick)
 
@@ -97,6 +98,16 @@ El equipo organiza la elaboración del informe mediante ramas de trabajo y Pull 
 | Ayala Fernandez, Jorge Brayan           | Desarrollo del backend, pruebas locales mediante Swagger y avance de las pantallas móviles.                         |
 | Mauricio Silva, Ghiou Justinn           | Revisión de pantallas y navegación frente a los mock-ups, prevista para el cierre de TB1.                           |
 | Montes Zamora, Edgar Alexander Mauricio | Comprobación del backend público y recopilación de evidencias de Render, previstas para el cierre de TB1.           |
+
+### AV2
+
+| Integrante                              | Responsabilidad asignada en AV2                                                                                                                                 |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ayala Fernandez, Jorge Brayan           | Revisión de los servicios de gestión ganadera, operaciones de animales, observaciones y pruebas del backend.                                                    |
+| León Morales, Johan Yonel               | Coordinación técnica del Sprint 2, integración frontend-backend, revisión de vinculación veterinaria, pruebas funcionales y consolidación del incremento móvil. |
+| Lozano Leon, Richard Enrique            | Actualización del informe, registro de versiones, documentación de las evidencias del Sprint 2 y preparación del documento para su generación en PDF.           |
+| Mauricio Silva, Ghiou Justinn           | Revisión del flujo de programación de visitas, agenda veterinaria, navegación móvil y correspondencia con los diseños de Figma.                                 |
+| Montes Zamora, Edgar Alexander Mauricio | Revisión de la disponibilidad del backend en Render, registros de despliegue, PostgreSQL y evidencias técnicas del entorno de staging.                          |
 
 Para el control de versiones se utilizan Git y GitHub. El equipo mantiene una rama principal main, una rama de integración develop y ramas de trabajo para funcionalidades, correcciones y documentación. Los cambios se integran mediante Pull Requests.
 
