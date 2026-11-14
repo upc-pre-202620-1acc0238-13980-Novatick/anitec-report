@@ -323,6 +323,24 @@ Las contribuciones pueden revisarse en los historiales de [Android](https://gith
 
 ###### Video About-the-Team
 
+**Duración:** 00:03:44.
+
+El video reúne cinco intervenciones ante cámara de los integrantes del Equipo NOVATICK. La secuencia presenta los testimonios individuales del equipo sobre su participación en el proyecto ANITEC.
+
+| Inicio (hh:mm:ss) | Sección |
+| --- | --- |
+| 00:00:00 | Primera intervención del equipo. |
+| 00:00:37 | Segunda intervención del equipo. |
+| 00:01:47 | Tercera intervención del equipo. |
+| 00:02:33 | Cuarta intervención del equipo. |
+| 00:03:08 | Quinta intervención del equipo. |
+
+**Cuadro representativo del video**
+
+![Intervención ante cámara en el video About-the-Team](../../assets/images/capitulo-4/sprint-2/about-the-team.jpg)
+
+**Microsoft Stream**
+
 [Video About-the-Team](https://upcedupe-my.sharepoint.com/:v:/g/personal/u20241d990_upc_edu_pe/IQCIJtzli2BQRKeKsM1A_p_RAQqAsUxotwnFTxwQAjjqdEw?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=fCwkFB)
 
 </div>
