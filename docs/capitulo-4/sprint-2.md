@@ -118,6 +118,29 @@ En el registro, `emailDelivery: UNCONFIRMED` indicó que el servidor no confirma
 
 Estas comprobaciones corresponden a la API y no incluyen pruebas de interfaz en Android ni entrevistas con usuarios.
 
+
+### Android Execution Evidence
+#### Perfil Ganadero:
+
+![GAN-01 Registro de animal: Registro de un nuevo animal, con finca, código, especie, sexo, nombre, raza y fecha de nacimiento.](../../assets/images/capitulo-4/sprint-2/execution_evidence/animalRegister.png)
+
+![GAN-02 Invitación al veterinario: Envío exitoso de invitación al veterinario.](../../assets/images/capitulo-4/sprint-2/execution_evidence/invitation.png)
+
+
+![GAN-03 Veterinario vinculado: Veterinario vinculado a la cuenta del ganadero.](../../assets/images/capitulo-4/sprint-2/execution_evidence/vinculation.png)
+
+
+![GAN-04 Consulta de próximas visitas: Pantalla principal del ganadero, mostrando un animal activo y una próxima visita programada.](../../assets/images/capitulo-4/sprint-2/execution_evidence/scheduled_appointment.png)
+
+
+
+
+
+
+
+
+
+
 ##### 4.2.2.7. Services Documentation Evidence for Sprint Review
 
 El contrato OpenAPI del backend documenta las operaciones y respuestas del incremento. La documentación técnica se encuentra en [openapi.yaml](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/blob/develop/docs/api/openapi.yaml), acompañada por la [guía de integración móvil](https://github.com/upc-pre-202620-1acc0238-13980-Novatick/anitec-platform/blob/develop/docs/api/mobile-integration.md).
